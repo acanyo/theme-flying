@@ -1,0 +1,40 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <Fragment slot="head">
+    <title th:text="|${category.spec.displayName} - ${site.title}|"></title>
+  </Fragment>
+
+  <div class="page-heading">
+    <h1 th:text="${category.spec.displayName}"></h1>
+    <p class="page-meta">
+      <span th:text="|${posts.total} 篇文章|"></span>
+    </p>
+  </div>
+
+  <th:block th:replace="~{fragments/post-list}"></th:block>
+
+  <div th:if="${posts.total == 0}" class="feed-empty">暂无文章。</div>
+
+  <nav
+    th:if="${posts.totalPages gt 1}"
+    class="pagination"
+    aria-label="Pagination"
+  >
+    <a
+      th:if="${posts.hasPrevious()}"
+      th:href="@{${posts.prevUrl}}"
+      class="pagination__prev">&larr; 较新</a
+    >
+    <span
+      class="pagination__info"
+      th:text="|${posts.page} / ${posts.totalPages}|"></span>
+    <a
+      th:if="${posts.hasNext()}"
+      th:href="@{${posts.nextUrl}}"
+      class="pagination__next">较旧 &rarr;</a
+    >
+  </nav>
+</Layout>

@@ -1,0 +1,18 @@
+apiVersion: theme.halo.run/v1alpha1
+kind: Theme
+metadata:
+  name: astro-starter
+spec:
+  displayName: Astro Starter
+  author:
+    name: Your Name
+    website: https://github.com/YourName
+  description: A starter theme for Halo.
+  logo: https://www.halo.run/logo
+  homepage: https://github.com/halo-sigs/theme-astro-starter
+  issues: https://github.com/halo-sigs/theme-astro-starter/issues
+  version: "1.0.0"
+  requires: ">=2.0.0"
+  license:
+    - name: "GPL-3.0"
+      url: "https://www.gnu.org/licenses/gpl-3.0.en.html"

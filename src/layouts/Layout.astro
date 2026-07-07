@@ -1,0 +1,52 @@
+---
+import "../styles/global.css";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+
+interface Props {
+  pageTitle?: string;
+  contentClass?: string;
+}
+
+const { pageTitle, contentClass } = Astro.props;
+
+const hasHeading = Boolean(pageTitle);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <script is:inline>
+      (function () {
+        var stored = localStorage.getItem("theme");
+        var prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        if (stored === "dark" || (!stored && prefersDark)) {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
+    <slot name="head" />
+  </head>
+  <body>
+    <Header />
+    <main class="layout-main">
+      <article class="page-shell">
+        {
+          hasHeading && (
+            <header class="page-heading">
+              {pageTitle && <h1>{pageTitle}</h1>}
+            </header>
+          )
+        }
+        <div class:list={["page-content", contentClass]}>
+          <slot />
+        </div>
+      </article>
+    </main>
+    <Footer />
+  </body>
+</html>
