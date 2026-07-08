@@ -165,6 +165,73 @@ hr {
   gap: 2.5rem;
 }
 
+.swup-loading #swup {
+  opacity: 0.55;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.swup-loading::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: swup-progress 1s ease-in-out infinite;
+}
+
+.swup-content {
+  animation: swup-fade-in 0.3s ease-out;
+}
+
+[data-no-swup] {
+  cursor: pointer;
+}
+
+@keyframes swup-progress {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  50% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes swup-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swup-loading #swup {
+    opacity: 1;
+    transition: none;
+  }
+
+  .swup-loading::after {
+    display: none;
+  }
+
+  .swup-content {
+    animation: none;
+  }
+}
+
 .page-heading {
   padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--rule);

@@ -1,0 +1,26 @@
+apiVersion: v1alpha1
+kind: Setting
+metadata:
+  name: theme-flying-setting
+spec:
+  forms:
+    - group: custom
+      label: Custom
+      formSchema:
+        - $formkit: switch
+          name: enable_swup
+          id: enable_swup
+          key: enable_swup
+          label: Enable Swup
+          value: true
+          help: Use Swup for same-site page transitions.
+        - $formkit: number
+          if: "$get(enable_swup).value === true"
+          name: swup_timeout
+          id: swup_timeout
+          key: swup_timeout
+          label: Swup timeout
+          value: 5000
+          help: Page load timeout in milliseconds.
+          min: 1000
+          max: 60000

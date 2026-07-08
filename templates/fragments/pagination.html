@@ -1,0 +1,5 @@
+<nav th:fragment="pager(result)" th:if="${result != null and result.totalPages gt 1}" class="pagination" aria-label="Pagination">
+  <a th:if="${result.hasPrevious()}" th:href="@{${result.prevUrl}}" class="pagination__prev">Newer</a>
+  <span class="pagination__info" th:text="|${result.page} / ${result.totalPages}|">1 / 1</span>
+  <a th:if="${result.hasNext()}" th:href="@{${result.nextUrl}}" class="pagination__next">Older</a>
+</nav>

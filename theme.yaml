@@ -1,16 +1,18 @@
 apiVersion: theme.halo.run/v1alpha1
 kind: Theme
 metadata:
-  name: astro-starter
+  name: theme-flying
 spec:
-  displayName: Astro Starter
+  displayName: flying
   author:
-    name: Your Name
-    website: https://github.com/YourName
-  description: A starter theme for Halo.
+    name: Handsome
+    website: https://github.com/acanyo
+  description: A flying theme for Halo.
+  settingName: "theme-flying-setting"
+  configMapName: "theme-flying-configMap"
   logo: https://www.halo.run/logo
-  homepage: https://github.com/halo-sigs/theme-astro-starter
-  issues: https://github.com/halo-sigs/theme-astro-starter/issues
+  homepage: https://github.com/acanyo/theme-flying
+  issues: https://github.com/acanyo/theme-flying/issues
   version: "1.0.0"
   requires: ">=2.0.0"
   license:

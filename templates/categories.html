@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{fragments/layout :: page(pageTitle=|Categories - ${site.title}|, bodyClass='flying-taxonomy', content=~{::content})}"
+>
+  <th:block th:fragment="content">
+    <div class="content-shell">
+      <header class="page-header">
+        <p class="eyebrow">Browse</p>
+        <h1>Categories</h1>
+        <p>Explore stories by destination, mood, and subject.</p>
+      </header>
+
+      <nav class="taxonomy-grid" aria-label="Category list">
+        <a
+          th:each="category : ${categories}"
+          class="taxonomy-card"
+          th:href="@{${category.status.permalink}}"
+        >
+          <span th:text="${category.spec.displayName}">Category</span>
+          <small th:text="|${category.postCount} stories|">0 stories</small>
+        </a>
+      </nav>
+    </div>
+  </th:block>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{fragments/layout :: page(pageTitle=|${singlePage.spec.title} - ${site.title}|, bodyClass='flying-page', content=~{::content})}"
+>
+  <th:block th:fragment="content">
+    <div class="content-shell content-shell--narrow">
+      <article class="post-article">
+        <header class="post-hero">
+          <p class="eyebrow">Page</p>
+          <h1 class="post-heading" th:text="${singlePage.spec.title}">Page title</h1>
+          <footer class="post-meta post-meta--hero">
+            <time th:datetime="${singlePage.spec.publishTime}" th:text="${#dates.format(singlePage.spec.publishTime, 'yyyy-MM-dd')}">
+              2026-07-08
+            </time>
+          </footer>
+        </header>
+
+        <section class="post-content prose" th:utext="${singlePage.content.content}"></section>
+
+        <section class="comments-panel" th:if="${haloCommentEnabled}">
+          <halo:comment group="content.halo.run" kind="SinglePage" th:attr="name=${singlePage.metadata.name}" />
+        </section>
+      </article>
+    </div>
+  </th:block>
+</html>

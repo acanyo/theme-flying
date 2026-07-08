@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{fragments/layout :: page(pageTitle=|${post.spec.title} - ${site.title}|, bodyClass='flying-post', content=~{::content})}"
+>
+  <th:block th:fragment="content">
+    <div class="content-shell content-shell--narrow">
+      <article class="post-article">
+        <header class="post-hero">
+          <a
+            class="post-chip"
+            href="/"
+            th:href="@{${not #lists.isEmpty(post.categories) ? post.categories[0].status.permalink : post.status.permalink}}"
+            th:text="${not #lists.isEmpty(post.categories) ? post.categories[0].spec.displayName : 'Journal'}"
+          >Journal</a>
+          <h1 class="post-heading" th:text="${post.spec.title}">Post title</h1>
+          <p class="post-lede" th:if="${not #strings.isEmpty(post.status.excerpt)}" th:text="${post.status.excerpt}">
+            Post excerpt
+          </p>
+          <footer class="post-meta post-meta--hero">
+            <a class="author-pill" href="/" th:href="@{${post.owner?.permalink ?: post.status.permalink}}">
+              <img
+                src="/assets/images/avatar.svg"
+                th:src="${post.owner?.avatar ?: #theme.assets('/images/avatar.svg')}"
+                th:alt="${post.owner?.displayName ?: site.title}"
+                alt=""
+              />
+              <span th:text="${post.owner?.displayName ?: site.title}">Author</span>
+            </a>
+            <span class="dot" aria-hidden="true"></span>
+            <time th:datetime="${post.spec.publishTime}" th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}">
+              2026-07-08
+            </time>
+          </footer>
+          <div class="post-tags post-tags--hero" th:if="${not #lists.isEmpty(post.tags)}">
+            <a th:each="tag : ${post.tags}" th:href="@{${tag.status.permalink}}" th:text="${tag.spec.displayName}">Tag</a>
+          </div>
+        </header>
+
+        <figure class="post-hero-image" th:if="${not #strings.isEmpty(post.spec.cover)}">
+          <img th:src="${post.spec.cover}" th:alt="${post.spec.title}" alt="" loading="eager" />
+        </figure>
+
+        <section class="post-content prose" th:utext="${post.content.content}"></section>
+
+        <aside class="post-author-card">
+          <img
+            src="/assets/images/avatar.svg"
+            th:src="${post.owner?.avatar ?: #theme.assets('/images/avatar.svg')}"
+            th:alt="${post.owner?.displayName ?: site.title}"
+            alt=""
+          />
+          <div>
+            <p>Written by</p>
+            <h2 th:text="${post.owner?.displayName ?: site.title}">Author</h2>
+          </div>
+        </aside>
+
+        <section class="comments-panel" th:if="${haloCommentEnabled}">
+          <halo:comment group="content.halo.run" kind="Post" th:attr="name=${post.metadata.name}" />
+        </section>
+      </article>
+    </div>
+  </th:block>
+</html>

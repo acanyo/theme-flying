@@ -5,6 +5,7 @@ dist/
 
 # dependencies
 node_modules/
+.pnpm-store/
 
 # logs
 npm-debug.log*
@@ -23,4 +24,3 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-templates/

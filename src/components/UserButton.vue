@@ -61,6 +61,7 @@ onMounted(async () => {
     v-else-if="user && !isAnonymous"
     class="user-button-shell"
     :title="displayName"
+    data-no-swup
   >
     <span class="user-button-avatar" aria-hidden="true">
       <img
@@ -73,7 +74,12 @@ onMounted(async () => {
     </span>
     <span class="user-button-text">{{ displayName }}</span>
   </a>
-  <a v-else class="user-button-shell user-button-shell--link" href="/login">
+  <a
+    v-else
+    class="user-button-shell user-button-shell--link"
+    href="/login"
+    data-no-swup
+  >
     <span class="user-button-avatar" aria-hidden="true">{{ avatarLabel }}</span>
     <span class="user-button-text">Login</span>
   </a>

@@ -20,6 +20,13 @@ const hasHeading = Boolean(pageTitle);
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <script is:inline>
       (function () {
+        window.themeConfig = window.themeConfig || {};
+        window.themeConfig.custom = window.themeConfig.custom || {};
+        window.themeConfig.custom.enable_swup =
+          /*[[${theme.config.custom?.enable_swup}]]*/ true;
+        window.themeConfig.custom.swup_timeout =
+          /*[[${theme.config.custom?.swup_timeout}]]*/ 5000;
+
         var stored = localStorage.getItem("theme");
         var prefersDark = window.matchMedia(
           "(prefers-color-scheme: dark)",
@@ -34,7 +41,7 @@ const hasHeading = Boolean(pageTitle);
   <body>
     <Header />
     <main class="layout-main">
-      <article class="page-shell">
+      <article id="swup" class="page-shell">
         {
           hasHeading && (
             <header class="page-heading">
@@ -48,5 +55,8 @@ const hasHeading = Boolean(pageTitle);
       </article>
     </main>
     <Footer />
+    <script>
+      import "../scripts/swup";
+    </script>
   </body>
 </html>

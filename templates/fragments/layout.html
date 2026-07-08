@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" th:fragment="page(pageTitle, bodyClass, content)">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <script th:inline="javascript">
+      (function () {
+        window.themeConfig = window.themeConfig || {};
+        window.themeConfig.custom = window.themeConfig.custom || {};
+        window.themeConfig.custom.enable_swup =
+          /*[[${theme.config.custom?.enable_swup}]]*/ true;
+        window.themeConfig.custom.swup_timeout =
+          /*[[${theme.config.custom?.swup_timeout}]]*/ 5000;
+
+        var stored = localStorage.getItem("flying-theme");
+        var prefersDark =
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme =
+          stored || (prefersDark ? "dark" : "light");
+      })();
+    </script>
+    <title th:text="${pageTitle}">flying</title>
+    <link
+      rel="stylesheet"
+      href="/assets/css/style.css"
+      th:href="@{/assets/css/style.css?v={v}(v=${theme.spec.version})}"
+    />
+  </head>
+  <body th:class="${bodyClass}">
+    <div class="page-overlay" data-menu-close></div>
+    <th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block>
+    <th:block th:replace="~{fragments/mobile-header :: mobileHeader}"></th:block>
+
+    <main id="swup" class="site-main">
+      <th:block th:replace="${content}"></th:block>
+      <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+    </main>
+
+    <script
+      type="module"
+      src="/assets/js/script.js"
+      th:src="@{/assets/js/script.js?v={v}(v=${theme.spec.version})}"
+    ></script>
+  </body>
+</html>

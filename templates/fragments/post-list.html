@@ -1,0 +1,10 @@
+<th:block th:fragment="grid(result)">
+  <div class="article-grid" th:if="${result != null and not #lists.isEmpty(result.items)}">
+    <th:block th:each="post : ${result.items}">
+      <th:block th:replace="~{fragments/post-card :: card(${post})}"></th:block>
+    </th:block>
+  </div>
+  <p class="empty-state empty-state--visible" th:if="${result == null or #lists.isEmpty(result.items)}">
+    No posts yet.
+  </p>
+</th:block>

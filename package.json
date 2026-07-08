@@ -4,8 +4,9 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "nodemon --config nodemon.json --exec 'astro build'",
-    "build": "astro build",
+    "dev": "nodemon --config nodemon.json --exec \"node scripts/build-theme.mjs\"",
+    "build": "node scripts/build-theme.mjs",
+    "build:uno": "node scripts/build-theme.mjs",
     "astro": "astro",
     "format": "prettier --write ."
   },
@@ -30,13 +31,16 @@
     "astro": "^6.1.4",
     "ky": "^2.0.0",
     "sharp": "^0.34.5",
+    "swup": "^4.9.2",
     "vue": "^3.5.32"
   },
   "devDependencies": {
     "@iconify-json/mingcute": "^1.2.7",
+    "@unocss/cli": "^66.7.4",
     "nodemon": "^3.1.14",
     "prettier": "3.8.1",
     "prettier-plugin-astro": "0.14.1",
+    "unocss": "^66.7.4",
     "unplugin-icons": "^23.0.1"
   }
 }

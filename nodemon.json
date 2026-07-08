@@ -1,5 +1,5 @@
 {
   "verbose": false,
-  "watch": ["src/**/*", "public/**/*"],
-  "ext": "astro,ts,html"
+  "watch": ["templates/**/*", "unocss/**/*", "scripts/**/*", "theme.yaml", "settings.yaml", "uno.config.ts"],
+  "ext": "html,css,js,svg,yaml,ts,mjs"
 }

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{fragments/layout :: page(pageTitle=${site.title}, bodyClass='flying-home', content=~{::content})}"
+>
+  <th:block th:fragment="content">
+    <div class="content-shell">
+      <header class="desktop-topbar">
+        <label class="search-box">
+          <span class="search-icon" aria-hidden="true"></span>
+          <input data-search type="search" placeholder="Search..." autocomplete="off" />
+          <kbd>Ctrl K</kbd>
+        </label>
+        <div class="topbar-actions">
+          <a class="signin-link" href="/login" th:href="@{/login}" data-no-swup>Sign In</a>
+          <a class="button button--primary" href="/login" th:href="@{/login}" data-no-swup>Subscribe</a>
+        </div>
+      </header>
+
+      <section
+        class="featured-section"
+        aria-label="Featured posts"
+        th:if="${posts != null and not #lists.isEmpty(posts.items)}"
+      >
+        <div class="featured-grid">
+          <article
+            class="featured-card featured-card--lead"
+            data-post-card
+            data-featured
+            th:each="post, iter : ${posts.items}"
+            th:if="${iter.index == 0}"
+            th:attr="data-category=${not #lists.isEmpty(post.categories) ? post.categories[0].metadata.name : 'uncategorized'},data-title=${post.spec.title},data-excerpt=${post.status.excerpt ?: ''}"
+            data-category="slow-travel"
+            data-title="Silence in the Dolomites"
+            data-excerpt="Getting lost in the winter Dolomites taught me more about mountain respect."
+          >
+            <a class="card-hit" href="/" th:href="@{${post.status.permalink}}"></a>
+            <img
+              class="featured-image"
+              src="/assets/images/fallback-cover.svg"
+              th:src="${#strings.isEmpty(post.spec.cover) ? #theme.assets('/images/fallback-cover.svg') : post.spec.cover}"
+              th:alt="${post.spec.title}"
+              alt=""
+              loading="eager"
+            />
+            <div class="image-shade"></div>
+            <div class="featured-content">
+              <a
+                class="post-chip post-chip--glass"
+                href="/"
+                th:href="@{${not #lists.isEmpty(post.categories) ? post.categories[0].status.permalink : post.status.permalink}}"
+                th:text="${not #lists.isEmpty(post.categories) ? post.categories[0].spec.displayName : 'Journal'}"
+              >Slow Travel</a>
+              <h1 class="featured-title">
+                <a href="/" th:href="@{${post.status.permalink}}" th:text="${post.spec.title}">Silence in the Dolomites</a>
+              </h1>
+              <p class="featured-excerpt" th:if="${not #strings.isEmpty(post.status.excerpt)}" th:text="${post.status.excerpt}">
+                Getting lost in the winter Dolomites taught me more about mountain respect and patience.
+              </p>
+              <footer class="post-meta post-meta--light">
+                <a class="author-pill" href="/" th:href="@{${post.owner?.permalink ?: post.status.permalink}}">
+                  <img
+                    src="/assets/images/avatar.svg"
+                    th:src="${post.owner?.avatar ?: #theme.assets('/images/avatar.svg')}"
+                    th:alt="${post.owner?.displayName ?: site.title}"
+                    alt=""
+                  />
+                  <span th:text="${post.owner?.displayName ?: site.title}">Elena Vasquez</span>
+                </a>
+                <span class="dot" aria-hidden="true"></span>
+                <time th:datetime="${post.spec.publishTime}" th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}">
+                  2026-07-08
+                </time>
+              </footer>
+            </div>
+          </article>
+
+          <article
+            class="featured-card featured-card--side"
+            data-post-card
+            data-featured
+            th:each="post, iter : ${posts.items}"
+            th:if="${iter.index == 1}"
+            th:attr="data-category=${not #lists.isEmpty(post.categories) ? post.categories[0].metadata.name : 'uncategorized'},data-title=${post.spec.title},data-excerpt=${post.status.excerpt ?: ''}"
+            data-category="island-escapes"
+            data-title="Thailand's Secret Cove"
+            data-excerpt="A longtail journey into a secluded cove."
+          >
+            <a class="card-hit" href="/" th:href="@{${post.status.permalink}}"></a>
+            <img
+              class="featured-image"
+              src="/assets/images/fallback-cover.svg"
+              th:src="${#strings.isEmpty(post.spec.cover) ? #theme.assets('/images/fallback-cover.svg') : post.spec.cover}"
+              th:alt="${post.spec.title}"
+              alt=""
+              loading="lazy"
+            />
+            <div class="image-shade"></div>
+            <div class="featured-content">
+              <h2 class="featured-title">
+                <a href="/" th:href="@{${post.status.permalink}}" th:text="${post.spec.title}">Thailand's Secret Cove</a>
+              </h2>
+              <p class="featured-excerpt" th:if="${not #strings.isEmpty(post.status.excerpt)}" th:text="${post.status.excerpt}">
+                A longtail journey into a secluded cove off Thailand's coast.
+              </p>
+            </div>
+          </article>
+
+          <article
+            class="featured-card featured-card--side"
+            data-post-card
+            data-featured
+            th:each="post, iter : ${posts.items}"
+            th:if="${iter.index == 2}"
+            th:attr="data-category=${not #lists.isEmpty(post.categories) ? post.categories[0].metadata.name : 'uncategorized'},data-title=${post.spec.title},data-excerpt=${post.status.excerpt ?: ''}"
+            data-category="culture"
+            data-title="Turkey's Village Heartland"
+            data-excerpt="A missed connection led to an unexpected encounter."
+          >
+            <a class="card-hit" href="/" th:href="@{${post.status.permalink}}"></a>
+            <img
+              class="featured-image"
+              src="/assets/images/fallback-cover.svg"
+              th:src="${#strings.isEmpty(post.spec.cover) ? #theme.assets('/images/fallback-cover.svg') : post.spec.cover}"
+              th:alt="${post.spec.title}"
+              alt=""
+              loading="lazy"
+            />
+            <div class="image-shade"></div>
+            <div class="featured-content">
+              <h2 class="featured-title">
+                <a href="/" th:href="@{${post.status.permalink}}" th:text="${post.spec.title}">Turkey's Village Heartland</a>
+              </h2>
+              <p class="featured-excerpt" th:if="${not #strings.isEmpty(post.status.excerpt)}" th:text="${post.status.excerpt}">
+                A missed connection led me to an unexpected encounter with rural traditions.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <nav class="category-filter" aria-label="Filter posts" th:with="categories=${categoryFinder.listAsTree()}">
+        <button class="filter-chip is-active" type="button" data-filter="all">All</button>
+        <button
+          class="filter-chip"
+          type="button"
+          data-filter="mountains"
+          th:each="cat : ${categories}"
+          th:attr="data-filter=${cat.metadata.name}"
+          th:text="${cat.spec.displayName}"
+        >
+          Mountains
+        </button>
+      </nav>
+
+      <section class="latest-section" aria-label="Latest posts">
+        <header class="section-heading">
+          <div>
+            <h2>Explore More</h2>
+            <p th:text="${site.subtitle}">Minimal travel notes, quiet destinations, and thoughtful escapes.</p>
+          </div>
+        </header>
+
+        <div class="article-grid">
+          <th:block th:each="post, iter : ${posts.items}" th:if="${iter.index >= 3}">
+            <th:block th:replace="~{fragments/post-card :: card(${post})}"></th:block>
+          </th:block>
+        </div>
+
+        <p class="empty-state" hidden>No posts match the current filter.</p>
+
+        <div class="load-more-wrap">
+          <button
+            class="button button--dark"
+            type="button"
+            data-load-more
+            th:attr="data-next-url=${posts.hasNext() ? posts.nextUrl : ''}"
+          >
+            Load More
+          </button>
+        </div>
+      </section>
+
+      <th:block th:with="categories=${categoryFinder.listAsTree()}">
+        <section class="topic-section" aria-label="Category highlights" th:if="${not #lists.isEmpty(categories)}">
+          <th:block
+            th:each="category, catIter : ${categories}"
+            th:if="${catIter.index < 2}"
+            th:with="categoryPosts=${postFinder.list({ page: 1, size: 3, categoryName: category.metadata.name })}"
+          >
+            <section
+              class="topic-block"
+              th:if="${categoryPosts != null and not #lists.isEmpty(categoryPosts.items)}"
+            >
+              <header class="topic-header">
+                <div>
+                  <a
+                    class="post-chip"
+                    href="/"
+                    th:href="@{${category.status.permalink}}"
+                    th:text="${category.spec.displayName}"
+                  >Category</a>
+                  <p th:text="${category.spec.description ?: 'Fresh stories from this category.'}">
+                    Fresh stories from this category.
+                  </p>
+                </div>
+                <a class="topic-view-link" href="/" th:href="@{${category.status.permalink}}">View all</a>
+              </header>
+
+              <div class="article-grid topic-grid">
+                <th:block th:each="post : ${categoryPosts.items}">
+                  <th:block th:replace="~{fragments/post-card :: card(${post})}"></th:block>
+                </th:block>
+              </div>
+            </section>
+          </th:block>
+        </section>
+      </th:block>
+
+      <section
+        class="authors-section"
+        aria-label="Featured authors"
+        th:if="${posts != null and not #lists.isEmpty(posts.items)}"
+      >
+        <header class="section-heading">
+          <div>
+            <h2>Featured Authors</h2>
+            <p>Voices behind the latest stories.</p>
+          </div>
+        </header>
+
+        <div class="authors-list">
+          <article class="author-card" th:each="post, iter : ${posts.items}" th:if="${iter.index < 4}">
+            <a class="author-avatar" href="/" th:href="@{${post.owner?.permalink ?: post.status.permalink}}">
+              <img
+                src="/assets/images/avatar.svg"
+                th:src="${post.owner?.avatar ?: #theme.assets('/images/avatar.svg')}"
+                th:alt="${post.owner?.displayName ?: site.title}"
+                alt=""
+                loading="lazy"
+              />
+            </a>
+            <div>
+              <a
+                class="author-name"
+                href="/"
+                th:href="@{${post.owner?.permalink ?: post.status.permalink}}"
+                th:text="${post.owner?.displayName ?: site.title}"
+              >Author</a>
+              <p th:text="|Latest: ${post.spec.title}|">Latest: Story title</p>
+            </div>
+          </article>
+        </div>
+      </section>
+    </div>
+  </th:block>
+</html>

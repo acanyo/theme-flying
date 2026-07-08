@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{fragments/layout :: page(pageTitle=|Archives - ${site.title}|, bodyClass='flying-archive', content=~{::content})}"
+>
+  <th:block th:fragment="content">
+    <div class="content-shell">
+      <header class="page-header">
+        <p class="eyebrow">Archive</p>
+        <h1>All Stories</h1>
+        <p>Browse the complete publishing timeline.</p>
+      </header>
+
+      <section class="archive-list" aria-label="Archive list" th:if="${archives != null and not #lists.isEmpty(archives.items)}">
+        <th:block th:each="archive : ${archives.items}">
+          <th:block th:each="month : ${archive.months}">
+            <section class="archive-group">
+              <h2 class="archive-group__year" th:text="|${archive.year} / ${month.month}|">2026 / 07</h2>
+              <ul class="archive-group__items">
+                <li th:each="post : ${month.posts}" class="archive-entry">
+                  <time class="archive-entry__date" th:datetime="${post.spec.publishTime}" th:text="${#dates.format(post.spec.publishTime, 'MM/dd')}">
+                    07/08
+                  </time>
+                  <div>
+                    <h3 class="archive-entry__title">
+                      <a th:href="@{${post.status.permalink}}" th:text="${post.spec.title}">Story title</a>
+                    </h3>
+                    <p class="archive-entry__summary" th:if="${not #strings.isEmpty(post.status.excerpt)}" th:text="${post.status.excerpt}">
+                      Story excerpt
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </section>
+          </th:block>
+        </th:block>
+      </section>
+
+      <p class="empty-state empty-state--visible" th:if="${archives == null or #lists.isEmpty(archives.items)}">No posts yet.</p>
+      <th:block th:replace="~{fragments/pagination :: pager(${archives})}"></th:block>
+    </div>
+  </th:block>
+</html>

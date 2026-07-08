@@ -1,4 +1,4 @@
-# Theme Astro Starter
+# Theme flying
 
 面向 [Halo](https://www.halo.run/) 的主题脚手架：以 **Astro** 作为预渲染框架，将组件与页面编译为干净的 HTML，交由 **Thymeleaf** 在运行时完成数据渲染。
 
@@ -81,15 +81,15 @@ src/pages/index.astro        →   templates/index.html  →   Thymeleaf 注入�
 ## 开发
 
 ```bash
-git clone https://github.com/halo-sigs/theme-astro-starter.git ~/halo2-dev/themes/astro-starter
-cd ~/halo2-dev/themes/astro-starter
+git clone https://github.com/acanyo/theme-flying.git ~/halo2-dev/themes/theme-flying
+cd ~/halo2-dev/themes/theme-flying
 pnpm install
 pnpm dev
 ```
 
 `pnpm dev` 会启动 Astro 开发服务器并监听 `src/` 变更，实时重新生成 `templates/`。
 
-将主题目录链接或复制到 Halo 的 `themes/astro-starter/` 后，在控制台安装并启用主题即可预览。建议同时关闭 Thymeleaf 缓存以便热更新调试：
+将主题目录链接或复制到 Halo 的 `themes/theme-flying/` 后，在控制台安装并启用主题即可预览。建议同时关闭 Thymeleaf 缓存以便热更新调试：
 
 ```yaml
 # application.yaml
@@ -116,6 +116,6 @@ pnpm build
 
 ## 注意事项
 
-- Astro 配置中 `base` 需与 `theme.yaml` 的 `metadata.name` 保持一致（当前为 `astro-starter`），这决定了静态资源的引用路径。
+- Astro 配置中 `base` 需与 `theme.yaml` 的 `metadata.name` 保持一致（当前为 `theme-flying`），这决定了静态资源的引用路径。
 - `public/` 目录不仅可以存放图片、字体等静态资源，也可以存放**纯 Thymeleaf 模板**（例如 `public/fragments/post-list.html`）。这些文件会被 Astro 原样复制到 `templates/` 对应路径，不经过任何编译处理，适合编写不需要 Astro 组件化的 Thymeleaf 片段。
 - Vue Island 组件可通过 Halo 提供的 [API Client](https://www.npmjs.com/package/@halo-dev/api-client) 在客户端获取数据。

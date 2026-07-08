@@ -6,17 +6,11 @@ import UserButton from "./UserButton.vue";
 <header>
   <div class="header-inner">
     <a class="brand" href="/" th:text="${site.title}"></a>
-    <nav
-      th:with="menu = ${menuFinder.getPrimary()}"
-      aria-label="Main navigation"
-    >
-      <a
-        th:each="menuItem : ${menu.menuItems}"
-        th:href="@{${menuItem.status.href}}"
-        th:target="${menuItem.spec.target?.value}"
-        th:text="${menuItem.status.displayName}"
-      >
-      </a>
+    <nav aria-label="Main navigation">
+      <a href="/" th:href="@{/}">首页</a>
+      <a href="/archives" th:href="@{/archives}">归档</a>
+      <a href="/categories" th:href="@{/categories}">分类</a>
+      <a href="/tags" th:href="@{/tags}">标签</a>
     </nav>
     <div class="header-actions">
       <ThemeSwitcher client:load />

@@ -1,0 +1,59 @@
+<aside class="site-sidebar" th:fragment="sidebar">
+  <div class="sidebar-inner">
+    <div class="sidebar-head">
+      <a class="brand" href="/" th:href="@{/}" th:text="${site.title}">flying</a>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme">
+        <span class="sun" aria-hidden="true"></span>
+        <span class="moon" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <p class="sidebar-tagline" th:text="${site.subtitle ?: 'Where minimalism meets infinite possibility.'}">
+      Where minimalism meets infinite possibility.
+    </p>
+
+    <label class="search-box sidebar-search">
+      <span class="search-icon" aria-hidden="true"></span>
+      <input data-search type="search" placeholder="Search..." autocomplete="off" />
+      <kbd>Ctrl K</kbd>
+    </label>
+
+    <nav class="sidebar-nav" aria-label="Main navigation">
+      <a class="nav-link is-active" href="/" th:href="@{/}">
+        <span class="nav-icon nav-icon--home" aria-hidden="true"></span>
+        Home
+      </a>
+      <a class="nav-link" href="/archives" th:href="@{/archives}">
+        <span class="nav-icon nav-icon--archive" aria-hidden="true"></span>
+        Archives
+      </a>
+      <a class="nav-link" href="/categories" th:href="@{/categories}">
+        <span class="nav-icon nav-icon--category" aria-hidden="true"></span>
+        Categories
+      </a>
+      <a class="nav-link" href="/tags" th:href="@{/tags}">
+        <span class="nav-icon nav-icon--tag" aria-hidden="true"></span>
+        Tags
+      </a>
+    </nav>
+
+    <section class="sidebar-block" th:with="categories=${categoryFinder.listAsTree()}">
+      <h2>Categories</h2>
+      <a href="/" th:href="@{/}">All posts</a>
+      <a href="/categories/mountains" th:each="cat : ${categories}" th:href="@{${cat.status.permalink}}" th:text="${cat.spec.displayName}">Mountains</a>
+    </section>
+
+    <section class="sidebar-block">
+      <h2>Custom Pages</h2>
+      <a href="/contact" th:href="@{/contact}">Contact</a>
+      <a href="/links" th:href="@{/links}">Links</a>
+      <a href="/about" th:href="@{/about}">About</a>
+    </section>
+  </div>
+
+  <div class="sidebar-socials" aria-label="Social links">
+    <a href="https://github.com/acanyo" aria-label="GitHub">Gh</a>
+    <a href="/rss.xml" th:href="@{/rss.xml}" aria-label="RSS">Rs</a>
+    <a href="/sitemap.xml" th:href="@{/sitemap.xml}" aria-label="Sitemap">Sm</a>
+  </div>
+</aside>

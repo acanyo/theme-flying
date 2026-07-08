@@ -5,7 +5,7 @@ import vue from "@astrojs/vue";
 import Icons from "unplugin-icons/vite";
 
 export default defineConfig({
-  base: "/themes/astro-starter",
+  base: "/themes/theme-flying",
   build: {
     assets: "assets",
     format: "file",
