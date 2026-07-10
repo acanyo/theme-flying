@@ -1,48 +1,37 @@
-<footer class="site-footer" th:fragment="footer">
-  <div class="footer-shell">
-    <section class="newsletter-panel">
+<footer
+  class="fly-site-footer"
+  th:fragment="footer"
+  th:with="showCopyright=${theme.config.basic?.show_copyright != false},
+           copyrightTemplate=${theme.config.basic?.copyright ?: '© {year} {site}'},
+           copyrightYear=${#dates.format(#dates.createNow(), 'yyyy')},
+           footerCopyright=${#strings.replace(#strings.replace(copyrightTemplate, '{year}', copyrightYear), '{site}', site.title)}"
+>
+  <div class="fly-footer-shell">
+    <section class="fly-newsletter-panel">
       <div>
-        <p class="eyebrow">Newsletter</p>
-        <h2>Subscribe to our newsletter</h2>
-        <p>Be the first to know about new posts and quiet updates.</p>
+        <p class="fly-eyebrow">通讯</p>
+        <h2>订阅更新</h2>
+        <p>第一时间收到新文章和安静更新。</p>
       </div>
-      <form class="newsletter-form" data-newsletter novalidate>
+      <form class="fly-newsletter-form" data-fly-newsletter novalidate>
         <label>
-          <span class="sr-only">Email address</span>
-          <input type="email" name="email" placeholder="email@example.com" autocomplete="email" />
+          <span class="fly-sr-only">邮箱地址</span>
+          <input type="email" name="email" placeholder="请输入邮箱地址" autocomplete="email" />
         </label>
-        <button class="button button--primary" type="submit">Subscribe</button>
-        <p class="newsletter-status" role="status" aria-live="polite"></p>
+        <button class="fly-button fly-button--primary" type="submit">订阅</button>
+        <p class="fly-newsletter-status" role="status" aria-live="polite"></p>
       </form>
     </section>
 
-    <div class="footer-links">
+    <div class="fly-footer-links">
       <div>
-        <a class="brand brand--footer" href="/" th:href="@{/}" th:text="${site.title}">flying</a>
-        <p th:text="${site.subtitle ?: 'A minimal Halo theme inspired by Luno.'}">A minimal Halo theme inspired by Luno.</p>
+        <a class="fly-brand fly-brand--footer" href="/" th:href="@{/}" th:text="${site.title}">flying</a>
+        <p th:text="${site.subtitle ?: '一个受 Luno 启发的极简 Halo 中文主题。'}">一个受 Luno 启发的极简 Halo 中文主题。</p>
       </div>
-
-      <nav class="footer-nav-grid" aria-label="Footer navigation">
-        <section class="footer-nav-group">
-          <h2>Browse</h2>
-          <a href="/" th:href="@{/}">Home</a>
-          <a href="/archives" th:href="@{/archives}">Archives</a>
-          <a href="/categories" th:href="@{/categories}">Categories</a>
-          <a href="/tags" th:href="@{/tags}">Tags</a>
-        </section>
-        <section class="footer-nav-group">
-          <h2>Pages</h2>
-          <a href="/about" th:href="@{/about}">About</a>
-          <a href="/contact" th:href="@{/contact}">Contact</a>
-          <a href="/links" th:href="@{/links}">Links</a>
-          <a href="/rss.xml" th:href="@{/rss.xml}">RSS</a>
-        </section>
-      </nav>
     </div>
 
-    <p class="copyright">
-      &copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2026</span>
-      <span th:text="${site.title}">flying</span>.
+    <p class="fly-copyright" th:if="${showCopyright and not #strings.isEmpty(footerCopyright)}" th:text="${footerCopyright}">
+      © 2026 flying
     </p>
   </div>
   <halo:footer />

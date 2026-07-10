@@ -1,14 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html
-  lang="en"
-  th:replace="~{fragments/layout :: page(pageTitle=|${tag.spec.displayName} - ${site.title}|, bodyClass='flying-archive', content=~{::content})}"
+  lang="zh-CN"
+  th:replace="~{fragments/layout :: page(pageTitle=|${tag.spec.displayName} - ${site.title}|, bodyClass='fly-archive', content=~{::content})}"
 >
   <th:block th:fragment="content">
-    <div class="content-shell">
-      <header class="page-header">
-        <p class="eyebrow">Tag</p>
-        <h1 th:text="${tag.spec.displayName}">Tag</h1>
-        <p th:text="|${posts.total} stories|">0 stories</p>
+    <div class="fly-content-shell">
+      <header class="fly-page-header">
+        <p class="fly-eyebrow">标签</p>
+        <h1 th:text="${tag.spec.displayName}">标签</h1>
+        <p th:text="|${posts.total} 篇文章|">0 篇文章</p>
       </header>
 
       <th:block th:replace="~{fragments/post-list :: grid(${posts})}"></th:block>

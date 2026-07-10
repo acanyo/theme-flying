@@ -1,22 +1,55 @@
 const SWUP_URL = new URL("../../vendor/swup.umd.js", import.meta.url).href;
+const REVEAL_DURATION = 650;
+
+let revealTimer = 0;
+
+function clearReveal() {
+  window.clearTimeout(revealTimer);
+  revealTimer = 0;
+  document.body.classList.remove("fly-swup-revealing");
+}
+
+function playReveal() {
+  const container = document.querySelector("#swup");
+  if (!container) return;
+
+  clearReveal();
+  void container.offsetWidth;
+  document.body.classList.add("fly-swup-revealing");
+
+  const finish = (event) => {
+    if (event && event.target !== container) return;
+    container.removeEventListener("animationend", finish);
+    clearReveal();
+  };
+
+  container.addEventListener("animationend", finish);
+  revealTimer = window.setTimeout(finish, REVEAL_DURATION);
+}
+
+function clearVisitState() {
+  document.body.classList.remove("fly-swup-loading");
+}
 
 function isEnabled() {
-  const config = window.themeConfig && window.themeConfig.custom;
+  const config = window.flyThemeConfig && window.flyThemeConfig.advanced;
   return !config || config.enable_swup !== false;
 }
 
 function timeout() {
-  const config = window.themeConfig && window.themeConfig.custom;
+  const config = window.flyThemeConfig && window.flyThemeConfig.advanced;
   const value = config && Number(config.swup_timeout);
   return Number.isFinite(value) && value > 0 ? value : 5000;
 }
 
-function shouldIgnoreLink(url, anchor) {
-  if (!anchor) {
+function shouldIgnoreLink(url, context) {
+  const anchor = context && context.el ? context.el : context;
+
+  if (!anchor || typeof anchor.closest !== "function") {
     return false;
   }
 
-  if (anchor.closest("[data-no-swup]")) {
+  if (anchor.closest("[data-fly-no-swup]")) {
     return true;
   }
 
@@ -57,11 +90,11 @@ export function setupTransitions(root, callbacks) {
 
   loadSwup()
     .then((Swup) => {
-      if (!Swup || window.flyingSwup) {
+      if (!Swup || window.flySwup) {
         return;
       }
 
-      window.flyingSwup = new Swup({
+      window.flySwup = new Swup({
         cache: true,
         containers: ["#swup"],
         linkSelector: "a[href]",
@@ -69,21 +102,27 @@ export function setupTransitions(root, callbacks) {
         ignoreVisit: shouldIgnoreLink,
       });
 
-      window.flyingSwup.hooks.on("visit:start", () => {
-        document.body.dataset.menuOpen = "false";
-        document.body.classList.add("swup-loading");
+      window.flySwup.hooks.on("visit:start", () => {
+        document.body.dataset.flyMenuOpen = "false";
+        clearReveal();
+        document.body.classList.add("fly-swup-loading");
       });
 
-      window.flyingSwup.hooks.on("page:view", () => {
-        callbacks.refresh();
-        document.body.classList.remove("swup-loading");
+      window.flySwup.hooks.on("page:view", () => {
+        try {
+          callbacks.refresh();
+          playReveal();
+        } finally {
+          clearVisitState();
+        }
       });
 
-      window.flyingSwup.hooks.on("visit:end", () => {
-        document.body.classList.remove("swup-loading");
+      window.flySwup.hooks.on("visit:end", () => {
+        clearVisitState();
       });
     })
     .catch(() => {
-      document.documentElement.classList.add("swup-unavailable");
+      clearVisitState();
+      document.documentElement.classList.add("fly-swup-unavailable");
     });
 }

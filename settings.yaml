@@ -4,23 +4,116 @@ metadata:
   name: theme-flying-setting
 spec:
   forms:
-    - group: custom
-      label: Custom
+    - group: basic
+      label: 基础设置
+      formSchema:
+        - $formkit: toggle
+          name: home_layout
+          label: 首页风格
+          value: grid
+          help: 选择首页顶部精选区域的展示风格；访客不能在前台自行切换。
+          render-type: image
+          size: 160
+          gap: 12
+          options:
+            - label: 网格
+              value: grid
+              render: /themes/theme-flying/assets/images/layout-grid.svg
+            - label: 横幅
+              value: slider
+              render: /themes/theme-flying/assets/images/layout-slider.svg
+            - label: 轮播
+              value: carousel
+              render: /themes/theme-flying/assets/images/layout-carousel.svg
+        - $formkit: switch
+          name: show_copyright
+          id: basic_show_copyright
+          key: basic_show_copyright
+          label: 显示版权
+          value: true
+        - $formkit: text
+          if: "$get(basic_show_copyright).value === true"
+          name: copyright
+          id: basic_copyright
+          key: basic_copyright
+          label: 版权文案
+          value: "© {year} {site}"
+          help: 支持占位符 {year} 和 {site}，例如 © {year} {site}。
+
+    - group: navigation
+      label: 导航
+      formSchema:
+        - $formkit: menuRadio
+          name: main_menu
+          label: 主菜单
+          value: ""
+          help: 选择侧栏顶部展示的主导航菜单；不选择则隐藏主菜单区域。
+        - $formkit: menuRadio
+          name: feature_menu
+          label: 更多功能菜单
+          value: ""
+          help: 选择侧栏“更多功能”区域展示的菜单；不选择则隐藏此区域。
+        - $formkit: tagSelect
+          name: tags
+          label: 侧栏标签
+          value: []
+          multiple: true
+          searchable: true
+          clearable: true
+          placeholder: 请选择标签
+          help: 下拉多选侧栏标签区域展示的标签；不选择则隐藏标签区域。
+        - $formkit: array
+          name: sidebar_links
+          label: 侧栏底部链接
+          value: []
+          help: 添加展示在侧栏底部的链接。图标使用 Iconify；需要 RSS 时可添加名称 RSS、链接 /rss.xml。
+          children:
+            - $formkit: text
+              name: label
+              label: 名称
+              value: ""
+              validation: required
+              placeholder: 例如 RSS
+            - $formkit: text
+              name: url
+              label: 链接
+              value: ""
+              validation: required
+              placeholder: 例如 /rss.xml 或 https://example.com
+            - $formkit: iconify
+              name: icon
+              label: 图标
+              value: ""
+              format: svg
+              value-only: true
+              help: 可选。收缩侧栏时建议为每个链接设置图标。
+            - $formkit: switch
+              name: show_label
+              label: 显示文字
+              value: false
+              help: 开启后会在图标旁显示链接名称。
+            - $formkit: switch
+              name: new_tab
+              label: 新窗口打开
+              value: true
+
+    - group: advanced
+      label: 高级设置
       formSchema:
         - $formkit: switch
           name: enable_swup
-          id: enable_swup
-          key: enable_swup
-          label: Enable Swup
+          id: advanced_enable_swup
+          key: advanced_enable_swup
+          label: 启用 Swup
           value: true
-          help: Use Swup for same-site page transitions.
+          help: 开启站内页面无刷新切换动画。
         - $formkit: number
-          if: "$get(enable_swup).value === true"
+          if: "$get(advanced_enable_swup).value === true"
           name: swup_timeout
-          id: swup_timeout
-          key: swup_timeout
-          label: Swup timeout
+          id: advanced_swup_timeout
+          key: advanced_swup_timeout
+          label: Swup 超时时间
           value: 5000
-          help: Page load timeout in milliseconds.
+          help: 页面切换超时时间，单位为毫秒。
           min: 1000
           max: 60000

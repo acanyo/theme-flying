@@ -1,65 +1,123 @@
 export const layoutPreflight = {
   getCSS: () => String.raw`
-.mobile-header {
+.fly-mobile-header {
   position: sticky;
   top: 0;
   z-index: 30;
-  height: 76px;
-  padding: 0 var(--content-padding-mobile);
-  background: color-mix(in srgb, var(--page) 88%, transparent);
-  backdrop-filter: blur(14px);
+  display: flex;
+  height: var(--navbar-height);
+  align-items: center;
+  gap: 16px;
+  padding: 8px var(--content-padding-x) 8px 16px;
+  background: color-mix(in srgb, var(--page) 92%, transparent);
+  backdrop-filter: blur(16px);
 }
 
-.brand--mobile {
-  font-size: 34px;
+.fly-brand--mobile {
+  max-width: 160px;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  text-overflow: ellipsis;
 }
 
-.menu-button {
+.fly-navbar-brand {
+  display: flex;
+  width: calc(var(--sidebar-width) + 200px);
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+}
+
+.fly-menu-button {
   display: grid;
+  width: 36px;
+  height: 36px;
   place-items: center;
+  flex: 0 0 36px;
+  border-radius: 999px;
 }
 
-.menu-button span {
-  display: block;
-  width: 22px;
-  height: 2px;
-  border-radius: 99px;
-  background: currentColor;
-  transition: transform 180ms ease;
+.fly-menu-button .fly-iconify {
+  grid-area: 1 / 1;
+  width: 20px;
+  height: 20px;
+  flex-basis: 20px;
 }
 
-.menu-button span + span {
-  margin-top: -14px;
-  transform: translateX(6px) rotate(90deg);
+.fly-navbar-search {
+  position: relative;
+  display: flex;
+  width: min(424px, 34vw);
+  height: 40px;
+  align-items: center;
+  margin-inline: auto;
 }
 
-body[data-menu-open="true"] .menu-button span:first-child {
-  transform: rotate(45deg);
+.fly-navbar-search input {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 10px;
+  outline: 0;
+  background: var(--page-alt);
+  color: var(--text);
+  padding: 4px 42px 4px 42px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
-body[data-menu-open="true"] .menu-button span + span {
-  margin-top: -2px;
-  transform: rotate(-45deg);
+.fly-navbar-search .fly-search-icon {
+  position: absolute;
+  left: 16px;
+  width: 16px;
+  height: 16px;
+  color: var(--muted);
 }
 
-.page-overlay {
+.fly-navbar-search kbd {
+  right: 16px;
+}
+
+.fly-navbar-user {
+  position: relative;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background: var(--page-alt);
+  color: var(--text);
+}
+
+.fly-navbar-user .fly-iconify {
+  grid-area: 1 / 1;
+  width: 17px;
+  height: 17px;
+  flex-basis: 17px;
+}
+
+.fly-page-overlay {
   background: rgba(12, 18, 28, 0.24);
   backdrop-filter: blur(2px);
   transition: opacity 240ms ease;
 }
 
-body[data-menu-open="true"] .page-overlay {
+body[data-fly-menu-open="true"] .fly-page-overlay {
   pointer-events: auto;
   opacity: 1;
 }
 
-.signin-link {
+.fly-signin-link {
   color: var(--text);
   font-size: 14px;
   font-weight: 500;
 }
 
-.search-box input {
+.fly-search-box input {
   width: 100%;
   height: 100%;
   border: 1px solid var(--line);
@@ -72,30 +130,9 @@ body[data-menu-open="true"] .page-overlay {
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
 }
 
-.search-box input:focus {
+.fly-search-box input:focus {
   border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 12%, transparent);
-}
-
-.search-icon {
-  position: absolute;
-  left: 15px;
-  width: 13px;
-  height: 13px;
-  border: 1.8px solid var(--muted);
-  border-radius: 50%;
-}
-
-.search-icon::after {
-  content: "";
-  position: absolute;
-  right: -4px;
-  bottom: -4px;
-  width: 6px;
-  height: 1.8px;
-  border-radius: 99px;
-  background: var(--muted);
-  transform: rotate(45deg);
 }
 
 kbd {
@@ -106,43 +143,75 @@ kbd {
   font-weight: 500;
 }
 
-.load-more-wrap {
+.fly-load-more-wrap {
   margin: 42px 0 78px;
 }
 
 @media (min-width: 1180px) {
-  .mobile-header {
-    display: none;
-  }
-
-  .site-main {
+  body .fly-site-main {
     margin-left: var(--sidebar-width);
+    transition: margin-left 220ms ease;
   }
 
-  .sidebar-search {
+  body[data-fly-sidebar-collapsed="true"] .fly-site-main {
+    margin-left: var(--sidebar-collapsed-width);
+  }
+
+  body .fly-desktop-topbar,
+  body .fly-sidebar-search {
     display: none;
   }
 }
 
 @media (max-width: 1179px) {
-  .desktop-topbar {
+  body .fly-desktop-topbar {
     display: none;
   }
 
-  .content-shell,
-  .footer-shell {
+  body .fly-content-shell,
+  body .fly-footer-shell {
     max-width: none;
     padding-right: var(--content-padding-mobile);
     padding-left: var(--content-padding-mobile);
   }
 
-  .content-shell {
-    padding-top: 12px;
+  body .fly-content-shell {
+    padding-top: 16px;
+  }
+
+  .fly-mobile-header {
+    gap: 8px;
+    padding: 8px 16px;
+  }
+
+  body[data-fly-menu-open="true"] .fly-mobile-header {
+    z-index: 60;
+  }
+
+  .fly-navbar-brand {
+    width: auto;
+    flex: 1 1 auto;
+  }
+
+  .fly-navbar-search {
+    width: 36px;
+    flex: 0 0 36px;
+    margin-left: auto;
+  }
+
+  .fly-navbar-search input {
+    border-radius: 999px;
+    padding: 0;
+    font-size: 0;
+  }
+
+  .fly-navbar-search kbd {
+    display: none;
   }
 }
 
 @media (max-width: 480px) {
-  .load-more-wrap {
+  .fly-load-more-wrap {
     margin-bottom: 58px;
   }
 }

@@ -1,5 +1,5 @@
-<nav th:fragment="pager(result)" th:if="${result != null and result.totalPages gt 1}" class="pagination" aria-label="Pagination">
-  <a th:if="${result.hasPrevious()}" th:href="@{${result.prevUrl}}" class="pagination__prev">Newer</a>
-  <span class="pagination__info" th:text="|${result.page} / ${result.totalPages}|">1 / 1</span>
-  <a th:if="${result.hasNext()}" th:href="@{${result.nextUrl}}" class="pagination__next">Older</a>
+<nav th:fragment="pager(result)" th:if="${result != null and result.totalPages gt 1}" class="fly-pagination" aria-label="分页">
+  <a th:if="${result.hasPrevious()}" th:href="@{${result.prevUrl}}" class="fly-pagination__prev">较新</a>
+  <span class="fly-pagination__info" th:text="|${result.page} / ${result.totalPages}|">1 / 1</span>
+  <a th:if="${result.hasNext()}" th:href="@{${result.nextUrl}}" class="fly-pagination__next">较早</a>
 </nav>

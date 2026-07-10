@@ -1,0 +1,60 @@
+<section
+  class="fly-topic-section"
+  aria-label="分类精选"
+  th:fragment="topics(categories)"
+  th:if="${not #lists.isEmpty(categories)}"
+>
+  <th:block
+    th:each="category, catIter : ${categories}"
+    th:if="${catIter.index < 2}"
+    th:with="categoryPosts=${postFinder.list({ page: 1, size: 4, categoryName: category.metadata.name })}"
+  >
+    <section
+      class="fly-topic-block"
+      th:if="${categoryPosts != null and not #lists.isEmpty(categoryPosts.items)}"
+    >
+      <header class="fly-topic-header">
+        <div>
+          <h2>
+            <a
+              href="/"
+              th:href="@{${category.status.permalink}}"
+              th:text="${category.spec.displayName}"
+              >分类</a
+            >
+          </h2>
+          <p
+            th:text="${category.spec.description ?: '从这个分类继续发现值得阅读的内容。'}"
+          >
+            从这个分类继续发现值得阅读的内容。
+          </p>
+        </div>
+        <a
+          class="fly-topic-view-link"
+          href="/"
+          th:href="@{${category.status.permalink}}"
+          data-fly-motion-button
+        >
+          <span class="fly-motion-label">
+            <span class="fly-motion-label-copy">查看全部</span>
+            <span class="fly-motion-label-copy" aria-hidden="true"
+              >查看全部</span
+            >
+          </span>
+          <span
+            class="fly-iconify fly-iconify--chevron fly-motion-icon"
+            aria-hidden="true"
+          ></span>
+        </a>
+      </header>
+
+      <div class="fly-article-grid fly-topic-grid">
+        <th:block th:each="post : ${categoryPosts.items}">
+          <th:block
+            th:replace="~{fragments/post-card :: card(${post})}"
+          ></th:block>
+        </th:block>
+      </div>
+    </section>
+  </th:block>
+</section>

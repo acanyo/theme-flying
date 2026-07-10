@@ -1,24 +1,24 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html
-  lang="en"
-  th:replace="~{fragments/layout :: page(pageTitle=|Categories - ${site.title}|, bodyClass='flying-taxonomy', content=~{::content})}"
+  lang="zh-CN"
+  th:replace="~{fragments/layout :: page(pageTitle=|分类 - ${site.title}|, bodyClass='fly-taxonomy', content=~{::content})}"
 >
   <th:block th:fragment="content">
-    <div class="content-shell">
-      <header class="page-header">
-        <p class="eyebrow">Browse</p>
-        <h1>Categories</h1>
-        <p>Explore stories by destination, mood, and subject.</p>
+    <div class="fly-content-shell">
+      <header class="fly-page-header">
+        <p class="fly-eyebrow">浏览</p>
+        <h1>分类</h1>
+        <p>按主题、目的地和心情浏览文章。</p>
       </header>
 
-      <nav class="taxonomy-grid" aria-label="Category list">
+      <nav class="fly-taxonomy-grid" aria-label="分类列表">
         <a
           th:each="category : ${categories}"
-          class="taxonomy-card"
+          class="fly-taxonomy-card"
           th:href="@{${category.status.permalink}}"
         >
-          <span th:text="${category.spec.displayName}">Category</span>
-          <small th:text="|${category.postCount} stories|">0 stories</small>
+          <span th:text="${category.spec.displayName}">分类</span>
+          <small th:text="|${category.postCount} 篇文章|">0 篇文章</small>
         </a>
       </nav>
     </div>

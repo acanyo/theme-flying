@@ -1,19 +1,19 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html
-  lang="en"
-  th:replace="~{fragments/layout :: page(pageTitle=|Tags - ${site.title}|, bodyClass='flying-taxonomy', content=~{::content})}"
+  lang="zh-CN"
+  th:replace="~{fragments/layout :: page(pageTitle=|标签 - ${site.title}|, bodyClass='fly-taxonomy', content=~{::content})}"
 >
   <th:block th:fragment="content">
-    <div class="content-shell">
-      <header class="page-header">
-        <p class="eyebrow">Browse</p>
-        <h1>Tags</h1>
-        <p>Find related notes across the archive.</p>
+    <div class="fly-content-shell">
+      <header class="fly-page-header">
+        <p class="fly-eyebrow">浏览</p>
+        <h1>标签</h1>
+        <p>通过标签查找相关内容。</p>
       </header>
 
-      <nav class="tag-cloud" aria-label="Tag list">
-        <a th:each="tag : ${tags}" class="tag-pill" th:href="@{${tag.status.permalink}}">
-          <span th:text="${tag.spec.displayName}">Tag</span>
+      <nav class="fly-tag-cloud" aria-label="标签列表">
+        <a th:each="tag : ${tags}" class="fly-tag-pill" th:href="@{${tag.status.permalink}}">
+          <span th:text="${tag.spec.displayName}">标签</span>
           <small th:text="${tag.postCount}">0</small>
         </a>
       </nav>

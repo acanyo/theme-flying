@@ -1,35 +1,42 @@
 export const tokenPreflight = {
   getCSS: () => String.raw`
 :root {
-  --sidebar-width: 18rem;
-  --content-width: 92rem;
-  --content-padding-x: 3rem;
+  --sidebar-width: 259px;
+  --sidebar-collapsed-width: 82px;
+  --content-width: none;
+  --content-padding-x: clamp(16px, 2.1vw, 30px);
   --content-padding-mobile: 1rem;
-  --post-card-image-aspect-ratio: 3 / 2;
-  --radius-card: 12px;
+  --post-card-image-aspect-ratio: 16 / 9;
+  --radius-control: 8px;
+  --radius-card: 14px;
+  --radius-section: clamp(16px, 2vw, 30px);
+  --section-gap: clamp(60px, 5.6vw, 80px);
   --page: #ffffff;
-  --page-alt: #f7f7f8;
-  --text: #111113;
-  --muted: #696a72;
-  --faint: #9698a1;
-  --line: #ececf0;
-  --hover-bg-color: #f4f5f6;
-  --accent: #0095f6;
-  --accent-strong: #0078d4;
-  --shadow-soft: 0 18px 44px rgba(17, 17, 19, 0.08);
+  --page-alt: #f3f3f3;
+  --text: #000000;
+  --muted: #4d4d4d;
+  --faint: #757575;
+  --mute: #b2b2b2;
+  --line: hsla(0, 0%, 50%, 0.2);
+  --hover-bg-color: #ededed;
+  --accent: #000000;
+  --accent-strong: #000000;
+  --shadow-soft: 0 18px 38px -16px rgba(0, 0, 0, 0.35);
+  --navbar-height: 58px;
   color-scheme: light;
 }
 
 [data-theme="dark"] {
-  --page: #0d1117;
-  --page-alt: #171c23;
-  --text: #f2f5f8;
-  --muted: #a9b1be;
-  --faint: #7f8897;
-  --line: #27303d;
-  --hover-bg-color: #171d25;
-  --accent: #3aa7ff;
-  --accent-strong: #66bdff;
+  --page: #111317;
+  --page-alt: #1b1f25;
+  --text: #ffffff;
+  --muted: #d0d0d0;
+  --faint: #a2a2a2;
+  --mute: #747474;
+  --line: #2a3038;
+  --hover-bg-color: #252a31;
+  --accent: #ffffff;
+  --accent-strong: #ffffff;
   --shadow-soft: 0 18px 48px rgba(0, 0, 0, 0.34);
   color-scheme: dark;
 }

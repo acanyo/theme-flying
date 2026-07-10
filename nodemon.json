@@ -1,5 +1,15 @@
 {
   "verbose": false,
-  "watch": ["templates/**/*", "unocss/**/*", "scripts/**/*", "theme.yaml", "settings.yaml", "uno.config.ts"],
-  "ext": "html,css,js,svg,yaml,ts,mjs"
+  "watch": [
+    "templates/**/*.html",
+    "templates/assets/js/**/*.js",
+    "templates/assets/images/**/*.svg",
+    "unocss/**/*",
+    "scripts/**/*",
+    "theme.yaml",
+    "settings.yaml",
+    "uno.config.ts"
+  ],
+  "ignore": ["templates/assets/css/**"],
+  "ext": "html,js,svg,yaml,ts,mjs"
 }

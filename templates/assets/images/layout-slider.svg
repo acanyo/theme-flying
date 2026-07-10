@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="240" viewBox="0 0 360 240" role="img" aria-label="Slider layout preview">
+  <rect width="360" height="240" rx="28" fill="#f7f7f7"/>
+  <rect x="28" y="28" width="304" height="184" rx="22" fill="#101010"/>
+  <circle cx="70" cy="120" r="18" fill="#ffffff" opacity=".92"/>
+  <circle cx="290" cy="120" r="18" fill="#ffffff" opacity=".92"/>
+  <rect x="104" y="82" width="152" height="16" rx="8" fill="#ffffff" opacity=".95"/>
+  <rect x="88" y="112" width="184" height="12" rx="6" fill="#ffffff" opacity=".62"/>
+  <rect x="124" y="140" width="112" height="10" rx="5" fill="#ffffff" opacity=".42"/>
+  <text x="28" y="228" fill="#6b6b6b" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">Slider</text>
+</svg>

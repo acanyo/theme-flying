@@ -1,37 +1,39 @@
-import { all, first } from "../utils/dom.js";
+import { all, first } from "../utils/dom.js?fly=1.0.33";
 
-const DEFAULT_VISIBLE_LIMIT = 6;
+function normalizedQuery(inputs) {
+  const input = inputs[0];
+  return (input && input.value ? input.value : "").trim().toLowerCase();
+}
+
+function cardText(card) {
+  return [card.dataset.flyTitle || "", card.dataset.flyExcerpt || "", card.textContent || ""]
+    .join(" ")
+    .toLowerCase();
+}
 
 export function setupSearchFilter(root) {
-  if (window.flyingSearchFilterController) {
-    window.flyingSearchFilterController.abort();
+  if (window.flySearchFilterController) {
+    window.flySearchFilterController.abort();
   }
 
   const controller = new AbortController();
-  window.flyingSearchFilterController = controller;
+  window.flySearchFilterController = controller;
 
-  const chips = all("[data-filter]", root);
-  const cards = all("[data-post-card]", root);
-  const inputs = all("[data-search]", root);
-  const empty = first(".empty-state", root);
-  const loadButton = first("[data-load-more]", root);
+  const feed = first("[data-fly-feed]", root) || first(".fly-article-grid", root);
+  const chips = all("[data-fly-filter]", root);
+  const inputs = all("[data-fly-search]", root);
+  const empty = first("[data-fly-feed-empty]", root) || first(".fly-empty-state", root);
   let activeFilter = "all";
-  let visibleLimit = DEFAULT_VISIBLE_LIMIT;
 
-  function query() {
-    const input = inputs[0];
-    return (input && input.value ? input.value : "").trim().toLowerCase();
-  }
-
-  function postText(card) {
-    return [card.dataset.title || "", card.dataset.excerpt || "", card.textContent || ""].join(" ").toLowerCase();
+  function cards() {
+    return feed ? all("[data-fly-post-card]", feed) : [];
   }
 
   function matches(card) {
-    const cardCategory = card.dataset.category || "uncategorized";
+    const cardCategory = card.dataset.flyCategory || "uncategorized";
     const filterMatch = activeFilter === "all" || cardCategory === activeFilter;
-    const searchMatch = !query() || postText(card).includes(query());
-    return filterMatch && searchMatch;
+    const query = normalizedQuery(inputs);
+    return filterMatch && (!query || cardText(card).includes(query));
   }
 
   function syncInputs(value, source) {
@@ -42,72 +44,49 @@ export function setupSearchFilter(root) {
     });
   }
 
-  function render(resetLimit = false) {
-    if (resetLimit) {
-      visibleLimit = DEFAULT_VISIBLE_LIMIT;
-    }
+  function render() {
+    const currentCards = cards();
+    const matchedCards = currentCards.filter(matches);
 
-    const matchedGridCards = [];
-    let visibleCount = 0;
-
-    cards.forEach((card) => {
-      const matched = matches(card);
-      card.classList.toggle("is-filtered-out", !matched);
-
-      if (!matched || card.dataset.featured !== undefined) {
-        card.classList.remove("is-hidden-by-load");
-        return;
-      }
-
-      matchedGridCards.push(card);
-      visibleCount += 1;
-      card.classList.toggle("is-hidden-by-load", visibleCount > visibleLimit);
+    currentCards.forEach((card) => {
+      card.classList.toggle("fly-is-filtered-out", !matches(card));
     });
 
     if (empty) {
-      empty.hidden = cards.some(matches);
-    }
-
-    if (loadButton) {
-      const hasHiddenCards = matchedGridCards.length > visibleLimit;
-      const hasNextPage = Boolean(loadButton.dataset.nextUrl);
-      loadButton.hidden = !hasHiddenCards && !hasNextPage;
-      loadButton.disabled = !hasHiddenCards && !hasNextPage;
+      empty.hidden = matchedCards.length > 0;
     }
   }
 
   chips.forEach((chip) => {
-    chip.addEventListener("click", () => {
-      activeFilter = chip.dataset.filter || "all";
-      chips.forEach((item) => item.classList.toggle("is-active", item === chip));
-      render(true);
-    }, { signal: controller.signal });
+    chip.addEventListener(
+      "click",
+      () => {
+        activeFilter = chip.dataset.flyFilter || "all";
+        chips.forEach((item) => {
+          const active = item === chip;
+          item.classList.toggle("fly-is-active", active);
+          item.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+        chip.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
+        render();
+      },
+      { signal: controller.signal },
+    );
   });
 
   inputs.forEach((input) => {
-    input.addEventListener("input", () => {
-      syncInputs(input.value, input);
-      render(true);
-    }, { signal: controller.signal });
+    input.addEventListener(
+      "input",
+      () => {
+        syncInputs(input.value, input);
+        render();
+      },
+      { signal: controller.signal },
+    );
   });
 
-  if (loadButton) {
-    loadButton.addEventListener("click", () => {
-      const hiddenCards = all(".article-grid [data-post-card].is-hidden-by-load", root);
-
-      if (hiddenCards.length > 0) {
-        visibleLimit += DEFAULT_VISIBLE_LIMIT;
-        render(false);
-        return;
-      }
-
-      if (loadButton.dataset.nextUrl) {
-        window.location.href = loadButton.dataset.nextUrl;
-      }
-    }, { signal: controller.signal });
-  }
-
-  render(false);
+  root.addEventListener("fly:posts-appended", render, { signal: controller.signal });
+  render();
 
   return {
     focusSearch: () => {

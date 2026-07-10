@@ -9,7 +9,7 @@ export const basePreflight = {
 html {
   min-width: 0;
   background: var(--page);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: Geist, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   letter-spacing: 0;
 }
 
@@ -23,7 +23,7 @@ body {
   line-height: 1.5;
 }
 
-body[data-menu-open="true"] {
+body[data-fly-menu-open="true"] {
   overflow: hidden;
 }
 
@@ -53,11 +53,11 @@ img {
 }
 
 :focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--accent) 78%, white);
-  outline-offset: 4px;
+  outline: 2px solid var(--text);
+  outline-offset: 3px;
 }
 
-.sr-only {
+.fly-sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -69,20 +69,36 @@ img {
   border: 0;
 }
 
-.brand {
-  font-size: 40px;
+.fly-brand {
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
-.button {
-  transition: transform 160ms ease, background 160ms ease, opacity 160ms ease;
+.fly-button {
+  transition: opacity 150ms ease, background-color 150ms ease, color 150ms ease;
 }
 
-.button:hover {
-  transform: translateY(-1px);
+.fly-button--primary:hover,
+.fly-button--primary:focus-visible,
+.fly-button--dark:hover,
+.fly-button--dark:focus-visible {
+  opacity: 0.86;
 }
 
-.button--primary {
-  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 28%, transparent);
+.fly-button--primary {
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 `,
 };

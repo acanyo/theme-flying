@@ -1,24 +1,24 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html
-  lang="en"
-  th:replace="~{fragments/layout :: page(pageTitle=|${singlePage.spec.title} - ${site.title}|, bodyClass='flying-page', content=~{::content})}"
+  lang="zh-CN"
+  th:replace="~{fragments/layout :: page(pageTitle=|${singlePage.spec.title} - ${site.title}|, bodyClass='fly-page', content=~{::content})}"
 >
   <th:block th:fragment="content">
-    <div class="content-shell content-shell--narrow">
-      <article class="post-article">
-        <header class="post-hero">
-          <p class="eyebrow">Page</p>
-          <h1 class="post-heading" th:text="${singlePage.spec.title}">Page title</h1>
-          <footer class="post-meta post-meta--hero">
+    <div class="fly-content-shell fly-content-shell--narrow">
+      <article class="fly-post-article">
+        <header class="fly-post-hero">
+          <p class="fly-eyebrow">页面</p>
+          <h1 class="fly-post-heading" th:text="${singlePage.spec.title}">页面标题</h1>
+          <footer class="fly-post-meta fly-post-meta--hero">
             <time th:datetime="${singlePage.spec.publishTime}" th:text="${#dates.format(singlePage.spec.publishTime, 'yyyy-MM-dd')}">
               2026-07-08
             </time>
           </footer>
         </header>
 
-        <section class="post-content prose" th:utext="${singlePage.content.content}"></section>
+        <section class="fly-post-content fly-prose" th:utext="${singlePage.content.content}"></section>
 
-        <section class="comments-panel" th:if="${haloCommentEnabled}">
+        <section class="fly-comments-panel" th:if="${haloCommentEnabled}">
           <halo:comment group="content.halo.run" kind="SinglePage" th:attr="name=${singlePage.metadata.name}" />
         </section>
       </article>

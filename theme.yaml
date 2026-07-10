@@ -7,13 +7,13 @@ spec:
   author:
     name: Handsome
     website: https://github.com/acanyo
-  description: A flying theme for Halo.
+  description: 一个受 Aspect 启发的 Halo 中文博客主题。
   settingName: "theme-flying-setting"
   configMapName: "theme-flying-configMap"
   logo: https://www.halo.run/logo
   homepage: https://github.com/acanyo/theme-flying
   issues: https://github.com/acanyo/theme-flying/issues
-  version: "1.0.0"
+  version: "1.0.27"
   requires: ">=2.0.0"
   license:
     - name: "GPL-3.0"

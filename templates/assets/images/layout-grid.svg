@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="240" viewBox="0 0 360 240" role="img" aria-label="Grid layout preview">
+  <rect width="360" height="240" rx="28" fill="#f7f7f7"/>
+  <rect x="28" y="28" width="188" height="184" rx="20" fill="#101010"/>
+  <rect x="232" y="28" width="100" height="84" rx="18" fill="#d9d9d9"/>
+  <rect x="232" y="128" width="100" height="84" rx="18" fill="#c7c7c7"/>
+  <rect x="48" y="150" width="116" height="12" rx="6" fill="#ffffff" opacity=".9"/>
+  <rect x="48" y="172" width="82" height="10" rx="5" fill="#ffffff" opacity=".56"/>
+  <text x="28" y="228" fill="#6b6b6b" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">Grid</text>
+</svg>

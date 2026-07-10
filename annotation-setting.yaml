@@ -1,0 +1,16 @@
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: theme-flying-menu-item
+spec:
+  targetRef:
+    group: ""
+    kind: MenuItem
+  formSchema:
+    - $formkit: iconify
+      name: fly_icon
+      label: 侧栏图标
+      value: ""
+      format: svg
+      value-only: true
+      help: 可选。为此菜单项选择一个 Iconify 图标；不选择时主题不会自动添加图标。

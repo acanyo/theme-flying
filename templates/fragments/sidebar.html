@@ -1,59 +1,149 @@
-<aside class="site-sidebar" th:fragment="sidebar">
-  <div class="sidebar-inner">
-    <div class="sidebar-head">
-      <a class="brand" href="/" th:href="@{/}" th:text="${site.title}">flying</a>
-      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme">
-        <span class="sun" aria-hidden="true"></span>
-        <span class="moon" aria-hidden="true"></span>
-      </button>
-    </div>
+<aside
+  class="fly-site-sidebar"
+  th:fragment="sidebar"
+  th:with="mainMenuName=${theme.config.navigation?.main_menu ?: ''},
+           featureMenuName=${theme.config.navigation?.feature_menu ?: ''},
+           tagNames=${theme.config.navigation?.tags},
+           socialLinks=${theme.config.navigation?.sidebar_links},
+           showCopyright=${theme.config.basic?.show_copyright != false},
+           copyrightTemplate=${theme.config.basic?.copyright ?: '© {year} {site}'},
+           copyrightYear=${#dates.format(#dates.createNow(), 'yyyy')},
+           sidebarCopyright=${#strings.replace(#strings.replace(copyrightTemplate, '{year}', copyrightYear), '{site}', site.title)},
+           mainMenu=${#strings.isEmpty(mainMenuName) ? null : menuFinder.getByName(mainMenuName)},
+           featureMenu=${#strings.isEmpty(featureMenuName) ? null : menuFinder.getByName(featureMenuName)},
+           selectedTags=${#lists.isEmpty(tagNames) ? null : tagFinder.getByNames(tagNames)}"
+>
+  <div class="fly-sidebar-inner">
+    <nav
+      class="fly-sidebar-nav"
+      aria-label="主导航"
+      th:if="${(mainMenu != null and not #lists.isEmpty(mainMenu.menuItems)) or (featureMenu != null and not #lists.isEmpty(featureMenu.menuItems))}"
+    >
+      <th:block
+        th:if="${mainMenu != null and not #lists.isEmpty(mainMenu.menuItems)}"
+        th:replace="~{fragments/sidebar :: menuItems(menuItems=${mainMenu.menuItems})}"
+      ></th:block>
 
-    <p class="sidebar-tagline" th:text="${site.subtitle ?: 'Where minimalism meets infinite possibility.'}">
-      Where minimalism meets infinite possibility.
-    </p>
-
-    <label class="search-box sidebar-search">
-      <span class="search-icon" aria-hidden="true"></span>
-      <input data-search type="search" placeholder="Search..." autocomplete="off" />
-      <kbd>Ctrl K</kbd>
-    </label>
-
-    <nav class="sidebar-nav" aria-label="Main navigation">
-      <a class="nav-link is-active" href="/" th:href="@{/}">
-        <span class="nav-icon nav-icon--home" aria-hidden="true"></span>
-        Home
-      </a>
-      <a class="nav-link" href="/archives" th:href="@{/archives}">
-        <span class="nav-icon nav-icon--archive" aria-hidden="true"></span>
-        Archives
-      </a>
-      <a class="nav-link" href="/categories" th:href="@{/categories}">
-        <span class="nav-icon nav-icon--category" aria-hidden="true"></span>
-        Categories
-      </a>
-      <a class="nav-link" href="/tags" th:href="@{/tags}">
-        <span class="nav-icon nav-icon--tag" aria-hidden="true"></span>
-        Tags
-      </a>
+      <th:block th:if="${featureMenu != null and not #lists.isEmpty(featureMenu.menuItems)}">
+        <div
+          class="fly-sidebar-menu-separator"
+          aria-hidden="true"
+          th:if="${mainMenu != null and not #lists.isEmpty(mainMenu.menuItems)}"
+        ></div>
+        <span class="fly-sidebar-section-title">更多功能</span>
+        <th:block th:replace="~{fragments/sidebar :: menuItems(menuItems=${featureMenu.menuItems})}"></th:block>
+      </th:block>
     </nav>
 
-    <section class="sidebar-block" th:with="categories=${categoryFinder.listAsTree()}">
-      <h2>Categories</h2>
-      <a href="/" th:href="@{/}">All posts</a>
-      <a href="/categories/mountains" th:each="cat : ${categories}" th:href="@{${cat.status.permalink}}" th:text="${cat.spec.displayName}">Mountains</a>
-    </section>
-
-    <section class="sidebar-block">
-      <h2>Custom Pages</h2>
-      <a href="/contact" th:href="@{/contact}">Contact</a>
-      <a href="/links" th:href="@{/links}">Links</a>
-      <a href="/about" th:href="@{/about}">About</a>
-    </section>
+    <nav class="fly-sidebar-tags" aria-label="标签" th:if="${not #lists.isEmpty(selectedTags)}">
+      <a class="fly-sidebar-section-link" href="/tags" th:href="@{/tags}">
+        <span>标签</span>
+      </a>
+      <a
+        class="fly-sidebar-tag-link"
+        href="/tags/design"
+        th:each="tag : ${selectedTags}"
+        th:href="@{${tag.status.permalink}}"
+        th:style="${not #strings.isEmpty(tag.spec.color) ? '--fly-tag-color: ' + tag.spec.color + ';' : ''}"
+      >
+        <span class="fly-tag-dot" aria-hidden="true"></span>
+        <span th:text="${tag.spec.displayName}">灵感</span>
+      </a>
+    </nav>
   </div>
 
-  <div class="sidebar-socials" aria-label="Social links">
-    <a href="https://github.com/acanyo" aria-label="GitHub">Gh</a>
-    <a href="/rss.xml" th:href="@{/rss.xml}" aria-label="RSS">Rs</a>
-    <a href="/sitemap.xml" th:href="@{/sitemap.xml}" aria-label="Sitemap">Sm</a>
-  </div>
+  <footer
+    class="fly-sidebar-socials"
+    aria-label="站点链接"
+    th:if="${not #lists.isEmpty(socialLinks) or (showCopyright and not #strings.isEmpty(sidebarCopyright))}"
+  >
+    <div class="fly-social-icons" th:if="${not #lists.isEmpty(socialLinks)}">
+      <a
+        href="/"
+        th:each="link : ${socialLinks}"
+        th:if="${not #strings.isEmpty(link['label']) and not #strings.isEmpty(link['url'])}"
+        th:class="${link['show_label'] == true ? 'fly-sidebar-foot-link' : 'fly-social-icon'}"
+        th:href="@{${link['url']}}"
+        th:target="${link['new_tab'] == false ? null : '_blank'}"
+        th:rel="${link['new_tab'] == false ? null : 'noopener'}"
+        th:attr="aria-label=${link['label']},data-fly-tip=${link['label']}"
+      >
+        <span
+          class="fly-social-custom-icon"
+          aria-hidden="true"
+          th:if="${not #strings.isEmpty(link['icon'])}"
+          th:utext="${link['icon']}"
+        ></span>
+        <span th:if="${link['show_label'] == true or #strings.isEmpty(link['icon'])}" th:text="${link['label']}">
+          链接
+        </span>
+      </a>
+    </div>
+    <p class="fly-sidebar-copyright" th:if="${showCopyright and not #strings.isEmpty(sidebarCopyright)}" th:text="${sidebarCopyright}">
+      © 2026 flying
+    </p>
+  </footer>
 </aside>
+
+<th:block th:fragment="menuItems(menuItems)">
+  <th:block th:each="item : ${menuItems}">
+    <section
+      class="fly-sidebar-section"
+      th:if="${not #lists.isEmpty(item.children)}"
+      th:with="icon=${#annotations.get(item, 'fly_icon') ?: ''}"
+    >
+      <button
+        class="fly-sidebar-parent"
+        type="button"
+        aria-expanded="false"
+        th:attr="aria-label=${item.status.displayName},data-fly-tip=${item.status.displayName}"
+      >
+        <span
+          class="fly-menu-icon"
+          aria-hidden="true"
+          th:if="${not #strings.isEmpty(icon)}"
+          th:utext="${icon}"
+        ></span>
+        <span class="fly-nav-label" th:text="${item.status.displayName}">菜单</span>
+        <span class="fly-iconify fly-iconify--chevron" aria-hidden="true"></span>
+      </button>
+      <div class="fly-sidebar-sub-list">
+        <a
+          class="fly-sidebar-sub-link"
+          href="/"
+          th:each="child : ${item.children}"
+          th:with="childIcon=${#annotations.get(child, 'fly_icon') ?: ''}"
+          th:href="@{${child.status.href}}"
+          th:target="${child.spec.target?.value}"
+          th:attr="aria-label=${child.status.displayName},data-fly-tip=${child.status.displayName}"
+        >
+          <span
+            class="fly-menu-icon fly-menu-icon--sub"
+            aria-hidden="true"
+            th:if="${not #strings.isEmpty(childIcon)}"
+            th:utext="${childIcon}"
+          ></span>
+          <span th:text="${child.status.displayName}">子菜单</span>
+        </a>
+      </div>
+    </section>
+
+    <a
+      class="fly-sidebar-link"
+      href="/"
+      th:unless="${not #lists.isEmpty(item.children)}"
+      th:with="icon=${#annotations.get(item, 'fly_icon') ?: ''}"
+      th:href="@{${item.status.href}}"
+      th:target="${item.spec.target?.value}"
+      th:attr="aria-label=${item.status.displayName},data-fly-tip=${item.status.displayName}"
+    >
+      <span
+        class="fly-menu-icon"
+        aria-hidden="true"
+        th:if="${not #strings.isEmpty(icon)}"
+        th:utext="${icon}"
+      ></span>
+      <span class="fly-nav-label" th:text="${item.status.displayName}">菜单</span>
+    </a>
+  </th:block>
+</th:block>

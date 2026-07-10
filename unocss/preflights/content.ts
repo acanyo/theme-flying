@@ -1,7 +1,7 @@
 export const contentPreflight = {
   getCSS: () => String.raw`
-.page-header h1,
-.post-heading {
+.fly-page-header h1,
+.fly-post-heading {
   margin: 0;
   color: var(--text);
   font-size: 76px;
@@ -11,8 +11,8 @@ export const contentPreflight = {
   overflow-wrap: anywhere;
 }
 
-.page-header p:not(.eyebrow),
-.post-lede {
+.fly-page-header p:not(.fly-eyebrow),
+.fly-post-lede {
   max-width: 620px;
   margin: 16px 0 0;
   color: var(--muted);
@@ -20,83 +20,91 @@ export const contentPreflight = {
   line-height: 1.55;
 }
 
-.post-hero .post-chip {
+.fly-author-header h1 {
+  font-size: 64px;
+}
+
+.fly-author-header p:not(.fly-eyebrow) {
+  margin-top: 8px;
+}
+
+.fly-post-hero .fly-post-chip {
   margin-bottom: 18px;
 }
 
-.post-heading {
+.fly-post-heading {
   font-size: 84px;
 }
 
-.post-meta--hero {
+.fly-post-meta--hero {
   margin-top: 22px;
   color: var(--muted);
 }
 
-.post-tags--hero {
+.fly-post-tags--hero {
   margin-top: 18px;
 }
 
-.post-hero-image img {
+.fly-post-hero-image img {
   width: 100%;
   aspect-ratio: 1.55;
   object-fit: cover;
 }
 
-.prose {
+.fly-prose {
   font-size: 18px;
   line-height: 1.78;
 }
 
-.prose > *:first-child {
+.fly-prose > *:first-child {
   margin-top: 0;
 }
 
-.prose h2,
-.prose h3,
-.prose h4 {
+.fly-prose h2,
+.fly-prose h3,
+.fly-prose h4 {
   color: var(--text);
   line-height: 1.2;
 }
 
-.prose h2 {
+.fly-prose h2 {
   margin: 48px 0 16px;
   font-size: 34px;
 }
 
-.prose h3 {
+.fly-prose h3 {
   margin: 36px 0 12px;
   font-size: 25px;
 }
 
-.prose p,
-.prose ul,
-.prose ol,
-.prose blockquote,
-.prose pre {
+.fly-prose p,
+.fly-prose ul,
+.fly-prose ol,
+.fly-prose blockquote,
+.fly-prose pre {
   margin: 0 0 24px;
 }
 
-.prose a {
+.fly-prose a {
   color: var(--accent);
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 4px;
 }
 
-.prose img {
+.fly-prose img {
   width: 100%;
   height: auto;
   border-radius: var(--radius-card);
 }
 
-.prose blockquote {
+.fly-prose blockquote {
   border-left: 3px solid var(--accent);
   color: var(--muted);
   padding-left: 20px;
 }
 
-.prose code {
+.fly-prose code {
   border-radius: 6px;
   background: var(--page-alt);
   color: var(--text);
@@ -104,19 +112,19 @@ export const contentPreflight = {
   font-size: 0.88em;
 }
 
-.prose pre {
+.fly-prose pre {
   overflow-x: auto;
   border-radius: var(--radius-card);
   background: var(--page-alt);
   padding: 18px;
 }
 
-.prose pre code {
+.fly-prose pre code {
   background: transparent;
   padding: 0;
 }
 
-.post-author-card img {
+.fly-post-author-card img {
   width: 58px;
   height: 58px;
   flex: 0 0 auto;
@@ -124,32 +132,32 @@ export const contentPreflight = {
   object-fit: cover;
 }
 
-.post-author-card p,
-.post-author-card h2 {
+.fly-post-author-card p,
+.fly-post-author-card h2 {
   margin: 0;
 }
 
-.post-author-card p {
+.fly-post-author-card p {
   color: var(--faint);
   font-size: 12px;
   font-weight: 800;
   text-transform: uppercase;
 }
 
-.post-author-card h2 {
+.fly-post-author-card h2 {
   color: var(--text);
   font-size: 20px;
 }
 
-.taxonomy-card,
-.tag-pill {
+.fly-taxonomy-card,
+.fly-tag-pill {
   border: 1px solid var(--line);
   background: var(--page);
   color: var(--text);
   transition: border-color 160ms ease, transform 160ms ease;
 }
 
-.taxonomy-card {
+.fly-taxonomy-card {
   display: grid;
   min-height: 112px;
   align-content: space-between;
@@ -157,26 +165,26 @@ export const contentPreflight = {
   padding: 18px;
 }
 
-.taxonomy-card:hover,
-.tag-pill:hover {
+.fly-taxonomy-card:hover,
+.fly-tag-pill:hover {
   border-color: color-mix(in srgb, var(--accent) 44%, var(--line));
   transform: translateY(-2px);
 }
 
-.taxonomy-card span {
+.fly-taxonomy-card span {
   overflow-wrap: anywhere;
   font-size: 20px;
   font-weight: 800;
 }
 
-.taxonomy-card small,
-.tag-pill small {
+.fly-taxonomy-card small,
+.fly-tag-pill small {
   color: var(--muted);
   font-size: 12px;
   font-weight: 700;
 }
 
-.tag-pill {
+.fly-tag-pill {
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -186,18 +194,18 @@ export const contentPreflight = {
   font-weight: 800;
 }
 
-.archive-group {
+.fly-archive-group {
   border-bottom: 1px solid var(--line);
   padding-bottom: 30px;
 }
 
-.archive-group__year {
+.fly-archive-group__year {
   margin: 0 0 18px;
   color: var(--text);
   font-size: 20px;
 }
 
-.archive-group__items {
+.fly-archive-group__items {
   display: grid;
   gap: 18px;
   margin: 0;
@@ -205,20 +213,20 @@ export const contentPreflight = {
   list-style: none;
 }
 
-.archive-entry__date {
+.fly-archive-entry__date {
   color: var(--faint);
   font-size: 13px;
   font-weight: 700;
 }
 
-.archive-entry__title {
+.fly-archive-entry__title {
   margin: 0;
   color: var(--text);
   font-size: 19px;
   line-height: 1.35;
 }
 
-.archive-entry__summary {
+.fly-archive-entry__summary {
   display: -webkit-box;
   margin: 6px 0 0;
   overflow: hidden;
@@ -228,8 +236,8 @@ export const contentPreflight = {
   -webkit-line-clamp: 2;
 }
 
-.pagination a,
-.pagination span {
+.fly-pagination a,
+.fly-pagination span {
   display: inline-flex;
   min-height: 40px;
   align-items: center;
@@ -239,44 +247,53 @@ export const contentPreflight = {
   font-weight: 800;
 }
 
-.pagination a {
+.fly-pagination a {
   background: var(--text);
   color: var(--page);
 }
 
-.pagination span {
+.fly-pagination span {
   color: var(--muted);
 }
 
 @media (max-width: 1179px) {
-  .content-shell--narrow {
+  .fly-content-shell--narrow {
     max-width: none;
   }
 
-  .page-header,
-  .post-hero {
+  .fly-page-header,
+  .fly-post-hero {
     padding-top: 16px;
   }
 }
 
 @media (max-width: 640px) {
-  .page-header h1,
-  .post-heading {
+  .fly-page-header h1,
+  .fly-post-heading {
     font-size: 40px;
     line-height: 1.05;
   }
 
-  .page-header p:not(.eyebrow),
-  .post-lede,
-  .prose {
+  .fly-author-hero {
+    align-items: flex-start;
+  }
+
+  .fly-author-hero-avatar {
+    width: 58px;
+    height: 58px;
+  }
+
+  .fly-page-header p:not(.fly-eyebrow),
+  .fly-post-lede,
+  .fly-prose {
     font-size: 16px;
   }
 
-  .post-hero-image img {
+  .fly-post-hero-image img {
     aspect-ratio: 1.25;
   }
 
-  .archive-entry {
+  .fly-archive-entry {
     grid-template-columns: 1fr;
     gap: 6px;
   }

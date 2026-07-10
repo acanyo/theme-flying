@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="240" viewBox="0 0 360 240" role="img" aria-label="Carousel layout preview">
+  <rect width="360" height="240" rx="28" fill="#f7f7f7"/>
+  <rect x="28" y="42" width="132" height="14" rx="7" fill="#111111"/>
+  <rect x="28" y="72" width="154" height="14" rx="7" fill="#111111" opacity=".9"/>
+  <rect x="28" y="106" width="126" height="10" rx="5" fill="#767676"/>
+  <rect x="28" y="130" width="96" height="10" rx="5" fill="#a0a0a0"/>
+  <rect x="210" y="36" width="122" height="154" rx="22" fill="#101010"/>
+  <circle cx="48" cy="178" r="15" fill="#111111"/>
+  <circle cx="84" cy="178" r="15" fill="#d8d8d8"/>
+  <text x="28" y="228" fill="#6b6b6b" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">Carousel</text>
+</svg>
