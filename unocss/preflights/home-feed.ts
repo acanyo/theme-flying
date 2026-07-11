@@ -11,6 +11,8 @@ export const homeFeedPreflight = {
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-inline: contain;
+  scroll-padding-inline: 0;
+  scroll-snap-type: x proximity;
   scrollbar-width: none;
   touch-action: pan-x;
   -webkit-overflow-scrolling: touch;
@@ -33,12 +35,14 @@ export const homeFeedPreflight = {
   font-weight: 500;
   letter-spacing: 0;
   line-height: 22px;
+  scroll-snap-align: start;
   white-space: nowrap;
   transition: background-color 180ms ease, transform 180ms ease;
 }
 
 .fly-filter-chip:hover,
-.fly-filter-chip.fly-is-active {
+.fly-filter-chip.fly-is-active,
+.fly-filter-chip[aria-pressed="true"] {
   background: var(--hover-bg-color);
   color: var(--text);
 }

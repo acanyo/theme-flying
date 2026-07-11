@@ -1,4 +1,5 @@
-import { all } from "../utils/dom.js?fly=1.0.30";
+import { all } from "../utils/dom.js?fly=1.0.41";
+import { syncCurrentMenu } from "./menu-current.js?fly=1.0.41";
 
 const desktopQuery = window.matchMedia("(min-width: 1180px)");
 const COLLAPSED_STORAGE_KEY = "flying-sidebar-collapsed";
@@ -59,8 +60,14 @@ export function setupMenu(root) {
 
     toggles.forEach((button) => {
       if (isDesktop()) {
-        button.setAttribute("aria-expanded", sidebarCollapsed ? "false" : "true");
-        button.setAttribute("aria-label", sidebarCollapsed ? "展开侧栏" : "收缩侧栏");
+        button.setAttribute(
+          "aria-expanded",
+          sidebarCollapsed ? "false" : "true",
+        );
+        button.setAttribute(
+          "aria-label",
+          sidebarCollapsed ? "展开侧栏" : "收缩侧栏",
+        );
         return;
       }
 
@@ -80,7 +87,9 @@ export function setupMenu(root) {
       storeCollapsed(collapsed);
     }
     syncToggles();
-    window.dispatchEvent(new CustomEvent("fly:sidebar-collapse-change", { detail: { collapsed } }));
+    window.dispatchEvent(
+      new CustomEvent("fly:sidebar-collapse-change", { detail: { collapsed } }),
+    );
   }
 
   toggles.forEach((button) => {
@@ -119,12 +128,14 @@ export function setupMenu(root) {
     isDesktop,
     () => body.dataset.flySidebarCollapsed === "true",
   );
+  syncCurrentMenu(root);
   setSidebarCollapsed(readStoredCollapsed(), false);
   setMenuOpen(false);
 
   return {
     close: () => setMenuOpen(false),
     open: () => setMenuOpen(true),
+    refresh: () => syncCurrentMenu(root),
     toggle: () => {
       if (isDesktop()) {
         setSidebarCollapsed(body.dataset.flySidebarCollapsed !== "true");

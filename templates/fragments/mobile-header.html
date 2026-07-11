@@ -7,20 +7,54 @@
       aria-label="打开菜单"
       aria-expanded="false"
     >
-      <span class="fly-iconify fly-iconify--menu fly-menu-icon-open" aria-hidden="true"></span>
-      <span class="fly-iconify fly-iconify--close fly-menu-icon-close" aria-hidden="true"></span>
+      <span
+        class="fly-iconify fly-iconify--menu fly-menu-icon-open"
+        aria-hidden="true"
+      ></span>
+      <span
+        class="fly-iconify fly-iconify--close fly-menu-icon-close"
+        aria-hidden="true"
+      ></span>
     </button>
-    <a class="fly-brand fly-brand--mobile" href="/" th:href="@{/}" th:text="${site.title}">flying</a>
+    <a
+      class="fly-brand fly-brand--mobile"
+      href="/"
+      th:href="@{/}"
+      th:text="${site.title}"
+      >flying</a
+    >
   </div>
 
   <label class="fly-navbar-search">
-    <span class="fly-iconify fly-iconify--search fly-search-icon" aria-hidden="true"></span>
-    <input data-fly-search type="search" placeholder="搜索" autocomplete="off" />
-    <kbd>/</kbd>
+    <span
+      class="fly-iconify fly-iconify--search fly-search-icon"
+      aria-hidden="true"
+    ></span>
+    <input
+      data-fly-search
+      type="search"
+      placeholder="搜索文章"
+      aria-label="搜索文章"
+      autocomplete="off"
+      enterkeyhint="search"
+      spellcheck="false"
+    />
+    <kbd aria-hidden="true">/</kbd>
   </label>
 
-  <button class="fly-navbar-user" type="button" data-fly-theme-toggle aria-label="切换到暗色模式">
-    <span class="fly-iconify fly-iconify--moon fly-theme-icon-dark" aria-hidden="true"></span>
-    <span class="fly-iconify fly-iconify--sun fly-theme-icon-light" aria-hidden="true"></span>
+  <button
+    class="fly-navbar-user"
+    type="button"
+    data-fly-theme-toggle
+    aria-label="切换到暗色模式"
+  >
+    <span
+      class="fly-iconify fly-iconify--moon fly-theme-icon-dark"
+      aria-hidden="true"
+    ></span>
+    <span
+      class="fly-iconify fly-iconify--sun fly-theme-icon-light"
+      aria-hidden="true"
+    ></span>
   </button>
 </header>

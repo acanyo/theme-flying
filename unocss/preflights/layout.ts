@@ -4,13 +4,14 @@ export const layoutPreflight = {
   position: sticky;
   top: 0;
   z-index: 30;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 424px) minmax(0, 1fr);
   height: var(--navbar-height);
   align-items: center;
   gap: 16px;
   padding: 8px var(--content-padding-x) 8px 16px;
-  background: color-mix(in srgb, var(--page) 92%, transparent);
-  backdrop-filter: blur(16px);
+  background: color-mix(in srgb, var(--page) 82%, transparent);
+  backdrop-filter: blur(10px);
 }
 
 .fly-brand--mobile {
@@ -24,19 +25,20 @@ export const layoutPreflight = {
 
 .fly-navbar-brand {
   display: flex;
-  width: calc(var(--sidebar-width) + 200px);
+  width: 100%;
   min-width: 0;
   align-items: center;
   gap: 8px;
 }
 
-.fly-menu-button {
+.fly-icon-button.fly-menu-button {
   display: grid;
   width: 36px;
   height: 36px;
   place-items: center;
   flex: 0 0 36px;
   border-radius: 999px;
+  transition: background-color 160ms ease, color 160ms ease;
 }
 
 .fly-menu-button .fly-iconify {
@@ -49,10 +51,11 @@ export const layoutPreflight = {
 .fly-navbar-search {
   position: relative;
   display: flex;
-  width: min(424px, 34vw);
+  width: 100%;
+  max-width: 424px;
   height: 40px;
   align-items: center;
-  margin-inline: auto;
+  justify-self: center;
 }
 
 .fly-navbar-search input {
@@ -89,8 +92,21 @@ export const layoutPreflight = {
   place-items: center;
   border: 0;
   border-radius: 999px;
-  background: var(--page-alt);
+  background: transparent;
   color: var(--text);
+  justify-self: end;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.fly-icon-button.fly-menu-button:hover,
+.fly-navbar-user:hover {
+  background: var(--page-alt);
+}
+
+.fly-icon-button.fly-menu-button:focus-visible,
+.fly-navbar-user:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
 }
 
 .fly-navbar-user .fly-iconify {
@@ -180,6 +196,7 @@ kbd {
   }
 
   .fly-mobile-header {
+    display: flex;
     gap: 8px;
     padding: 8px 16px;
   }
@@ -195,6 +212,7 @@ kbd {
 
   .fly-navbar-search {
     width: 36px;
+    max-width: none;
     flex: 0 0 36px;
     margin-left: auto;
   }

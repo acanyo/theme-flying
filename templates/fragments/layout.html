@@ -1,5 +1,9 @@
-<!DOCTYPE html>
-<html lang="zh-CN" data-theme="light" th:fragment="page(pageTitle, bodyClass, content)">
+<!doctype html>
+<html
+  lang="zh-CN"
+  data-theme="light"
+  th:fragment="page(pageTitle, bodyClass, content)"
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -7,14 +11,13 @@
       (function () {
         window.flyThemeConfig = window.flyThemeConfig || {};
         window.flyThemeConfig.advanced = window.flyThemeConfig.advanced || {};
-        window.flyThemeConfig.advanced.enable_swup =
-          /*[[${theme.config.advanced?.enable_swup == null ? true : theme.config.advanced.enable_swup}]]*/ true;
-        window.flyThemeConfig.advanced.swup_timeout =
-          /*[[${theme.config.advanced?.swup_timeout ?: 5000}]]*/ 5000;
+        window.flyThemeConfig.advanced.enable_swup = /*[[${theme.config.advanced?.enable_swup == null ? true : theme.config.advanced.enable_swup}]]*/ true;
+        window.flyThemeConfig.advanced.swup_timeout = /*[[${theme.config.advanced?.swup_timeout ?: 5000}]]*/ 5000;
         var configuredHomeLayout =
           /*[[${theme.config.basic?.home_layout ?: 'grid'}]]*/ "grid";
         document.documentElement.dataset.flyHomeLayout =
-          configuredHomeLayout === "slider" || configuredHomeLayout === "carousel"
+          configuredHomeLayout === "slider" ||
+          configuredHomeLayout === "carousel"
             ? configuredHomeLayout
             : "grid";
 
@@ -29,19 +32,21 @@
     <title th:text="${pageTitle}">flying</title>
     <link
       rel="stylesheet"
-      href="/assets/css/uno.css?v=1.0.39"
-      th:href="@{/assets/css/uno.css(v=${theme.spec.version},fly='1.0.39')}"
+      href="/assets/css/uno.css?v=1.0.41"
+      th:href="@{/assets/css/uno.css(v=${theme.spec.version},fly='1.0.41')}"
     />
     <link
       rel="stylesheet"
-      href="/assets/css/style.css?v=1.0.39"
-      th:href="@{/assets/css/style.css(v=${theme.spec.version},fly='1.0.39')}"
+      href="/assets/css/style.css?v=1.0.41"
+      th:href="@{/assets/css/style.css(v=${theme.spec.version},fly='1.0.41')}"
     />
   </head>
   <body th:class="${bodyClass}">
     <div class="fly-page-overlay" data-fly-menu-close></div>
     <th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block>
-    <th:block th:replace="~{fragments/mobile-header :: mobileHeader}"></th:block>
+    <th:block
+      th:replace="~{fragments/mobile-header :: mobileHeader}"
+    ></th:block>
 
     <main id="swup" class="fly-site-main">
       <th:block th:replace="${content}"></th:block>
@@ -50,13 +55,13 @@
 
     <script
       type="module"
-      src="/assets/js/script.js?v=1.0.39"
-      th:src="@{/assets/js/script.js(v=${theme.spec.version},fly='1.0.39')}"
+      src="/assets/js/script.js?v=1.0.41"
+      th:src="@{/assets/js/script.js(v=${theme.spec.version},fly='1.0.41')}"
     ></script>
     <script
       defer
-      src="/assets/js/fallback.js?v=1.0.39"
-      th:src="@{/assets/js/fallback.js(v=${theme.spec.version},fly='1.0.39')}"
+      src="/assets/js/fallback.js?v=1.0.41"
+      th:src="@{/assets/js/fallback.js(v=${theme.spec.version},fly='1.0.41')}"
     ></script>
   </body>
 </html>
