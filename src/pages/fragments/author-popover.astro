@@ -1,0 +1,102 @@
+---
+
+---
+
+<div
+  class="fly-author-popover-trigger"
+  th:fragment="trigger(author, fallbackPermalink)"
+  th:with="authorName=${author.displayName ?: site.title},authorPermalink=${author.permalink ?: fallbackPermalink},authorQq=${#annotations.getOrDefault(author, 'fly_qq', '')},authorWechat=${#annotations.getOrDefault(author, 'fly_wechat', '')},authorEmail=${#annotations.getOrDefault(author, 'fly_email', '')},authorWebsite=${#annotations.getOrDefault(author, 'fly_website', '')}"
+>
+  <a
+    class="fly-author-popover-anchor"
+    href="/"
+    th:href="@{${authorPermalink}}"
+    th:aria-label="|查看作者：${authorName}|"
+    aria-haspopup="true"
+    aria-expanded="false"
+    data-fly-author-popover-anchor
+  >
+    <img
+      src="/assets/images/avatar.svg"
+      th:src="${author.avatar ?: #theme.assets('/images/avatar.svg')}"
+      th:alt="${authorName}"
+      alt=""
+    />
+  </a>
+
+  <div
+    class="fly-author-popover"
+    popover="manual"
+    data-fly-author-popover
+    role="group"
+    th:attr="aria-label=|${authorName} 的联系信息|"
+  >
+    <a
+      class="fly-author-popover-avatar"
+      href="/"
+      th:href="@{${authorPermalink}}"
+      th:aria-label="|查看作者：${authorName}|"
+    >
+      <img
+        src="/assets/images/avatar.svg"
+        th:src="${author.avatar ?: #theme.assets('/images/avatar.svg')}"
+        th:alt="${authorName}"
+        alt=""
+      />
+    </a>
+    <a
+      class="fly-author-popover-name"
+      href="/"
+      th:href="@{${authorPermalink}}"
+      th:text="${authorName}">作者</a
+    >
+    <p
+      class="fly-author-popover-bio"
+      th:if="${not #strings.isEmpty(author.bio)}"
+      th:text="${author.bio}"
+    >
+      作者简介
+    </p>
+    <div
+      class="fly-author-popover-contacts"
+      th:if="${not #strings.isEmpty(authorQq) or not #strings.isEmpty(authorWechat) or not #strings.isEmpty(authorEmail) or not #strings.isEmpty(authorWebsite)}"
+    >
+      <button
+        type="button"
+        th:if="${not #strings.isEmpty(authorQq)}"
+        th:attr="data-fly-contact-value=${authorQq},aria-label=|复制 ${authorName} 的 QQ 号|,title=|QQ：${authorQq}（点击复制）|"
+        data-fly-contact-copy
+        data-fly-contact-label="QQ 号"
+      >
+        <span class="fly-iconify fly-iconify--qq" aria-hidden="true"></span>
+      </button>
+      <button
+        type="button"
+        th:if="${not #strings.isEmpty(authorWechat)}"
+        th:attr="data-fly-contact-value=${authorWechat},aria-label=|复制 ${authorName} 的微信号|,title=|微信：${authorWechat}（点击复制）|"
+        data-fly-contact-copy
+        data-fly-contact-label="微信号"
+      >
+        <span class="fly-iconify fly-iconify--wechat" aria-hidden="true"></span>
+      </button>
+      <a
+        th:if="${not #strings.isEmpty(authorEmail)}"
+        th:href="|mailto:${authorEmail}|"
+        title="联系邮箱"
+        th:aria-label="|给 ${authorName} 发送邮件|"
+      >
+        <span class="fly-iconify fly-iconify--mail" aria-hidden="true"></span>
+      </a>
+      <a
+        th:if="${not #strings.isEmpty(authorWebsite)}"
+        th:href="${authorWebsite}"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="个人网站"
+        th:aria-label="|访问 ${authorName} 的个人网站|"
+      >
+        <span class="fly-iconify fly-iconify--globe" aria-hidden="true"></span>
+      </a>
+    </div>
+  </div>
+</div>

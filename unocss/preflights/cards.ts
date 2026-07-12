@@ -51,7 +51,7 @@ export const cardPreflight = {
   font-weight: 500;
 }
 
-.fly-author-pill img {
+.fly-author-pill > img {
   width: 28px;
   height: 28px;
   flex: 0 0 28px;
@@ -59,10 +59,15 @@ export const cardPreflight = {
   object-fit: cover;
 }
 
-.fly-author-pill span {
+.fly-author-pill > span,
+.fly-author-pill > a > span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.fly-author-pill > .fly-author-name-link {
+  min-width: 0;
 }
 
 .fly-dot {

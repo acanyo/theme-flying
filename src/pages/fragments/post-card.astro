@@ -62,19 +62,19 @@
       >
     </div>
     <footer class="fly-post-meta">
-      <a
-        class="fly-author-pill"
-        href="/"
-        th:href="@{${post.owner?.permalink ?: post.status.permalink}}"
-      >
-        <img
-          src="/assets/images/avatar.svg"
-          th:src="${post.owner?.avatar ?: #theme.assets('/images/avatar.svg')}"
-          th:alt="${post.owner?.displayName ?: site.title}"
-          alt=""
-        />
-        <span th:text="${post.owner?.displayName ?: site.title}">作者</span>
-      </a>
+      <div class="fly-author-pill">
+        <th:block
+          th:if="${post.owner != null}"
+          th:replace="~{fragments/author-popover :: trigger(author=${post.owner}, fallbackPermalink=${post.status.permalink})}"
+        ></th:block>
+        <a
+          class="fly-author-name-link"
+          href="/"
+          th:href="@{${post.owner?.permalink ?: post.status.permalink}}"
+        >
+          <span th:text="${post.owner?.displayName ?: site.title}">作者</span>
+        </a>
+      </div>
       <span class="fly-dot" aria-hidden="true"></span>
       <time
         th:datetime="${post.spec.publishTime}"

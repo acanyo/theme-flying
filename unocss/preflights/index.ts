@@ -1,4 +1,5 @@
 import { basePreflight } from "./base";
+import { authorPopoverPreflight } from "./author-popover";
 import { cardPreflight } from "./cards";
 import { contentPreflight } from "./content";
 import { footerPreflight } from "./footer";
@@ -26,6 +27,7 @@ export const preflights = [
   searchWidgetPreflight,
   sidebarPreflight,
   cardPreflight,
+  authorPopoverPreflight,
   homeFeaturedPreflight,
   homeLayoutsPreflight,
   homeFeedPreflight,

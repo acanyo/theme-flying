@@ -395,186 +395,19 @@ export const homeFeaturedPreflight = {
   padding-bottom: 16px;
 }
 
-.fly-home-carousel-author {
-  display: block;
+.fly-home-carousel-avatars .fly-author-popover-trigger {
   width: 46px;
   height: 46px;
-  flex: 0 0 46px;
+  flex-basis: 46px;
 }
 
-.fly-home-carousel-author + .fly-home-carousel-author {
+.fly-home-carousel-avatars .fly-author-popover-trigger + .fly-author-popover-trigger {
   margin-left: -11px;
 }
 
-.fly-home-carousel-avatar {
-  position: relative;
-  display: block;
-  width: 46px;
-  height: 46px;
-  flex: 0 0 46px;
-  overflow: hidden;
+.fly-home-carousel-avatars .fly-author-popover-anchor {
   border: 2px solid var(--page-alt);
-  border-radius: 50%;
   background: var(--page);
-}
-
-.fly-home-carousel-author:hover .fly-home-carousel-avatar,
-.fly-home-carousel-author:focus-within .fly-home-carousel-avatar {
-  z-index: 2;
-}
-
-.fly-home-carousel-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.fly-author-popover {
-  position: absolute;
-  top: calc(100% - 6px);
-  left: 0;
-  z-index: 20;
-  width: min(320px, calc(100vw - 64px));
-  visibility: hidden;
-  border: 1px solid var(--line);
-  border-radius: 24px;
-  background: var(--page);
-  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.18);
-  color: var(--text);
-  opacity: 0;
-  padding: 28px;
-  pointer-events: none;
-  text-align: left;
-  transform: translateY(8px);
-  transition:
-    opacity 180ms ease,
-    transform 180ms ease,
-    visibility 180ms ease;
-}
-
-.fly-author-popover::before {
-  position: absolute;
-  right: 0;
-  bottom: 100%;
-  left: 0;
-  height: 12px;
-  content: "";
-}
-
-.fly-home-carousel-author:hover .fly-author-popover,
-.fly-home-carousel-author:focus-within .fly-author-popover {
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-
-.fly-author-popover-avatar {
-  display: block;
-  width: 72px;
-  height: 72px;
-  overflow: hidden;
-  border-radius: 50%;
-  background: var(--page-alt);
-}
-
-.fly-author-popover-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.fly-author-popover-name {
-  display: block;
-  width: fit-content;
-  margin-top: 22px;
-  color: var(--text);
-  font-size: 28px;
-  font-weight: 650;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-}
-
-.fly-author-popover-name:hover,
-.fly-author-popover-name:focus-visible {
-  color: var(--accent);
-}
-
-.fly-author-popover-bio {
-  display: -webkit-box;
-  margin: 18px 0 0;
-  overflow: hidden;
-  color: var(--muted);
-  font-size: 17px;
-  line-height: 1.55;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-}
-
-.fly-author-popover-contacts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 24px;
-}
-
-.fly-author-popover-contacts > :is(a, button) {
-  position: relative;
-  display: inline-flex;
-  width: 46px;
-  height: 46px;
-  align-items: center;
-  justify-content: center;
-  border: 0;
-  border-radius: 14px;
-  background: var(--hover-bg-color);
-  color: var(--text);
-  padding: 0;
-  transition:
-    background-color 160ms ease,
-    color 160ms ease,
-    transform 160ms ease;
-}
-
-.fly-author-popover-contacts > :is(a, button):hover,
-.fly-author-popover-contacts > :is(a, button):focus-visible {
-  background: var(--accent);
-  color: var(--page);
-  transform: translateY(-2px);
-}
-
-.fly-author-popover-contacts > button::after {
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 50%;
-  visibility: hidden;
-  border-radius: 6px;
-  background: var(--text);
-  color: var(--page);
-  content: "已复制";
-  font-size: 12px;
-  line-height: 1;
-  opacity: 0;
-  padding: 7px 9px;
-  pointer-events: none;
-  transform: translate(-50%, 4px);
-  transition:
-    opacity 140ms ease,
-    transform 140ms ease,
-    visibility 140ms ease;
-  white-space: nowrap;
-}
-
-.fly-author-popover-contacts > button[data-fly-contact-copied="true"]::after {
-  visibility: visible;
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
-
-.fly-author-popover-contacts .fly-iconify {
-  width: 21px;
-  height: 21px;
-  flex-basis: 21px;
 }
 
 .fly-home-carousel-terms {
@@ -838,9 +671,7 @@ export const homeFeaturedPreflight = {
 @media (prefers-reduced-motion: reduce) {
   .fly-featured-image,
   .fly-home-slide-image,
-  .fly-home-carousel-media img,
-  .fly-author-popover,
-  .fly-author-popover-contacts > :is(a, button) {
+  .fly-home-carousel-media img {
     transition-duration: 1ms;
   }
 }

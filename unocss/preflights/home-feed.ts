@@ -348,7 +348,7 @@ export const homeFeedPreflight = {
   font-size: 11px;
 }
 
-.fly-home-shell[data-fly-home-layout="slider"] .fly-post-card .fly-author-pill img {
+.fly-home-shell[data-fly-home-layout="slider"] .fly-post-card .fly-author-popover-trigger {
   display: none;
 }
 
@@ -362,12 +362,13 @@ export const homeFeedPreflight = {
   padding-top: 0;
 }
 
-.fly-home-shell[data-fly-home-layout="carousel"] .fly-post-card .fly-author-pill img {
+.fly-home-shell[data-fly-home-layout="carousel"] .fly-post-card .fly-author-popover-trigger {
   position: absolute;
   top: 10px;
   left: 8px;
   width: 36px;
   height: 36px;
+  flex-basis: 36px;
 }
 
 .fly-post-card[hidden],

@@ -2,6 +2,7 @@ import { setupMenu } from "./modules/menu.js?fly=1.0.60";
 import { setupHomeLayout } from "./modules/home-layout.js?fly=1.0.63";
 import { setupCategoryFilter } from "./modules/category-filter.js?fly=1.0.60";
 import { setupContactCopy } from "./modules/contact-copy.js?fly=1.0.68";
+import { setupAuthorPopover } from "./modules/author-popover.js?fly=1.0.70";
 import {
   openSearchWidget,
   setupSearchWidget,
@@ -19,6 +20,7 @@ function boot() {
   setupHomeLayout(document);
   setupCategoryFilter(document);
   setupContactCopy(document);
+  setupAuthorPopover(document);
   setupSearchWidget(document);
   setupLoadMore(document);
   setupMotion(document);
@@ -36,6 +38,7 @@ function boot() {
       setupHomeLayout(document);
       setupCategoryFilter(document);
       setupContactCopy(document);
+      setupAuthorPopover(document);
       setupLoadMore(document);
       setupMotion(document);
       setupScrollReveal(document);

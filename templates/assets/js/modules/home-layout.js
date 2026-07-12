@@ -129,6 +129,7 @@ function setupCarousel(carousel, signal) {
   carousel.dataset.flyCarouselSingle = String(items.length === 1);
 
   function sync() {
+    if (rail.scrollTop !== 0) rail.scrollTop = 0;
     activeIndex = nearestItemIndex(rail, items);
     const maxScroll = Math.max(0, rail.scrollWidth - rail.clientWidth - 1);
     prev.disabled = rail.scrollLeft <= 1;
@@ -186,6 +187,7 @@ function setupCarousel(carousel, signal) {
     once: true,
   });
   rail.scrollLeft = 0;
+  rail.scrollTop = 0;
   sync();
 }
 

@@ -2,6 +2,7 @@ export const homeLayoutsPreflight = {
   getCSS: () => String.raw`
 [data-fly-carousel-rail] {
   overflow-x: auto;
+  overflow-y: hidden;
   overscroll-behavior-inline: contain;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
