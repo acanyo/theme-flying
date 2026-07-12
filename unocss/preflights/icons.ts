@@ -30,6 +30,10 @@ export const iconPreflight = {
   --fly-icon-url: url("../icons/iconify/close.svg");
 }
 
+.fly-iconify--globe {
+  --fly-icon-url: url("../icons/iconify/globe.svg");
+}
+
 .fly-iconify--menu {
   --fly-icon-url: url("../icons/iconify/menu.svg");
 }
@@ -38,12 +42,16 @@ export const iconPreflight = {
   --fly-icon-url: url("../icons/iconify/loader.svg");
 }
 
+.fly-iconify--mail {
+  --fly-icon-url: url("../icons/iconify/mail.svg");
+}
+
 .fly-iconify--moon {
   --fly-icon-url: url("../icons/iconify/moon.svg");
 }
 
-.fly-iconify--rss {
-  --fly-icon-url: url("../icons/iconify/rss.svg");
+.fly-iconify--qq {
+  --fly-icon-url: url("../icons/iconify/qq.svg");
 }
 
 .fly-iconify--search {
@@ -54,12 +62,8 @@ export const iconPreflight = {
   --fly-icon-url: url("../icons/iconify/sun.svg");
 }
 
-.fly-iconify--twitter {
-  --fly-icon-url: url("../icons/iconify/twitter.svg");
-}
-
-.fly-iconify--youtube {
-  --fly-icon-url: url("../icons/iconify/youtube.svg");
+.fly-iconify--wechat {
+  --fly-icon-url: url("../icons/iconify/wechat.svg");
 }
 
 body[data-fly-menu-open="true"] .fly-menu-icon-open,
@@ -67,6 +71,10 @@ body:not([data-fly-menu-open="true"]) .fly-menu-icon-close,
 [data-theme="dark"] .fly-theme-icon-dark,
 [data-theme="light"] .fly-theme-icon-light {
   display: none;
+}
+
+.fly-mobile-header > astro-island {
+  display: contents;
 }
 `,
 };

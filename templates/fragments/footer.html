@@ -1,38 +1,6 @@
-<footer
-  class="fly-site-footer"
-  th:fragment="footer"
-  th:with="showCopyright=${theme.config.basic?.show_copyright != false},
+<!DOCTYPE html><footer class="fly-site-footer" th:fragment="footer" th:with="showCopyright=${theme.config.basic?.show_copyright != false},
            copyrightTemplate=${theme.config.basic?.copyright ?: '© {year} {site}'},
            copyrightYear=${#dates.format(#dates.createNow(), 'yyyy')},
-           footerCopyright=${#strings.replace(#strings.replace(copyrightTemplate, '{year}', copyrightYear), '{site}', site.title)}"
->
-  <div class="fly-footer-shell">
-    <section class="fly-newsletter-panel">
-      <div>
-        <p class="fly-eyebrow">通讯</p>
-        <h2>订阅更新</h2>
-        <p>第一时间收到新文章和安静更新。</p>
-      </div>
-      <form class="fly-newsletter-form" data-fly-newsletter novalidate>
-        <label>
-          <span class="fly-sr-only">邮箱地址</span>
-          <input type="email" name="email" placeholder="请输入邮箱地址" autocomplete="email" />
-        </label>
-        <button class="fly-button fly-button--primary" type="submit">订阅</button>
-        <p class="fly-newsletter-status" role="status" aria-live="polite"></p>
-      </form>
-    </section>
-
-    <div class="fly-footer-links">
-      <div>
-        <a class="fly-brand fly-brand--footer" href="/" th:href="@{/}" th:text="${site.title}">flying</a>
-        <p th:text="${site.subtitle ?: '一个受 Luno 启发的极简 Halo 中文主题。'}">一个受 Luno 启发的极简 Halo 中文主题。</p>
-      </div>
-    </div>
-
-    <p class="fly-copyright" th:if="${showCopyright and not #strings.isEmpty(footerCopyright)}" th:text="${footerCopyright}">
-      © 2026 flying
-    </p>
-  </div>
-  <halo:footer />
-</footer>
+           footerCopyright=${#strings.replace(#strings.replace(copyrightTemplate, '{year}', copyrightYear), '{site}', site.title)}"> <div class="fly-footer-shell"> <p class="fly-copyright" th:if="${showCopyright and not #strings.isEmpty(footerCopyright)}" th:text="${footerCopyright}">
+© 2026 flying
+</p> </div> <halo:footer></halo:footer> </footer>

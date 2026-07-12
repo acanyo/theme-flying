@@ -1,0 +1,61 @@
+---
+
+---
+
+<th:block th:fragment="friends">
+  <th:block
+    th:if="${pluginFinder.available('PluginLinks') and not #strings.isEmpty(theme.config.basic?.home_link_group)}"
+  >
+    <th:block
+      th:with="friendLinks=${linkFinder.listBy(theme.config.basic.home_link_group)}"
+    >
+      <section
+        class="fly-friends-section"
+        aria-labelledby="fly-friends-heading"
+        th:if="${not #lists.isEmpty(friendLinks)}"
+      >
+        <header class="fly-section-heading" data-fly-reveal>
+          <h2 id="fly-friends-heading">友情链接</h2>
+          <a
+            class="fly-section-action"
+            href="/links"
+            th:href="@{/links}"
+            data-fly-motion-button
+          >
+            <span class="fly-motion-label">
+              <span class="fly-motion-label-copy">查看全部</span>
+              <span class="fly-motion-label-copy" aria-hidden="true"
+                >查看全部</span
+              >
+            </span>
+            <span class="fly-motion-icon" aria-hidden="true">→</span>
+          </a>
+        </header>
+
+        <div class="fly-friends-grid" data-fly-reveal-group>
+          <article class="fly-friend-card" th:each="link : ${friendLinks}">
+            <a
+              th:href="${link.spec.url}"
+              target="_blank"
+              rel="noopener noreferrer"
+              th:attr="aria-label=|访问 ${link.spec.displayName}|"></a>
+            <img
+              th:if="${not #strings.isEmpty(link.spec.logo)}"
+              th:src="${link.spec.logo}"
+              th:alt="${link.spec.displayName}"
+              loading="lazy"
+              decoding="async"
+            />
+            <h3 th:text="${link.spec.displayName}">网站名称</h3>
+            <p
+              th:if="${not #strings.isEmpty(link.spec.description)}"
+              th:text="${link.spec.description}"
+            >
+              网站简介
+            </p>
+          </article>
+        </div>
+      </section>
+    </th:block>
+  </th:block>
+</th:block>

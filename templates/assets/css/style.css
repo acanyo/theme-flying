@@ -1,1 +1,7 @@
-@import url("https://fonts.bunny.net/css?family=inter:400,500,600,700,800");
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../fonts/Geist-Variable.woff2") format("woff2");
+}

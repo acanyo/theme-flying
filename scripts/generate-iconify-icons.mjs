@@ -2,25 +2,20 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import mingcute from "../node_modules/@iconify-json/mingcute/icons.json" with { type: "json" };
 
-const outputDir = join(
-  process.cwd(),
-  "templates",
-  "assets",
-  "icons",
-  "iconify",
-);
+const outputDir = join(process.cwd(), "public", "assets", "icons", "iconify");
 
 const icons = {
   "arrow-down": "down-line",
   close: "close-line",
+  globe: "globe-line",
   loader: "loading-3-line",
+  mail: "mail-line",
   menu: "menu-line",
   moon: "moon-line",
-  rss: "rss-2-line",
+  qq: "qq-line",
   search: "search-line",
   sun: "sun-line",
-  twitter: "social-x-line",
-  youtube: "youtube-line",
+  wechat: "wechat-line",
 };
 
 function svgFor(iconName) {

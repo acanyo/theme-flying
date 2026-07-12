@@ -13,7 +13,7 @@ spec:
   logo: https://www.halo.run/logo
   homepage: https://github.com/acanyo/theme-flying
   issues: https://github.com/acanyo/theme-flying/issues
-  version: "1.0.27"
+  version: "1.0.28"
   requires: ">=2.0.0"
   license:
     - name: "GPL-3.0"

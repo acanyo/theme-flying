@@ -1,0 +1,30 @@
+---
+
+---
+
+<nav
+  class="fly-category-filter"
+  aria-label="文章分类筛选"
+  data-fly-category-filter
+  th:fragment="categoryFilter(categories)"
+>
+  <button
+    class="fly-filter-chip fly-is-active"
+    type="button"
+    data-fly-filter="all"
+    aria-pressed="true"
+  >
+    全部文章
+  </button>
+  <button
+    class="fly-filter-chip"
+    type="button"
+    data-fly-filter="category"
+    aria-pressed="false"
+    th:each="category : ${categories}"
+    th:attr="data-fly-filter=${category.metadata.name}"
+    th:text="${category.spec.displayName}"
+  >
+    分类
+  </button>
+</nav>

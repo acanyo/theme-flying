@@ -1,0 +1,23 @@
+---
+
+---
+
+<footer
+  class="fly-site-footer"
+  th:fragment="footer"
+  th:with="showCopyright=${theme.config.basic?.show_copyright != false},
+           copyrightTemplate=${theme.config.basic?.copyright ?: '© {year} {site}'},
+           copyrightYear=${#dates.format(#dates.createNow(), 'yyyy')},
+           footerCopyright=${#strings.replace(#strings.replace(copyrightTemplate, '{year}', copyrightYear), '{site}', site.title)}"
+>
+  <div class="fly-footer-shell">
+    <p
+      class="fly-copyright"
+      th:if="${showCopyright and not #strings.isEmpty(footerCopyright)}"
+      th:text="${footerCopyright}"
+    >
+      © 2026 flying
+    </p>
+  </div>
+  <halo:footer></halo:footer>
+</footer>

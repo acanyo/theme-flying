@@ -9,8 +9,8 @@ export default defineConfig({
   preflights,
   blocklist: ["me"],
   content: {
-    filesystem: ["templates/**/*.html", "templates/assets/js/**/*.js"],
+    filesystem: ["src/**/*.{astro,vue}", "public/assets/js/**/*.js"],
   },
-  theme,
+  theme: theme as any,
   shortcuts,
 });

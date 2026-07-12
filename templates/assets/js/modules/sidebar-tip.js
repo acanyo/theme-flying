@@ -33,7 +33,8 @@ function createFlyout() {
 function shouldShow(target) {
   return (
     desktopQuery.matches &&
-    (document.body.dataset.flySidebarCollapsed === "true" || hasClippedLabel(target)) &&
+    (document.body.dataset.flySidebarCollapsed === "true" ||
+      hasClippedLabel(target)) &&
     Boolean(target.dataset.flyTip && target.dataset.flyTip.trim())
   );
 }
@@ -62,7 +63,10 @@ function positionPanel(panel, target, options = {}) {
   const viewportPadding = 12;
   const left = Math.min(rect.right + 10, window.innerWidth - viewportPadding);
   const anchorY = options.alignTop ? rect.top : rect.top + rect.height / 2;
-  const top = Math.min(Math.max(anchorY, viewportPadding), window.innerHeight - viewportPadding);
+  const top = Math.min(
+    Math.max(anchorY, viewportPadding),
+    window.innerHeight - viewportPadding,
+  );
 
   panel.style.left = `${left}px`;
   panel.style.top = `${top}px`;

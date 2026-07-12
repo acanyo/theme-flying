@@ -1,6 +1,6 @@
 import { all, first } from "../utils/dom.js?fly=1.0.37";
 
-const DEFAULT_END_TEXT = "已经到了列表的末尾";
+const DEFAULT_END_TEXT = "全部文章已显示";
 
 export function setupLoadMore(root) {
   if (window.flyLoadMoreController) {
@@ -22,7 +22,10 @@ export function setupLoadMore(root) {
   const loadLabelCopies = all("[data-fly-load-label-copy]", loadLink);
   const loadComplete = first("[data-fly-load-complete]", loadLink);
   const loadStatus = first("[data-fly-load-status]", root);
-  const endText = loadLink.dataset.flyEndText || DEFAULT_END_TEXT;
+  const localLoadMore = loadLink.dataset.flyLocalLoadMore === "true";
+  const endText = localLoadMore
+    ? "全部文章已显示"
+    : loadLink.dataset.flyEndText || DEFAULT_END_TEXT;
   let loading = false;
 
   function setLoadState(state, message = "") {
@@ -43,7 +46,7 @@ export function setupLoadMore(root) {
     }
 
     if (loadLabel) {
-      const labelText = state === "error" ? "重新加载" : "加载更多";
+      const labelText = state === "error" ? "重试" : "加载更多";
 
       if (loadLabelCopies.length > 0) {
         loadLabelCopies.forEach((label) => {
@@ -116,13 +119,25 @@ export function setupLoadMore(root) {
       return;
     }
 
+    if (localLoadMore) {
+      feed.dataset.flyFeedCollapsed = "false";
+      feed.dispatchEvent(
+        new CustomEvent("fly:posts-appended", {
+          bubbles: true,
+          detail: { count: all("[data-fly-post-card]", feed).length, feed },
+        }),
+      );
+      completeLoading();
+      return;
+    }
+
     const nextUrl = loadLink.getAttribute("href");
     if (!nextUrl || loadLink.dataset.flyExhausted === "true") {
       completeLoading();
       return;
     }
 
-    setLoadState("loading", "正在加载更多文章。");
+    setLoadState("loading", "正在加载更多文章…");
 
     try {
       const response = await fetch(nextUrl, {
@@ -152,7 +167,7 @@ export function setupLoadMore(root) {
         delete loadLink.dataset.flyExhausted;
         setLoadState(
           "ready",
-          appended > 0 ? `已加载 ${appended} 篇文章。` : "没有新的文章可加载。",
+          appended > 0 ? `已加载 ${appended} 篇文章。` : "没有可加载的新文章。",
         );
       } else {
         completeLoading();
@@ -161,7 +176,7 @@ export function setupLoadMore(root) {
       if (error && error.name === "AbortError") {
         return;
       }
-      setLoadState("error", "加载失败，请检查网络后重试。");
+      setLoadState("error", "加载失败，请重试。");
     }
   }
 

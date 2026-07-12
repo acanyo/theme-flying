@@ -1,0 +1,22 @@
+---
+
+---
+
+<th:block th:fragment="home(posts, categories, homeLayout, localPagination)">
+  <th:block
+    th:replace="~{fragments/home/category-filter :: categoryFilter(categories=${categories})}"
+  ></th:block>
+  <th:block
+    th:replace="~{fragments/home/featured :: featured(posts=${posts}, homeLayout=${homeLayout})}"
+  ></th:block>
+  <th:block
+    th:replace="~{fragments/home/feed :: feed(posts=${posts}, homeLayout=${homeLayout}, localPagination=${localPagination})}"
+  ></th:block>
+  <th:block th:replace="~{fragments/home/authors :: authors(posts=${posts})}"
+  ></th:block>
+  <th:block th:replace="~{fragments/home/newsletter :: newsletter}"></th:block>
+  <th:block
+    th:replace="~{fragments/home/topics :: topics(categories=${categories}, homeLayout=${homeLayout})}"
+  ></th:block>
+  <th:block th:replace="~{fragments/home/friends :: friends}"></th:block>
+</th:block>

@@ -56,19 +56,34 @@ export const layoutPreflight = {
   height: 40px;
   align-items: center;
   justify-self: center;
-}
-
-.fly-navbar-search input {
-  width: 100%;
-  height: 100%;
   border: 0;
   border-radius: 10px;
   outline: 0;
   background: var(--page-alt);
   color: var(--text);
-  padding: 4px 42px 4px 42px;
+  padding: 0;
   font-size: 14px;
   font-weight: 500;
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+
+.fly-navbar-search:hover {
+  background: var(--border);
+}
+
+.fly-navbar-search:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
+.fly-search-placeholder {
+  width: 100%;
+  overflow: hidden;
+  padding: 4px 42px;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .fly-navbar-search .fly-search-icon {
@@ -127,30 +142,6 @@ body[data-fly-menu-open="true"] .fly-page-overlay {
   opacity: 1;
 }
 
-.fly-signin-link {
-  color: var(--text);
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.fly-search-box input {
-  width: 100%;
-  height: 100%;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  outline: 0;
-  background: var(--page);
-  color: var(--text);
-  padding: 0 58px 0 38px;
-  font-size: 14px;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
-}
-
-.fly-search-box input:focus {
-  border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 12%, transparent);
-}
-
 kbd {
   position: absolute;
   right: 16px;
@@ -163,7 +154,7 @@ kbd {
   margin: 42px 0 78px;
 }
 
-@media (min-width: 1180px) {
+@media (min-width: 768px) {
   body .fly-site-main {
     margin-left: var(--sidebar-width);
     transition: margin-left 220ms ease;
@@ -173,17 +164,19 @@ kbd {
     margin-left: var(--sidebar-collapsed-width);
   }
 
-  body .fly-desktop-topbar,
-  body .fly-sidebar-search {
-    display: none;
+  body .fly-content-shell,
+  body .fly-footer-shell {
+    padding-right: var(--content-padding-x);
+    padding-left: var(--content-padding-x);
   }
+
+  body .fly-content-shell {
+    padding-top: 16px;
+  }
+
 }
 
-@media (max-width: 1179px) {
-  body .fly-desktop-topbar {
-    display: none;
-  }
-
+@media (max-width: 767px) {
   body .fly-content-shell,
   body .fly-footer-shell {
     max-width: none;
@@ -217,7 +210,7 @@ kbd {
     margin-left: auto;
   }
 
-  .fly-navbar-search input {
+  .fly-search-placeholder {
     border-radius: 999px;
     padding: 0;
     font-size: 0;

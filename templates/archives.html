@@ -1,43 +1,9 @@
-﻿<!DOCTYPE html>
-<html
-  lang="zh-CN"
-  th:replace="~{fragments/layout :: page(pageTitle=|归档 - ${site.title}|, bodyClass='fly-archive', content=~{::content})}"
->
-  <th:block th:fragment="content">
-    <div class="fly-content-shell">
-      <header class="fly-page-header">
-        <p class="fly-eyebrow">归档</p>
-        <h1>全部文章</h1>
-        <p>按发布时间浏览全部文章。</p>
-      </header>
-
-      <section class="fly-archive-list" aria-label="归档列表" th:if="${archives != null and not #lists.isEmpty(archives.items)}">
-        <th:block th:each="archive : ${archives.items}">
-          <th:block th:each="month : ${archive.months}">
-            <section class="fly-archive-group">
-              <h2 class="fly-archive-group__year" th:text="|${archive.year} / ${month.month}|">2026 / 07</h2>
-              <ul class="fly-archive-group__items">
-                <li th:each="post : ${month.posts}" class="fly-archive-entry">
-                  <time class="fly-archive-entry__date" th:datetime="${post.spec.publishTime}" th:text="${#dates.format(post.spec.publishTime, 'MM/dd')}">
-                    07/08
-                  </time>
-                  <div>
-                    <h3 class="fly-archive-entry__title">
-                      <a th:href="@{${post.status.permalink}}" th:text="${post.spec.title}">文章标题</a>
-                    </h3>
-                    <p class="fly-archive-entry__summary" th:if="${not #strings.isEmpty(post.status.excerpt)}" th:text="${post.status.excerpt}">
-                      文章摘要
-                    </p>
-                  </div>
-                </li>
-              </ul>
-            </section>
-          </th:block>
-        </th:block>
-      </section>
-
-      <p class="fly-empty-state fly-empty-state--visible" th:if="${archives == null or #lists.isEmpty(archives.items)}">暂无文章。</p>
-      <th:block th:replace="~{fragments/pagination :: pager(${archives})}"></th:block>
-    </div>
-  </th:block>
-</html>
+<!DOCTYPE html><html lang="zh-CN" th:replace="~{fragments/layout :: page(pageTitle=|归档 - ${site.title}|, bodyClass='fly-archive', content=~{::content})}"> <th:block th:fragment="content"> <div class="fly-content-shell"> <header class="fly-page-header"> <p class="fly-eyebrow">归档</p> <h1>全部文章</h1> <p>按发布时间浏览全部文章。</p> </header> <section class="fly-archive-list" aria-label="归档列表" th:if="${archives != null and not #lists.isEmpty(archives.items)}"> <th:block th:each="archive : ${archives.items}"> <th:block th:each="month : ${archive.months}"> <section class="fly-archive-group"> <h2 class="fly-archive-group__year" th:text="|${archive.year} / ${month.month}|">
+2026 / 07
+</h2> <ul class="fly-archive-group__items"> <li th:each="post : ${month.posts}" class="fly-archive-entry"> <time class="fly-archive-entry__date" th:datetime="${post.spec.publishTime}" th:text="${#dates.format(post.spec.publishTime, 'MM/dd')}">
+07/08
+</time> <div> <h3 class="fly-archive-entry__title"> <a th:href="@{${post.status.permalink}}" th:text="${post.spec.title}">文章标题</a> </h3> <p class="fly-archive-entry__summary" th:if="${not #strings.isEmpty(post.status.excerpt)}" th:text="${post.status.excerpt}">
+文章摘要
+</p> </div> </li> </ul> </section> </th:block> </th:block> </section> <p class="fly-empty-state fly-empty-state--visible" th:if="${archives == null or #lists.isEmpty(archives.items)}">
+暂无文章。
+</p> <th:block th:replace="~{fragments/pagination :: pager(${archives})}"></th:block> </div> </th:block> </html>

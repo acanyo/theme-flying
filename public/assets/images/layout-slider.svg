@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200" role="img" aria-label="横幅首页布局预览">
+  <rect x="1" y="1" width="318" height="198" rx="12" fill="#f5f6f8" stroke="#d8dce3" stroke-width="2"/>
+  <rect x="12" y="12" width="296" height="18" rx="5" fill="#ffffff"/>
+  <circle cx="23" cy="21" r="3" fill="#111111"/>
+  <rect x="31" y="18" width="36" height="6" rx="3" fill="#b7bdc7"/>
+  <rect x="242" y="17" width="42" height="8" rx="4" fill="#e2e5ea"/>
+  <circle cx="297" cy="21" r="5" fill="#111111"/>
+
+  <rect x="12" y="38" width="30" height="150" rx="7" fill="#e7e9ed"/>
+  <circle cx="27" cy="53" r="5" fill="#ffffff"/>
+  <circle cx="27" cy="71" r="4" fill="#b6bbc4"/>
+  <circle cx="27" cy="88" r="4" fill="#b6bbc4"/>
+  <circle cx="27" cy="105" r="4" fill="#b6bbc4"/>
+
+  <rect x="50" y="38" width="258" height="118" rx="9" fill="#111111"/>
+  <rect x="69" y="86" width="135" height="10" rx="5" fill="#ffffff" opacity=".92"/>
+  <rect x="69" y="104" width="92" height="6" rx="3" fill="#ffffff" opacity=".55"/>
+  <circle cx="67" cy="139" r="8" fill="#ffffff" opacity=".94"/>
+  <circle cx="291" cy="97" r="9" fill="#ffffff" opacity=".94"/>
+  <path d="M288 93l5 4-5 4" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="168" cy="145" r="2.5" fill="#ffffff"/>
+  <circle cx="177" cy="145" r="2.5" fill="#ffffff" opacity=".45"/>
+  <circle cx="186" cy="145" r="2.5" fill="#ffffff" opacity=".45"/>
+
+  <rect x="50" y="164" width="78" height="24" rx="6" fill="#d9dde3"/>
+  <rect x="136" y="164" width="78" height="24" rx="6" fill="#c8cdd5"/>
+  <rect x="222" y="164" width="86" height="24" rx="6" fill="#e2e5e9"/>
+</svg>

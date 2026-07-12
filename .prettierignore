@@ -1,3 +1,16 @@
+# prettier-plugin-astro 0.14.1 repeatedly inserts whitespace before the closing
+# html tag when a Thymeleaf th:block is the page root. Astro Check still parses
+# and validates these files; keep them out of Prettier until the plugin is fixed.
+src/pages/archives.astro
+src/pages/categories.astro
+src/pages/category.astro
+src/pages/index.astro
+src/pages/page.astro
+src/pages/post.astro
+src/pages/tag.astro
+src/pages/tags.astro
+
+# Build output is generated from src/pages and public.
 templates/
 pnpm-lock.yaml
 pnpm-workspace.yaml

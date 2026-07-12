@@ -3,9 +3,6 @@ export const layoutShortcuts = {
   "fly-content-shell":
     "w-full max-w-[var(--content-width)] mx-auto px-[var(--content-padding-mobile)] pt-3 xl:px-[var(--content-padding-x)] xl:pt-4",
   "fly-content-shell--narrow": "max-w-[820px]",
-  "fly-desktop-topbar":
-    "hidden items-center justify-between gap-6 mb-9 xl:flex",
-  "fly-topbar-actions": "flex items-center gap-4",
   "fly-page-overlay": "fixed inset-0 z-35 pointer-events-none opacity-0",
   "fly-load-more-wrap": "flex items-center justify-center",
 };

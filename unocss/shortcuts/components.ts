@@ -6,8 +6,6 @@ export const componentShortcuts = {
   "fly-button--primary": "bg-[var(--accent)] text-white",
   "fly-button--dark": "bg-[var(--text)] text-[var(--page)]",
   "fly-icon-button": "h-10 w-10 border-0 bg-transparent text-[var(--text)]",
-  "fly-search-box": "relative flex h-10 w-[min(100%,304px)] items-center",
-
   "fly-featured-grid": "min-w-0",
   "fly-featured-card":
     "relative isolate overflow-hidden rounded-[var(--radius-card)] bg-[var(--page-alt)] text-white shadow-[var(--shadow-soft)]",
@@ -28,7 +26,6 @@ export const componentShortcuts = {
   "fly-post-tags": "flex flex-wrap gap-2",
   "fly-topic-section": "grid",
   "fly-topic-block": "grid",
-  "fly-topic-grid": "min-w-0",
   "fly-authors-section": "min-w-0",
   "fly-authors-list": "min-w-0",
   "fly-author-card": "min-w-0",

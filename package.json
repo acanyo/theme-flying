@@ -5,8 +5,9 @@
   },
   "scripts": {
     "dev": "nodemon --config nodemon.json --exec \"node scripts/build-theme.mjs\"",
+    "lint": "prettier --check \"src/**/*.{astro,vue,ts}\" \"public/assets/js/**/*.js\" \"public/assets/css/style.css\" \"unocss/**/*.ts\" \"scripts/**/*.mjs\" astro.config.mjs uno.config.ts package.json theme.yaml settings.yaml annotation-setting.yaml",
+    "typecheck": "astro check",
     "build": "node scripts/build-theme.mjs",
-    "build:uno": "node scripts/build-theme.mjs",
     "astro": "astro",
     "format": "prettier --write ."
   },
@@ -24,23 +25,18 @@
     ]
   },
   "dependencies": {
-    "@astrojs/mdx": "^5.0.3",
-    "@astrojs/rss": "^4.0.18",
     "@astrojs/vue": "^6.0.1",
-    "@halo-dev/api-client": "^2.23.0",
     "astro": "^6.1.4",
-    "ky": "^2.0.0",
-    "sharp": "^0.34.5",
-    "swup": "^4.9.2",
     "vue": "^3.5.32"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.6",
     "@iconify-json/mingcute": "^1.2.7",
     "@unocss/cli": "^66.7.4",
     "nodemon": "^3.1.14",
     "prettier": "3.8.1",
     "prettier-plugin-astro": "0.14.1",
-    "unocss": "^66.7.4",
-    "unplugin-icons": "^23.0.1"
+    "typescript": "^5.9.3",
+    "unocss": "^66.7.4"
   }
 }

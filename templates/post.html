@@ -1,65 +1,7 @@
-﻿<!DOCTYPE html>
-<html
-  lang="zh-CN"
-  th:replace="~{fragments/layout :: page(pageTitle=|${post.spec.title} - ${site.title}|, bodyClass='fly-post', content=~{::content})}"
->
-  <th:block th:fragment="content">
-    <div class="fly-content-shell fly-content-shell--narrow">
-      <article class="fly-post-article">
-        <header class="fly-post-hero">
-          <a
-            class="fly-post-chip"
-            href="/"
-            th:href="@{${not #lists.isEmpty(post.categories) ? post.categories[0].status.permalink : post.status.permalink}}"
-            th:text="${not #lists.isEmpty(post.categories) ? post.categories[0].spec.displayName : '手记'}"
-          >手记</a>
-          <h1 class="fly-post-heading" th:text="${post.spec.title}">文章标题</h1>
-          <p class="fly-post-lede" th:if="${not #strings.isEmpty(post.status.excerpt)}" th:text="${post.status.excerpt}">
-            文章摘要
-          </p>
-          <footer class="fly-post-meta fly-post-meta--hero">
-            <a class="fly-author-pill" href="/" th:href="@{${post.owner?.permalink ?: post.status.permalink}}">
-              <img
-                src="/assets/images/avatar.svg"
-                th:src="${post.owner?.avatar ?: #theme.assets('/images/avatar.svg')}"
-                th:alt="${post.owner?.displayName ?: site.title}"
-                alt=""
-              />
-              <span th:text="${post.owner?.displayName ?: site.title}">作者</span>
-            </a>
-            <span class="fly-dot" aria-hidden="true"></span>
-            <time th:datetime="${post.spec.publishTime}" th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}">
-              2026-07-08
-            </time>
-          </footer>
-          <div class="fly-post-tags fly-post-tags--hero" th:if="${not #lists.isEmpty(post.tags)}">
-            <a th:each="tag : ${post.tags}" th:href="@{${tag.status.permalink}}" th:text="${tag.spec.displayName}">标签</a>
-          </div>
-        </header>
-
-        <figure class="fly-post-hero-image" th:if="${not #strings.isEmpty(post.spec.cover)}">
-          <img th:src="${post.spec.cover}" th:alt="${post.spec.title}" alt="" loading="eager" />
-        </figure>
-
-        <section class="fly-post-content fly-prose" th:utext="${post.content.content}"></section>
-
-        <aside class="fly-post-author-card">
-          <img
-            src="/assets/images/avatar.svg"
-            th:src="${post.owner?.avatar ?: #theme.assets('/images/avatar.svg')}"
-            th:alt="${post.owner?.displayName ?: site.title}"
-            alt=""
-          />
-          <div>
-            <p>作者</p>
-            <h2 th:text="${post.owner?.displayName ?: site.title}">作者</h2>
-          </div>
-        </aside>
-
-        <section class="fly-comments-panel" th:if="${haloCommentEnabled}">
-          <halo:comment group="content.halo.run" kind="Post" th:attr="name=${post.metadata.name}" />
-        </section>
-      </article>
-    </div>
-  </th:block>
-</html>
+<!DOCTYPE html><html lang="zh-CN" th:replace="~{fragments/layout :: page(pageTitle=|${post.spec.title} - ${site.title}|, bodyClass='fly-post', content=~{::content})}"> <th:block th:fragment="content"> <div class="fly-content-shell fly-content-shell--narrow"> <article class="fly-post-article"> <header class="fly-post-hero"> <a class="fly-post-chip" href="/" th:href="@{${not #lists.isEmpty(post.categories) ? post.categories[0].status.permalink : post.status.permalink}}" th:text="${not #lists.isEmpty(post.categories) ? post.categories[0].spec.displayName : '手记'}">手记</a> <h1 class="fly-post-heading" th:text="${post.spec.title}">
+文章标题
+</h1> <p class="fly-post-lede" th:if="${not #strings.isEmpty(post.status.excerpt)}" th:text="${post.status.excerpt}">
+文章摘要
+</p> <footer class="fly-post-meta fly-post-meta--hero"> <a class="fly-author-pill" href="/" th:href="@{${post.owner?.permalink ?: post.status.permalink}}"> <img src="/assets/images/avatar.svg" th:src="${post.owner?.avatar ?: #theme.assets('/images/avatar.svg')}" th:alt="${post.owner?.displayName ?: site.title}" alt=""> <span th:text="${post.owner?.displayName ?: site.title}">作者</span> </a> <span class="fly-dot" aria-hidden="true"></span> <time th:datetime="${post.spec.publishTime}" th:text="${#dates.format(post.spec.publishTime, 'yyyy-MM-dd')}">
+2026-07-08
+</time> </footer> <div class="fly-post-tags fly-post-tags--hero" th:if="${not #lists.isEmpty(post.tags)}"> <a th:each="tag : ${post.tags}" th:href="@{${tag.status.permalink}}" th:text="${tag.spec.displayName}">标签</a> </div> </header> <figure class="fly-post-hero-image" th:if="${not #strings.isEmpty(post.spec.cover)}"> <img th:src="${post.spec.cover}" th:alt="${post.spec.title}" alt="" loading="eager"> </figure> <section class="fly-post-content fly-prose" th:utext="${post.content.content}"></section> <aside class="fly-post-author-card"> <img src="/assets/images/avatar.svg" th:src="${post.owner?.avatar ?: #theme.assets('/images/avatar.svg')}" th:alt="${post.owner?.displayName ?: site.title}" alt=""> <div> <p>作者</p> <h2 th:text="${post.owner?.displayName ?: site.title}">作者</h2> </div> </aside> <section class="fly-comments-panel" th:if="${haloCommentEnabled}"> <halo:comment group="content.halo.run" kind="Post" th:attr="name=${post.metadata.name}"></halo:comment> </section> </article> </div> </th:block> </html>

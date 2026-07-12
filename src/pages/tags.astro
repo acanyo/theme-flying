@@ -1,21 +1,30 @@
 ---
-import Layout from "../layouts/Layout.astro";
+
 ---
 
-<Layout pageTitle="标签">
-  <Fragment slot="head">
-    <title th:text="|标签 - ${site.title}|"></title>
-  </Fragment>
+<html
+  lang="zh-CN"
+  th:replace="~{fragments/layout :: page(pageTitle=|标签 - ${site.title}|, bodyClass='fly-taxonomy', content=~{::content})}"
+>
+  <th:block th:fragment="content">
+    <div class="fly-content-shell">
+      <header class="fly-page-header">
+        <p class="fly-eyebrow">浏览</p>
+        <h1>标签</h1>
+        <p>通过标签查找相关内容。</p>
+      </header>
 
-  <div class="tag-cloud" role="list" aria-label="Tag list">
-    <a
-      th:each="tag : ${tags}"
-      class="tag-pill"
-      role="listitem"
-      th:href="@{${tag.status.permalink}}"
-    >
-      <span th:text="${tag.spec.displayName}"></span>
-      <span class="tag-pill__count" th:text="${tag.postCount}"></span>
-    </a>
-  </div>
-</Layout>
+      <nav class="fly-tag-cloud" aria-label="标签列表">
+        <a
+          th:each="tag : ${tags}"
+          class="fly-tag-pill"
+          th:href="@{${tag.status.permalink}}"
+        >
+          <span th:text="${tag.spec.displayName}">标签</span>
+          <small th:text="${tag.postCount}">0</small>
+        </a>
+      </nav>
+    </div>
+  </th:block>
+
+</html>

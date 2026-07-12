@@ -82,6 +82,10 @@ export const homeFeaturedPreflight = {
   pointer-events: none;
 }
 
+.fly-featured-card--lead .fly-featured-content {
+  padding: 40px;
+}
+
 .fly-featured-content a {
   pointer-events: auto;
 }
@@ -134,6 +138,8 @@ export const homeFeaturedPreflight = {
 
   .fly-featured-card--lead {
     grid-column: 1 / -1;
+    min-height: 417px;
+    aspect-ratio: auto;
   }
 
   .fly-featured-grid > .fly-featured-card:nth-child(n + 4) {
@@ -141,12 +147,12 @@ export const homeFeaturedPreflight = {
   }
 }
 
-@media (min-width: 992px) and (max-width: 1399px) {
+@media (min-width: 992px) and (max-width: 1574px) {
   .fly-home-shell .fly-featured-grid {
-    height: clamp(360px, 29vw, 390px);
-    grid-template-columns: minmax(0, 2.05fr) minmax(250px, 1fr);
+    height: 429px;
+    grid-template-columns: minmax(0, 2.073fr) minmax(250px, 1fr);
     grid-template-rows: repeat(2, minmax(0, 1fr));
-    gap: 20px;
+    gap: 30px;
   }
 
   .fly-featured-card {
@@ -166,9 +172,23 @@ export const homeFeaturedPreflight = {
   }
 }
 
-@media (min-width: 1400px) {
+@media (min-width: 1200px) and (max-width: 1574px) {
+  body[data-fly-sidebar-collapsed="true"] .fly-home-shell .fly-featured-grid {
+    height: clamp(390px, 29vw, 429px);
+    grid-template-columns: minmax(0, 2.05fr) repeat(2, minmax(220px, 1fr));
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: var(--content-padding-x);
+  }
+
+  body[data-fly-sidebar-collapsed="true"] .fly-featured-grid > .fly-featured-card:nth-child(4),
+  body[data-fly-sidebar-collapsed="true"] .fly-featured-grid > .fly-featured-card:nth-child(5) {
+    display: block;
+  }
+}
+
+@media (min-width: 1575px) {
   .fly-home-shell .fly-featured-grid {
-    height: clamp(360px, 26vw, 390px);
+    height: clamp(390px, 26vw, 429px);
     grid-template-columns: minmax(0, 2.05fr) repeat(2, minmax(220px, 1fr));
     grid-template-rows: repeat(2, minmax(0, 1fr));
     gap: clamp(20px, 1.6vw, 30px);
@@ -210,9 +230,9 @@ export const homeFeaturedPreflight = {
   position: relative;
   display: flex;
   min-width: 0;
-  min-height: 300px;
+  min-height: 557px;
   flex: 0 0 100%;
-  aspect-ratio: 21 / 9;
+  aspect-ratio: auto;
   align-items: center;
   justify-content: center;
   overflow: hidden;
@@ -252,7 +272,7 @@ export const homeFeaturedPreflight = {
   margin: 12px 0 0;
   overflow: hidden;
   color: #fff;
-  font-size: clamp(24px, 3vw, 42px);
+  font-size: clamp(18px, 3vw, 42px);
   font-weight: 600;
   letter-spacing: 0;
   line-height: 1.1;
@@ -342,29 +362,241 @@ export const homeFeaturedPreflight = {
 
 .fly-home-carousel-card {
   display: grid;
+  height: auto;
   min-width: 0;
   flex: 0 0 100%;
   grid-template-areas: "copy media";
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 0.968fr) minmax(0, 1fr);
   gap: 20px;
   align-items: stretch;
   scroll-snap-align: start;
 }
 
 .fly-home-carousel-copy {
+  position: relative;
   display: flex;
   min-width: 0;
   grid-area: copy;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: flex-start;
+  height: 100%;
+  overflow: visible;
+  padding: 20px;
+  color: var(--text);
+}
+
+.fly-home-carousel-avatars {
+  position: relative;
+  display: flex;
+  min-height: 46px;
+  align-items: center;
+  margin-bottom: auto;
+  padding-bottom: 16px;
+}
+
+.fly-home-carousel-author {
+  display: block;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+}
+
+.fly-home-carousel-author + .fly-home-carousel-author {
+  margin-left: -11px;
+}
+
+.fly-home-carousel-avatar {
+  position: relative;
+  display: block;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  overflow: hidden;
+  border: 2px solid var(--page-alt);
+  border-radius: 50%;
+  background: var(--page);
+}
+
+.fly-home-carousel-author:hover .fly-home-carousel-avatar,
+.fly-home-carousel-author:focus-within .fly-home-carousel-avatar {
+  z-index: 2;
+}
+
+.fly-home-carousel-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fly-author-popover {
+  position: absolute;
+  top: calc(100% - 6px);
+  left: 0;
+  z-index: 20;
+  width: min(320px, calc(100vw - 64px));
+  visibility: hidden;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--page);
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.18);
+  color: var(--text);
+  opacity: 0;
+  padding: 28px;
+  pointer-events: none;
+  text-align: left;
+  transform: translateY(8px);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    visibility 180ms ease;
+}
+
+.fly-author-popover::before {
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  left: 0;
+  height: 12px;
+  content: "";
+}
+
+.fly-home-carousel-author:hover .fly-author-popover,
+.fly-home-carousel-author:focus-within .fly-author-popover {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.fly-author-popover-avatar {
+  display: block;
+  width: 72px;
+  height: 72px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--page-alt);
+}
+
+.fly-author-popover-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fly-author-popover-name {
+  display: block;
+  width: fit-content;
+  margin-top: 22px;
+  color: var(--text);
+  font-size: 28px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.fly-author-popover-name:hover,
+.fly-author-popover-name:focus-visible {
+  color: var(--accent);
+}
+
+.fly-author-popover-bio {
+  display: -webkit-box;
+  margin: 18px 0 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.fly-author-popover-contacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.fly-author-popover-contacts > :is(a, button) {
+  position: relative;
+  display: inline-flex;
+  width: 46px;
+  height: 46px;
+  align-items: center;
   justify-content: center;
-  padding: 20px 20px 84px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--hover-bg-color);
+  color: var(--text);
+  padding: 0;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.fly-author-popover-contacts > :is(a, button):hover,
+.fly-author-popover-contacts > :is(a, button):focus-visible {
+  background: var(--accent);
+  color: var(--page);
+  transform: translateY(-2px);
+}
+
+.fly-author-popover-contacts > button::after {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  visibility: hidden;
+  border-radius: 6px;
+  background: var(--text);
+  color: var(--page);
+  content: "已复制";
+  font-size: 12px;
+  line-height: 1;
+  opacity: 0;
+  padding: 7px 9px;
+  pointer-events: none;
+  transform: translate(-50%, 4px);
+  transition:
+    opacity 140ms ease,
+    transform 140ms ease,
+    visibility 140ms ease;
+  white-space: nowrap;
+}
+
+.fly-author-popover-contacts > button[data-fly-contact-copied="true"]::after {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.fly-author-popover-contacts .fly-iconify {
+  width: 21px;
+  height: 21px;
+  flex-basis: 21px;
+}
+
+.fly-home-carousel-terms {
+  display: flex;
+  min-height: 21px;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 8px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+}
+
+.fly-home-carousel-terms a:hover,
+.fly-home-carousel-terms a:focus-visible {
   color: var(--text);
 }
 
 .fly-home-carousel-copy h2 {
   display: -webkit-box;
-  margin: 12px 0 0;
+  margin: 8px 0 0;
   overflow: hidden;
   color: var(--text);
   font-size: 28px;
@@ -377,7 +609,7 @@ export const homeFeaturedPreflight = {
 
 .fly-home-carousel-copy > p {
   display: -webkit-box;
-  margin: 16px 0 0;
+  margin: 14px 0 0;
   overflow: hidden;
   color: var(--muted);
   font-size: 16px;
@@ -386,21 +618,37 @@ export const homeFeaturedPreflight = {
   -webkit-line-clamp: 2;
 }
 
-.fly-home-carousel-copy .fly-post-meta {
-  flex-wrap: wrap;
-  margin-top: 20px;
-}
-
 .fly-home-carousel-media {
   position: relative;
   display: block;
   width: 100%;
   min-width: 0;
   grid-area: media;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 8 / 5;
   overflow: hidden;
   border-radius: 14px;
   background: var(--hover-bg-color);
+}
+
+.fly-home-carousel-media-meta {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+}
+
+.fly-home-carousel-media-meta > * {
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.62);
+  padding: 5px 9px;
+  white-space: nowrap;
 }
 
 .fly-home-carousel-media img {
@@ -420,11 +668,11 @@ export const homeFeaturedPreflight = {
   min-height: 40px;
   align-items: center;
   gap: 8px;
-  margin-top: 24px;
+  margin-top: 20px;
   border-radius: 999px;
   background: var(--text);
   color: var(--page);
-  padding: 9px 16px;
+  padding: 8px 20px;
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
@@ -443,6 +691,11 @@ export const homeFeaturedPreflight = {
   right: calc(50% + 40px);
   bottom: 40px;
   z-index: 5;
+  gap: 0;
+}
+
+.fly-home-carousel .fly-carousel-dots {
+  display: none;
 }
 
 .fly-home-carousel .fly-carousel-arrow {
@@ -461,32 +714,44 @@ export const homeFeaturedPreflight = {
 }
 
 @media (max-width: 991px) {
+  .fly-home-slide {
+    min-height: 369px;
+  }
+
+  .fly-home-slide-content h2 {
+    font-size: 26px;
+  }
+
   .fly-home-carousel {
     border-radius: 14px;
     padding: 0;
   }
 
   .fly-home-carousel-card {
+    height: auto;
     grid-template-areas:
       "media"
       "copy";
     grid-template-columns: minmax(0, 1fr);
-    gap: 0;
+    gap: 20px;
   }
 
   .fly-home-carousel-media {
     aspect-ratio: 16 / 9;
-    border-radius: 14px 14px 0 0;
+    border-radius: 14px;
   }
 
   .fly-home-carousel-copy {
-    min-height: 280px;
-    padding: 30px 30px 84px;
+    position: relative;
+    height: 306px;
+    min-height: 0;
+    overflow: visible;
+    padding: 30px;
   }
 
   .fly-home-carousel > .fly-carousel-controls {
-    right: 24px;
-    bottom: 24px;
+    right: 20px;
+    bottom: 20px;
   }
 }
 
@@ -504,16 +769,18 @@ export const homeFeaturedPreflight = {
   }
 
   .fly-home-slide {
-    aspect-ratio: 4 / 3;
+    min-height: 390px;
+    aspect-ratio: auto;
   }
 
   .fly-home-slide-content {
-    width: calc(100% - 48px);
-    padding: 40px 0 64px;
+    width: calc(100% - 40px);
+    padding: 20px 0 70px;
   }
 
   .fly-home-slide-content h2 {
-    font-size: 26px;
+    font-size: 18px;
+    line-height: 1.2;
   }
 
   .fly-home-slide-content > p {
@@ -537,8 +804,9 @@ export const homeFeaturedPreflight = {
   }
 
   .fly-home-carousel-copy {
-    min-height: 290px;
-    padding: 24px 20px 80px;
+    height: 300px;
+    min-height: 0;
+    padding: 16px;
   }
 
   .fly-home-carousel-copy h2 {
@@ -551,16 +819,17 @@ export const homeFeaturedPreflight = {
   }
 
   .fly-home-carousel > .fly-carousel-controls {
-    right: 18px;
-    bottom: 18px;
-  }
-
-  .fly-home-carousel .fly-carousel-dots {
-    display: none;
+    right: 20px;
+    bottom: 20px;
   }
 }
 
 @media (max-width: 539px) {
+  .fly-featured-card--lead {
+    min-height: 519px;
+    aspect-ratio: auto;
+  }
+
   .fly-featured-grid > .fly-featured-card:nth-child(n + 4) {
     display: none;
   }
@@ -569,7 +838,9 @@ export const homeFeaturedPreflight = {
 @media (prefers-reduced-motion: reduce) {
   .fly-featured-image,
   .fly-home-slide-image,
-  .fly-home-carousel-media img {
+  .fly-home-carousel-media img,
+  .fly-author-popover,
+  .fly-author-popover-contacts > :is(a, button) {
     transition-duration: 1ms;
   }
 }

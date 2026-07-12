@@ -4,7 +4,7 @@ export const sidebarPreflight = {
   border-right: 0;
   background: var(--page);
   overflow: hidden;
-  transition: width 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+  transition: width 220ms ease, transform 600ms cubic-bezier(0.2, 1, 0.2, 1), box-shadow 220ms ease;
 }
 
 .fly-sidebar-inner {
@@ -104,6 +104,12 @@ export const sidebarPreflight = {
   height: 100%;
 }
 
+.fly-menu-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .fly-menu-icon--sub {
   width: 16px;
   height: 16px;
@@ -147,16 +153,6 @@ export const sidebarPreflight = {
 .fly-sidebar-tags {
   margin-top: 14px;
   padding-top: 0;
-}
-
-.fly-sidebar-empty {
-  width: 220px;
-  border-radius: 10px;
-  background: var(--page-alt);
-  color: var(--faint);
-  padding: 10px 12px;
-  font-size: 13px;
-  line-height: 1.45;
 }
 
 .fly-sidebar-section-link,
@@ -385,7 +381,7 @@ export const sidebarPreflight = {
   flex-basis: 16px;
 }
 
-@media (min-width: 1180px) {
+@media (min-width: 768px) {
   body[data-fly-sidebar-collapsed="true"] .fly-site-sidebar {
     width: var(--sidebar-collapsed-width);
   }
@@ -450,17 +446,17 @@ export const sidebarPreflight = {
   }
 }
 
-@media (max-width: 1179px) {
+@media (max-width: 767px) {
   .fly-sidebar-tip,
   .fly-sidebar-flyout {
     display: none;
   }
 
-  .fly-site-sidebar {
+  body .fly-site-sidebar {
     top: 0;
     bottom: 0;
     z-index: 45;
-    width: min(273px, 86vw);
+    width: min(260.125px, 86vw);
     height: 100vh;
     transform: translateX(-100%);
     box-shadow: 22px 0 60px rgba(0, 0, 0, 0.12);

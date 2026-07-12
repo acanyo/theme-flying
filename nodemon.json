@@ -1,15 +1,19 @@
 {
   "verbose": false,
   "watch": [
-    "templates/**/*.html",
-    "templates/assets/js/**/*.js",
-    "templates/assets/images/**/*.svg",
+    "src/**/*",
+    "public/**/*",
     "unocss/**/*",
     "scripts/**/*",
+    "astro.config.mjs",
     "theme.yaml",
     "settings.yaml",
     "uno.config.ts"
   ],
-  "ignore": ["templates/assets/css/**"],
-  "ext": "html,js,svg,yaml,ts,mjs"
+  "ignore": [
+    "templates/**/*",
+    "public/assets/css/uno.css",
+    "public/assets/icons/iconify/**/*"
+  ],
+  "ext": "astro,vue,html,js,css,svg,yaml,ts,mjs"
 }

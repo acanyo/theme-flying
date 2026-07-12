@@ -2,7 +2,6 @@
 import { defineConfig } from "astro/config";
 
 import vue from "@astrojs/vue";
-import Icons from "unplugin-icons/vite";
 
 export default defineConfig({
   base: "/themes/theme-flying",
@@ -12,11 +11,4 @@ export default defineConfig({
   },
   outDir: "./templates",
   integrations: [vue()],
-  vite: {
-    plugins: [
-      Icons({
-        compiler: "vue3",
-      }),
-    ],
-  },
 });

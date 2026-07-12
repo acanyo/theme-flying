@@ -1,4 +1,4 @@
-import { all } from "../utils/dom.js?fly=1.0.41";
+import { all } from "../utils/dom.js?fly=1.0.42";
 
 function normalizeLocalPath(href) {
   try {

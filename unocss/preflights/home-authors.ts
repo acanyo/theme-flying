@@ -11,37 +11,58 @@ export const homeAuthorsPreflight = {
 }
 
 .fly-authors-heading h2 {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 600;
   letter-spacing: 0;
   line-height: 1.2;
 }
 
-.fly-authors-heading p:not(.fly-eyebrow) {
-  max-width: 440px;
-  margin-top: 8px;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.5;
+.fly-authors-carousel {
+  position: relative;
+  min-width: 0;
 }
 
 .fly-author-controls {
-  display: flex;
-  flex: 0 0 auto;
-  gap: 8px;
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
 }
 
 .fly-author-controls .fly-carousel-arrow {
-  width: 36px;
-  height: 36px;
-  flex-basis: 36px;
-  border-color: transparent;
-  background: transparent;
+  position: absolute;
+  top: 35%;
+  width: 52px;
+  height: 52px;
+  border: 0;
+  background: var(--page);
+  box-shadow: 0 12px 34px -12px rgba(0, 0, 0, 0.32);
+  pointer-events: auto;
+  transform: translateY(-50%);
 }
 
 .fly-author-controls .fly-carousel-arrow:not(:disabled):hover {
-  border-color: transparent;
   background: var(--hover-bg-color);
+  transform: translateY(-50%) scale(1.03);
+}
+
+.fly-author-controls .fly-carousel-arrow:disabled {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.fly-author-controls .fly-carousel-arrow--prev {
+  left: -18px;
+}
+
+.fly-author-controls .fly-carousel-arrow--next {
+  right: -18px;
+}
+
+.fly-author-controls .fly-iconify--chevron {
+  width: 18px;
+  height: 18px;
 }
 
 .fly-authors-list {
@@ -61,7 +82,7 @@ export const homeAuthorsPreflight = {
 
 .fly-author-card {
   min-width: 0;
-  flex: 0 0 calc((100% - clamp(48px, 6.3vw, 90px)) / 4);
+  flex: 0 0 212px;
   scroll-snap-align: start;
   scroll-snap-stop: normal;
 }
@@ -91,8 +112,7 @@ export const homeAuthorsPreflight = {
 }
 
 .fly-author-card-link:hover .fly-author-portrait {
-  box-shadow: var(--shadow-soft);
-  transform: translateY(-2px);
+  box-shadow: 0 18px 38px -16px rgba(0, 0, 0, 0.35);
 }
 
 .fly-author-card-link:hover .fly-author-portrait img {
@@ -110,8 +130,9 @@ export const homeAuthorsPreflight = {
 .fly-author-copy {
   display: grid;
   min-width: 0;
-  gap: 4px;
+  gap: 8px;
   margin-top: 14px;
+  padding: 0 8px;
 }
 
 .fly-author-name {
@@ -125,53 +146,48 @@ export const homeAuthorsPreflight = {
 }
 
 .fly-author-link-label {
-  overflow: hidden;
   color: var(--faint);
-  font-size: 13px;
-  line-height: 1.4;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-@media (max-width: 1100px) {
+.fly-authors-section[data-fly-author-count="1"] .fly-author-controls {
+  display: none;
+}
+
+@media (min-width: 440px) {
   .fly-author-card {
-    flex-basis: calc((100% - clamp(32px, 4.2vw, 60px)) / 3);
+    flex-basis: calc((100% - 16px) / 2);
   }
 }
 
-@media (max-width: 800px) {
+@media (min-width: 768px) {
   .fly-author-card {
-    flex-basis: calc((100% - 18px) / 2);
+    flex-basis: calc((100% - var(--content-padding-x) * 3) / 4);
+  }
+}
+
+@media (min-width: 992px) {
+  .fly-author-card {
+    flex-basis: calc((100% - var(--content-padding-x) * 4) / 5);
+  }
+}
+
+@media (min-width: 1200px) {
+  body[data-fly-sidebar-collapsed="true"] .fly-author-card {
+    flex-basis: calc((100% - var(--content-padding-x) * 5) / 6);
   }
 }
 
 @media (max-width: 620px) {
-  .fly-authors-heading {
-    display: flex;
-    align-items: flex-end;
-    gap: 16px;
-  }
-
-  .fly-authors-heading p:not(.fly-eyebrow) {
-    max-width: 270px;
-  }
-
   .fly-author-controls {
-    margin-top: 0;
-  }
-
-  .fly-author-card {
-    flex-basis: min(78vw, 280px);
+    display: none;
   }
 }
 
 @media (max-width: 420px) {
-  .fly-authors-heading p:not(.fly-eyebrow) {
-    display: none;
-  }
-
-  .fly-author-card {
-    flex-basis: min(76vw, 268px);
+  .fly-authors-heading .fly-section-action {
+    padding-inline: 10px;
   }
 }
 

@@ -5,7 +5,8 @@ function isValidEmail(value) {
 }
 
 function getEndpoint(form) {
-  const endpoint = form.dataset.flyNewsletterEndpoint || form.getAttribute("action");
+  const endpoint =
+    form.dataset.flyNewsletterEndpoint || form.getAttribute("action");
   return endpoint && endpoint !== "#" ? endpoint.trim() : "";
 }
 
@@ -22,7 +23,7 @@ function setStatus(status, state, message) {
 function setBusy(form, button, busy, idleLabel) {
   form.setAttribute("aria-busy", String(busy));
   button.disabled = busy;
-  button.textContent = busy ? "正在订阅..." : idleLabel;
+  button.textContent = busy ? "Sending..." : idleLabel;
 }
 
 async function submitNewsletter(form, endpoint, signal) {
@@ -85,14 +86,14 @@ export function setupNewsletter(root) {
         const email = input.value ? input.value.trim() : "";
         if (!email) {
           input.setAttribute("aria-invalid", "true");
-          setStatus(status, "error", "请输入邮箱地址。");
+          setStatus(status, "error", "Please enter your email address.");
           input.focus();
           return;
         }
 
         if (!isValidEmail(email)) {
           input.setAttribute("aria-invalid", "true");
-          setStatus(status, "error", "邮箱格式不正确，请检查后重试。");
+          setStatus(status, "error", "Please enter a valid email address.");
           input.focus();
           return;
         }
@@ -100,20 +101,28 @@ export function setupNewsletter(root) {
         input.removeAttribute("aria-invalid");
         const endpoint = getEndpoint(form);
         if (!endpoint) {
-          setStatus(status, "notice", "邮箱格式正确，但本站暂未接入订阅服务，本次未发送请求。");
+          setStatus(
+            status,
+            "notice",
+            "Thanks! This local demo does not send subscription requests.",
+          );
           return;
         }
 
         setBusy(form, button, true, idleLabel);
-        setStatus(status, "pending", "正在提交订阅请求...");
+        setStatus(status, "pending", "Sending your subscription request...");
 
         try {
           await submitNewsletter(form, endpoint, controller.signal);
           form.reset();
-          setStatus(status, "success", "订阅成功，请留意邮箱中的确认信息。");
+          setStatus(status, "success", "Subscribed. Please check your inbox.");
         } catch (error) {
           if (error.name !== "AbortError") {
-            setStatus(status, "error", "订阅失败，请稍后重试。");
+            setStatus(
+              status,
+              "error",
+              "Subscription failed. Please try again.",
+            );
           }
         } finally {
           if (!controller.signal.aborted) {

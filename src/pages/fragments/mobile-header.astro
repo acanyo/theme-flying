@@ -1,0 +1,44 @@
+---
+import ThemeSwitcher from "../../components/ThemeSwitcher.vue";
+---
+
+<header class="fly-mobile-header" th:fragment="mobileHeader">
+  <div class="fly-navbar-brand">
+    <button
+      class="fly-icon-button fly-menu-button"
+      type="button"
+      data-fly-menu-toggle
+      aria-label="打开菜单"
+      aria-expanded="false"
+    >
+      <span
+        class="fly-iconify fly-iconify--menu fly-menu-icon-open"
+        aria-hidden="true"></span>
+      <span
+        class="fly-iconify fly-iconify--close fly-menu-icon-close"
+        aria-hidden="true"></span>
+    </button>
+    <a
+      class="fly-brand fly-brand--mobile"
+      href="/"
+      th:href="@{/}"
+      th:text="${site.title}">站点</a
+    >
+  </div>
+
+  <button
+    class="fly-navbar-search"
+    type="button"
+    th:if="${pluginFinder.available('PluginSearchWidget')}"
+    data-fly-search-trigger
+    aria-label="搜索文章"
+  >
+    <span
+      class="fly-iconify fly-iconify--search fly-search-icon"
+      aria-hidden="true"></span>
+    <span class="fly-search-placeholder">搜索文章</span>
+    <kbd aria-hidden="true">/</kbd>
+  </button>
+
+  <ThemeSwitcher client:load />
+</header>

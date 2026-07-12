@@ -13,7 +13,7 @@ spec:
           value: grid
           help: 选择首页顶部精选区域的展示风格；访客不能在前台自行切换。
           render-type: image
-          size: 160
+          size: 180
           gap: 12
           options:
             - label: 网格
@@ -39,6 +39,25 @@ spec:
           label: 版权文案
           value: "© {year} {site}"
           help: 支持占位符 {year} 和 {site}，例如 © {year} {site}。
+        - $formkit: select
+          name: home_link_group
+          label: 首页友情链接分组
+          value: ""
+          placeholder: 请选择链接分组
+          help: 选择“链接管理”插件中的一个分组在首页展示；不选择则隐藏友情链接版块。
+          clearable: true
+          searchable: true
+          autoSelect: false
+          action: /apis/core.halo.run/v1alpha1/linkgroups
+          requestOption:
+            method: GET
+            pageField: page
+            sizeField: size
+            totalField: total
+            itemsField: items
+            labelField: spec.displayName
+            valueField: metadata.name
+            fieldSelectorKey: metadata.name
 
     - group: navigation
       label: 导航
@@ -96,6 +115,20 @@ spec:
               name: new_tab
               label: 新窗口打开
               value: true
+
+    - group: style
+      label: 配色设置
+      formSchema:
+        - $formkit: color
+          name: primary_color
+          label: 主题主色
+          value: "#000000"
+          help: 用于按钮、链接、选中状态、焦点边框和 Halo 搜索组件。
+        - $formkit: color
+          name: secondary_color
+          label: 主题辅助色
+          value: "#000000"
+          help: 用于弱强调、装饰元素和辅助交互；默认与主色一致以保持原版黑白风格。
 
     - group: advanced
       label: 高级设置

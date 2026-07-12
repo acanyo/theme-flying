@@ -1,11 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="360" height="240" viewBox="0 0 360 240" role="img" aria-label="Carousel layout preview">
-  <rect width="360" height="240" rx="28" fill="#f7f7f7"/>
-  <rect x="28" y="42" width="132" height="14" rx="7" fill="#111111"/>
-  <rect x="28" y="72" width="154" height="14" rx="7" fill="#111111" opacity=".9"/>
-  <rect x="28" y="106" width="126" height="10" rx="5" fill="#767676"/>
-  <rect x="28" y="130" width="96" height="10" rx="5" fill="#a0a0a0"/>
-  <rect x="210" y="36" width="122" height="154" rx="22" fill="#101010"/>
-  <circle cx="48" cy="178" r="15" fill="#111111"/>
-  <circle cx="84" cy="178" r="15" fill="#d8d8d8"/>
-  <text x="28" y="228" fill="#6b6b6b" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">Carousel</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200" role="img" aria-label="轮播首页布局预览">
+  <rect x="1" y="1" width="318" height="198" rx="12" fill="#f5f6f8" stroke="#d8dce3" stroke-width="2"/>
+  <rect x="12" y="12" width="296" height="18" rx="5" fill="#ffffff"/>
+  <circle cx="23" cy="21" r="3" fill="#111111"/>
+  <rect x="31" y="18" width="36" height="6" rx="3" fill="#b7bdc7"/>
+  <rect x="242" y="17" width="42" height="8" rx="4" fill="#e2e5ea"/>
+  <circle cx="297" cy="21" r="5" fill="#111111"/>
+
+  <rect x="12" y="38" width="46" height="150" rx="7" fill="#e7e9ed"/>
+  <rect x="20" y="49" width="30" height="8" rx="4" fill="#ffffff"/>
+  <rect x="20" y="64" width="23" height="5" rx="2.5" fill="#b6bbc4"/>
+  <rect x="20" y="76" width="26" height="5" rx="2.5" fill="#b6bbc4"/>
+  <rect x="20" y="88" width="20" height="5" rx="2.5" fill="#b6bbc4"/>
+
+  <rect x="66" y="38" width="242" height="108" rx="9" fill="#e2e5e9"/>
+  <rect x="80" y="58" width="91" height="9" rx="4.5" fill="#111111"/>
+  <rect x="80" y="75" width="72" height="7" rx="3.5" fill="#4f545d"/>
+  <rect x="80" y="93" width="88" height="5" rx="2.5" fill="#a3a9b2"/>
+  <rect x="80" y="104" width="61" height="5" rx="2.5" fill="#a3a9b2"/>
+  <rect x="80" y="121" width="48" height="14" rx="7" fill="#111111"/>
+  <rect x="187" y="48" width="111" height="88" rx="8" fill="#111111"/>
+  <circle cx="286" cy="137" r="9" fill="#ffffff"/>
+  <path d="M283 133l5 4-5 4" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="66" y="154" width="72" height="34" rx="7" fill="#d9dde3"/>
+  <rect x="146" y="154" width="72" height="34" rx="7" fill="#c8cdd5"/>
+  <rect x="226" y="154" width="82" height="34" rx="7" fill="#e2e5e9"/>
 </svg>

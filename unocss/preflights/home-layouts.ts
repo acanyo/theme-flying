@@ -20,6 +20,13 @@ export const homeLayoutsPreflight = {
   user-select: none;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  [data-fly-carousel-buttons-only] [data-fly-carousel-rail] {
+    overflow-x: hidden;
+    touch-action: pan-y pinch-zoom;
+  }
+}
+
 .fly-carousel-controls {
   display: flex;
   align-items: center;

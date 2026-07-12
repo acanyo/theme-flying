@@ -2,8 +2,12 @@ import { all } from "../utils/dom.js?fly=1.0.30";
 
 const VALID_LAYOUTS = new Set(["grid", "slider", "carousel"]);
 
-function readConfiguredLayout() {
-  const layout = document.documentElement.dataset.flyHomeLayout || "grid";
+function readConfiguredLayout(root) {
+  const home = root.querySelector(".fly-home-shell[data-fly-home-layout]");
+  const layout =
+    home?.dataset.flyHomeLayout ||
+    document.documentElement.dataset.flyHomeLayout ||
+    "grid";
   return VALID_LAYOUTS.has(layout) ? layout : "grid";
 }
 
@@ -17,17 +21,20 @@ function itemLeft(rail, item) {
 }
 
 function nearestItemIndex(rail, items) {
-  return items.reduce((nearest, item, index) => {
-    const distance = Math.abs(itemLeft(rail, item) - rail.scrollLeft);
-    return distance < nearest.distance ? { index, distance } : nearest;
-  }, { index: 0, distance: Number.POSITIVE_INFINITY }).index;
+  return items.reduce(
+    (nearest, item, index) => {
+      const distance = Math.abs(itemLeft(rail, item) - rail.scrollLeft);
+      return distance < nearest.distance ? { index, distance } : nearest;
+    },
+    { index: 0, distance: Number.POSITIVE_INFINITY },
+  ).index;
 }
 
 function createDots(container, items, onSelect, signal) {
   if (!container) return [];
   container.replaceChildren();
 
-  return items.map((item, index) => {
+  return items.map((_, index) => {
     const dot = document.createElement("button");
     dot.className = "fly-carousel-dot";
     dot.type = "button";
@@ -46,37 +53,54 @@ function setupPointerDrag(rail, signal) {
 
   function finishDrag(event) {
     if (pointerId === null || event.pointerId !== pointerId) return;
-    if (rail.hasPointerCapture(pointerId)) rail.releasePointerCapture(pointerId);
+    if (rail.hasPointerCapture(pointerId))
+      rail.releasePointerCapture(pointerId);
     pointerId = null;
     rail.classList.remove("fly-is-dragging");
   }
 
-  rail.addEventListener("pointerdown", (event) => {
-    if (event.pointerType === "touch" || event.button !== 0) return;
-    pointerId = event.pointerId;
-    startX = event.clientX;
-    startScrollLeft = rail.scrollLeft;
-    didDrag = false;
-    rail.setPointerCapture(pointerId);
-    rail.classList.add("fly-is-dragging");
-  }, { signal });
+  rail.addEventListener(
+    "pointerdown",
+    (event) => {
+      if (event.pointerType === "touch" || event.button !== 0) return;
+      pointerId = event.pointerId;
+      startX = event.clientX;
+      startScrollLeft = rail.scrollLeft;
+      didDrag = false;
+      rail.setPointerCapture(pointerId);
+      rail.classList.add("fly-is-dragging");
+    },
+    { signal },
+  );
 
-  rail.addEventListener("pointermove", (event) => {
-    if (event.pointerId !== pointerId) return;
-    const distance = event.clientX - startX;
-    didDrag = didDrag || Math.abs(distance) > 5;
-    rail.scrollLeft = startScrollLeft - distance;
-  }, { signal });
+  rail.addEventListener(
+    "pointermove",
+    (event) => {
+      if (event.pointerId !== pointerId) return;
+      const distance = event.clientX - startX;
+      didDrag = didDrag || Math.abs(distance) > 5;
+      rail.scrollLeft = startScrollLeft - distance;
+    },
+    { signal },
+  );
 
   rail.addEventListener("pointerup", finishDrag, { signal });
   rail.addEventListener("pointercancel", finishDrag, { signal });
-  rail.addEventListener("click", (event) => {
-    if (!didDrag) return;
-    event.preventDefault();
-    event.stopPropagation();
-    didDrag = false;
-  }, { capture: true, signal });
-  signal.addEventListener("abort", () => rail.classList.remove("fly-is-dragging"), { once: true });
+  rail.addEventListener(
+    "click",
+    (event) => {
+      if (!didDrag) return;
+      event.preventDefault();
+      event.stopPropagation();
+      didDrag = false;
+    },
+    { capture: true, signal },
+  );
+  signal.addEventListener(
+    "abort",
+    () => rail.classList.remove("fly-is-dragging"),
+    { once: true },
+  );
 }
 
 function setupCarousel(carousel, signal) {
@@ -86,6 +110,8 @@ function setupCarousel(carousel, signal) {
   const items = all("[data-fly-carousel-item]", rail || carousel);
   if (!rail || !prev || !next || items.length === 0) return;
 
+  const buttonsOnly = carousel.hasAttribute("data-fly-carousel-buttons-only");
+
   let activeIndex = 0;
   let frame = 0;
 
@@ -94,7 +120,12 @@ function setupCarousel(carousel, signal) {
     rail.scrollTo({ left: itemLeft(rail, items[activeIndex]), behavior });
   }
 
-  const dots = createDots(carousel.querySelector("[data-fly-carousel-dots]"), items, scrollToIndex, signal);
+  const dots = createDots(
+    carousel.querySelector("[data-fly-carousel-dots]"),
+    items,
+    scrollToIndex,
+    signal,
+  );
   carousel.dataset.flyCarouselSingle = String(items.length === 1);
 
   function sync() {
@@ -102,7 +133,9 @@ function setupCarousel(carousel, signal) {
     const maxScroll = Math.max(0, rail.scrollWidth - rail.clientWidth - 1);
     prev.disabled = rail.scrollLeft <= 1;
     next.disabled = rail.scrollLeft >= maxScroll;
-    items.forEach((item, index) => item.setAttribute("aria-current", String(index === activeIndex)));
+    items.forEach((item, index) =>
+      item.setAttribute("aria-current", String(index === activeIndex)),
+    );
     dots.forEach((dot, index) => {
       const isActive = index === activeIndex;
       dot.classList.toggle("fly-is-active", isActive);
@@ -115,15 +148,23 @@ function setupCarousel(carousel, signal) {
     frame = window.requestAnimationFrame(sync);
   }
 
-  prev.addEventListener("click", () => scrollToIndex(activeIndex - 1), { signal });
-  next.addEventListener("click", () => scrollToIndex(activeIndex + 1), { signal });
-  carousel.addEventListener("keydown", (event) => {
-    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
-    event.preventDefault();
-    scrollToIndex(activeIndex + (event.key === "ArrowRight" ? 1 : -1));
-  }, { signal });
+  prev.addEventListener("click", () => scrollToIndex(activeIndex - 1), {
+    signal,
+  });
+  next.addEventListener("click", () => scrollToIndex(activeIndex + 1), {
+    signal,
+  });
+  carousel.addEventListener(
+    "keydown",
+    (event) => {
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      event.preventDefault();
+      scrollToIndex(activeIndex + (event.key === "ArrowRight" ? 1 : -1));
+    },
+    { signal },
+  );
   rail.addEventListener("scroll", scheduleSync, { passive: true, signal });
-  setupPointerDrag(rail, signal);
+  if (!buttonsOnly) setupPointerDrag(rail, signal);
 
   if ("ResizeObserver" in window) {
     const observer = new ResizeObserver(() => {
@@ -134,12 +175,16 @@ function setupCarousel(carousel, signal) {
       });
     });
     observer.observe(rail);
-    signal.addEventListener("abort", () => observer.disconnect(), { once: true });
+    signal.addEventListener("abort", () => observer.disconnect(), {
+      once: true,
+    });
   } else {
     window.addEventListener("resize", scheduleSync, { signal });
   }
 
-  signal.addEventListener("abort", () => window.cancelAnimationFrame(frame), { once: true });
+  signal.addEventListener("abort", () => window.cancelAnimationFrame(frame), {
+    once: true,
+  });
   rail.scrollLeft = 0;
   sync();
 }
@@ -149,8 +194,8 @@ export function setupHomeLayout(root) {
 
   const controller = new AbortController();
   window.flyHomeLayoutController = controller;
-  applyLayout(readConfiguredLayout());
-  all("[data-fly-carousel]", root).forEach((carousel) => setupCarousel(carousel, controller.signal));
-
-  return { refresh: () => applyLayout(readConfiguredLayout()) };
+  applyLayout(readConfiguredLayout(root));
+  all("[data-fly-carousel]", root).forEach((carousel) =>
+    setupCarousel(carousel, controller.signal),
+  );
 }

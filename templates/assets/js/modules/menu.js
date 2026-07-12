@@ -1,7 +1,7 @@
-import { all } from "../utils/dom.js?fly=1.0.41";
-import { syncCurrentMenu } from "./menu-current.js?fly=1.0.41";
+import { all } from "../utils/dom.js?fly=1.0.42";
+import { syncCurrentMenu } from "./menu-current.js?fly=1.0.42";
 
-const desktopQuery = window.matchMedia("(min-width: 1180px)");
+const desktopQuery = window.matchMedia("(min-width: 768px)");
 const COLLAPSED_STORAGE_KEY = "flying-sidebar-collapsed";
 
 function readStoredCollapsed() {
@@ -18,6 +18,14 @@ function storeCollapsed(collapsed) {
   } catch (_error) {
     // Ignore storage failures; the visible state is still applied to the page.
   }
+}
+
+function initialCollapsed() {
+  const home = document.querySelector(".fly-home-shell[data-fly-home-layout]");
+  if (!home) return readStoredCollapsed();
+  if (window.innerWidth < 1180) return true;
+
+  return home.dataset.flyHomeLayout === "slider";
 }
 
 function setupSidebarGroups(root, isDesktop, isCollapsed) {
@@ -43,8 +51,6 @@ function setupSidebarGroups(root, isDesktop, isCollapsed) {
 }
 
 export function setupMenu(root) {
-  window.flyMenuReady = true;
-
   const body = document.body;
   const toggles = all("[data-fly-menu-toggle]", root);
   const closers = all("[data-fly-menu-close]", root);
@@ -129,19 +135,11 @@ export function setupMenu(root) {
     () => body.dataset.flySidebarCollapsed === "true",
   );
   syncCurrentMenu(root);
-  setSidebarCollapsed(readStoredCollapsed(), false);
+  setSidebarCollapsed(initialCollapsed(), false);
   setMenuOpen(false);
 
   return {
     close: () => setMenuOpen(false),
-    open: () => setMenuOpen(true),
     refresh: () => syncCurrentMenu(root),
-    toggle: () => {
-      if (isDesktop()) {
-        setSidebarCollapsed(body.dataset.flySidebarCollapsed !== "true");
-        return;
-      }
-      setMenuOpen(body.dataset.flyMenuOpen !== "true");
-    },
   };
 }

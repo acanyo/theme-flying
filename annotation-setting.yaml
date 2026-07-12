@@ -14,3 +14,54 @@ spec:
       format: svg
       value-only: true
       help: 可选。为此菜单项选择一个 Iconify 图标；不选择时主题不会自动添加图标。
+---
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: theme-flying-user-contact
+spec:
+  targetRef:
+    group: ""
+    kind: User
+  formSchema:
+    - $formkit: text
+      name: fly_qq
+      label: QQ
+      value: ""
+      placeholder: 请输入 QQ 号
+      help: 可选。资料卡中点击 QQ 图标可复制此号码。
+    - $formkit: text
+      name: fly_wechat
+      label: 微信
+      value: ""
+      placeholder: 请输入微信号
+      help: 可选。资料卡中点击微信图标可复制此微信号。
+    - $formkit: email
+      name: fly_email
+      label: 联系邮箱
+      value: ""
+      placeholder: name@example.com
+      help: 可选。填写后会在作者头像资料卡中展示邮件入口。
+    - $formkit: url
+      name: fly_website
+      label: 个人网站
+      value: ""
+      placeholder: https://example.com
+      help: 可选。填写后会在作者头像资料卡中展示网站入口。
+---
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: theme-flying-user-author-background
+spec:
+  targetRef:
+    group: ""
+    kind: User
+  formSchema:
+    - $formkit: attachment
+      name: fly_author_background
+      label: 作者展示背景图
+      value: ""
+      accepts:
+        - image/*
+      help: 可选。用于首页“我们的作者”卡片，建议上传竖向图片；未设置时使用用户头像。

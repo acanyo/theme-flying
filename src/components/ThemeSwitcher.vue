@@ -1,55 +1,46 @@
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
-import MingcuteMoonLine from "~icons/mingcute/moon-line";
-import MingcuteSunLine from "~icons/mingcute/sun-line";
+import { onMounted, ref } from "vue";
 
-const isDark = ref(false);
+type Theme = "dark" | "light";
+
+const STORAGE_KEY = "flying-theme";
+const theme = ref<Theme>("light");
+
+function currentTheme(): Theme {
+  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+}
+
+function applyTheme(nextTheme: Theme) {
+  theme.value = nextTheme;
+  document.documentElement.dataset.theme = nextTheme;
+  document.documentElement.dataset.colorScheme = nextTheme;
+  localStorage.setItem(STORAGE_KEY, nextTheme);
+}
+
+function toggleTheme() {
+  applyTheme(currentTheme() === "dark" ? "light" : "dark");
+}
 
 onMounted(() => {
-  isDark.value = document.documentElement.classList.contains("dark");
+  theme.value = currentTheme();
+  document.documentElement.dataset.colorScheme = theme.value;
 });
-
-function toggle() {
-  isDark.value = !isDark.value;
-  document.documentElement.classList.toggle("dark", isDark.value);
-  localStorage.setItem("theme", isDark.value ? "dark" : "light");
-}
 </script>
 
 <template>
   <button
-    class="theme-toggle"
+    class="fly-navbar-user"
     type="button"
-    :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-    @click="toggle"
+    :aria-label="theme === 'dark' ? '切换到亮色模式' : '切换到暗色模式'"
+    @click="toggleTheme"
   >
-    <!-- Moon: shown in light mode -->
-    <MingcuteSunLine v-if="isDark" />
-    <MingcuteMoonLine v-else />
+    <span
+      class="fly-iconify fly-iconify--moon fly-theme-icon-dark"
+      aria-hidden="true"
+    />
+    <span
+      class="fly-iconify fly-iconify--sun fly-theme-icon-light"
+      aria-hidden="true"
+    />
   </button>
 </template>
-
-<style scoped>
-.theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 34px;
-  height: 34px;
-  padding: 0;
-  border: none;
-  border-radius: 8px;
-  background: transparent;
-  color: var(--ink-2);
-  cursor: pointer;
-  transition:
-    background 0.15s ease,
-    color 0.15s ease;
-}
-
-.theme-toggle:hover {
-  background: var(--bg-raised);
-  color: var(--ink);
-}
-</style>

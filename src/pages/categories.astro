@@ -1,22 +1,30 @@
 ---
-import Layout from "../layouts/Layout.astro";
+
 ---
 
-<Layout pageTitle="分类">
-  <Fragment slot="head">
-    <title th:text="|分类 - ${site.title}|"></title>
-  </Fragment>
+<html
+  lang="zh-CN"
+  th:replace="~{fragments/layout :: page(pageTitle=|分类 - ${site.title}|, bodyClass='fly-taxonomy', content=~{::content})}"
+>
+  <th:block th:fragment="content">
+    <div class="fly-content-shell">
+      <header class="fly-page-header">
+        <p class="fly-eyebrow">浏览</p>
+        <h1>分类</h1>
+        <p>按主题、目的地和心情浏览文章。</p>
+      </header>
 
-  <nav class="taxonomy-list" aria-label="Category list">
-    <div th:each="category : ${categories}" class="taxonomy-list__item">
-      <a
-        class="taxonomy-list__link"
-        th:href="@{${category.status.permalink}}"
-        th:text="${category.spec.displayName}"
-      >
-      </a>
-      <span class="taxonomy-list__count" th:text="|${category.postCount} 篇|">
-      </span>
+      <nav class="fly-taxonomy-grid" aria-label="分类列表">
+        <a
+          th:each="category : ${categories}"
+          class="fly-taxonomy-card"
+          th:href="@{${category.status.permalink}}"
+        >
+          <span th:text="${category.spec.displayName}">分类</span>
+          <small th:text="|${category.postCount} 篇文章|">0 篇文章</small>
+        </a>
+      </nav>
     </div>
-  </nav>
-</Layout>
+  </th:block>
+
+</html>
