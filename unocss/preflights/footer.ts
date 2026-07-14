@@ -19,7 +19,7 @@ body .fly-footer-shell {
   display: flex;
   min-width: 0;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .fly-footer-shell > .fly-footer-identity {
@@ -27,11 +27,21 @@ body .fly-footer-shell {
 }
 
 .fly-footer-copyright {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   margin: 0;
   color: var(--muted);
   font-size: 14px;
   font-weight: 400;
   line-height: 21px;
+}
+
+.fly-footer-copyright-icon {
+  width: 15px;
+  height: 15px;
+  flex-basis: 15px;
+  margin-right: 4px;
 }
 
 .fly-footer-copyright a {

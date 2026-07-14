@@ -1,26 +1,68 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200" role="img" aria-label="网格首页布局预览">
-  <rect x="1" y="1" width="318" height="198" rx="12" fill="#f5f6f8" stroke="#d8dce3" stroke-width="2"/>
-  <rect x="12" y="12" width="296" height="18" rx="5" fill="#ffffff"/>
-  <circle cx="23" cy="21" r="3" fill="#111111"/>
-  <rect x="31" y="18" width="36" height="6" rx="3" fill="#b7bdc7"/>
-  <rect x="242" y="17" width="42" height="8" rx="4" fill="#e2e5ea"/>
-  <circle cx="297" cy="21" r="5" fill="#111111"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200" role="img" aria-labelledby="title desc">
+  <title id="title">网格布局预览</title>
+  <desc id="desc">一张主文章卡片和四张辅助文章卡片组成的精选文章网格</desc>
+  <defs>
+    <linearGradient id="grid-lead" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#71717a"/>
+      <stop offset="1" stop-color="#18181b"/>
+    </linearGradient>
+    <linearGradient id="grid-card-a" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d4d4d8"/>
+      <stop offset="1" stop-color="#a1a1aa"/>
+    </linearGradient>
+    <linearGradient id="grid-card-b" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a1a1aa"/>
+      <stop offset="1" stop-color="#52525b"/>
+    </linearGradient>
+    <linearGradient id="grid-shade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset=".42" stop-color="#09090b" stop-opacity="0"/>
+      <stop offset="1" stop-color="#09090b" stop-opacity=".76"/>
+    </linearGradient>
+    <clipPath id="grid-window">
+      <rect x="11" y="11" width="298" height="178" rx="11"/>
+    </clipPath>
+  </defs>
 
-  <rect x="12" y="38" width="46" height="150" rx="7" fill="#e7e9ed"/>
-  <rect x="20" y="49" width="30" height="8" rx="4" fill="#ffffff"/>
-  <rect x="20" y="64" width="23" height="5" rx="2.5" fill="#b6bbc4"/>
-  <rect x="20" y="76" width="26" height="5" rx="2.5" fill="#b6bbc4"/>
-  <rect x="20" y="88" width="20" height="5" rx="2.5" fill="#b6bbc4"/>
+  <rect x="1" y="1" width="318" height="198" rx="15" fill="#fafafa" stroke="#d4d4d8" stroke-width="2"/>
+  <g clip-path="url(#grid-window)">
+    <rect x="11" y="11" width="298" height="178" fill="#fff"/>
 
-  <rect x="66" y="38" width="150" height="96" rx="8" fill="#111111"/>
-  <rect x="78" y="99" width="96" height="8" rx="4" fill="#ffffff" opacity=".9"/>
-  <rect x="78" y="113" width="62" height="5" rx="2.5" fill="#ffffff" opacity=".55"/>
-  <rect x="224" y="38" width="84" height="44" rx="8" fill="#3d4148"/>
-  <rect x="232" y="62" width="48" height="5" rx="2.5" fill="#ffffff" opacity=".8"/>
-  <rect x="224" y="90" width="84" height="44" rx="8" fill="#737984"/>
-  <rect x="232" y="114" width="55" height="5" rx="2.5" fill="#ffffff" opacity=".82"/>
+    <g aria-hidden="true">
+      <circle cx="25" cy="26" r="5" fill="#18181b"/>
+      <rect x="35" y="23" width="29" height="6" rx="3" fill="#52525b"/>
+      <rect x="218" y="23" width="17" height="5" rx="2.5" fill="#d4d4d8"/>
+      <rect x="242" y="23" width="17" height="5" rx="2.5" fill="#d4d4d8"/>
+      <rect x="266" y="23" width="17" height="5" rx="2.5" fill="#d4d4d8"/>
+      <circle cx="296" cy="26" r="5" fill="#e4e4e7"/>
+      <path d="M11 42.5h298" stroke="#e4e4e7"/>
+    </g>
 
-  <rect x="66" y="142" width="72" height="46" rx="7" fill="#d9dde3"/>
-  <rect x="146" y="142" width="72" height="46" rx="7" fill="#c8cdd5"/>
-  <rect x="226" y="142" width="82" height="46" rx="7" fill="#e2e5e9"/>
+    <g aria-hidden="true">
+      <rect x="23" y="53" width="164" height="124" rx="9" fill="url(#grid-lead)"/>
+      <path d="M23 53h164v124H23z" fill="url(#grid-shade)"/>
+      <rect x="35" y="136" width="29" height="9" rx="4.5" fill="#fff" fill-opacity=".2"/>
+      <rect x="35" y="152" width="109" height="7" rx="3.5" fill="#fff" fill-opacity=".94"/>
+      <rect x="35" y="165" width="72" height="4" rx="2" fill="#fff" fill-opacity=".52"/>
+
+      <rect x="195" y="53" width="52" height="58" rx="8" fill="url(#grid-card-a)"/>
+      <path d="M195 76c14-8 28-7 52 5v30h-52z" fill="#71717a" fill-opacity=".38"/>
+      <rect x="202" y="94" width="32" height="4" rx="2" fill="#fff" fill-opacity=".92"/>
+      <rect x="202" y="102" width="22" height="3" rx="1.5" fill="#fff" fill-opacity=".54"/>
+
+      <rect x="255" y="53" width="52" height="58" rx="8" fill="url(#grid-card-b)"/>
+      <circle cx="289" cy="69" r="13" fill="#fff" fill-opacity=".09"/>
+      <rect x="262" y="94" width="36" height="4" rx="2" fill="#fff" fill-opacity=".92"/>
+      <rect x="262" y="102" width="25" height="3" rx="1.5" fill="#fff" fill-opacity=".54"/>
+
+      <rect x="195" y="119" width="52" height="58" rx="8" fill="#71717a"/>
+      <path d="m195 144 17-16 12 11 9-7 14 13v32h-52z" fill="#3f3f46" fill-opacity=".52"/>
+      <rect x="202" y="160" width="34" height="4" rx="2" fill="#fff" fill-opacity=".92"/>
+      <rect x="202" y="168" width="20" height="3" rx="1.5" fill="#fff" fill-opacity=".54"/>
+
+      <rect x="255" y="119" width="52" height="58" rx="8" fill="#d4d4d8"/>
+      <path d="M255 142c17 8 31 6 52-6v41h-52z" fill="#a1a1aa" fill-opacity=".55"/>
+      <rect x="262" y="160" width="33" height="4" rx="2" fill="#27272a" fill-opacity=".78"/>
+      <rect x="262" y="168" width="23" height="3" rx="1.5" fill="#52525b" fill-opacity=".52"/>
+    </g>
+  </g>
 </svg>

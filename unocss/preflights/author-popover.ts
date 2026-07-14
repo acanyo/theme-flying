@@ -29,6 +29,53 @@ export const authorPopoverPreflight = {
   object-fit: cover;
 }
 
+.fly-author-popover-trigger--named,
+.fly-author-popover-trigger--name-only {
+  display: flex;
+  min-width: 0;
+  width: auto;
+  max-width: 100%;
+  flex: 0 1 auto;
+}
+
+.fly-author-popover-trigger--named .fly-author-popover-anchor,
+.fly-author-popover-trigger--name-only .fly-author-popover-anchor {
+  display: flex;
+  min-width: 0;
+  width: auto;
+  max-width: 100%;
+  align-items: center;
+  gap: 8px;
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+}
+
+.fly-author-popover-trigger--name-only {
+  display: inline-flex;
+  height: auto;
+}
+
+.fly-author-popover-trigger--name-only .fly-author-popover-anchor {
+  height: auto;
+  color: inherit;
+}
+
+.fly-author-popover-trigger--named .fly-author-popover-anchor img {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  border-radius: 50%;
+}
+
+.fly-author-popover-label {
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .fly-author-popover {
   position: absolute;
   top: calc(100% + 10px);
@@ -40,13 +87,14 @@ export const authorPopoverPreflight = {
   border: 1px solid var(--line);
   border-radius: 20px;
   background: var(--page);
-  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.16);
+  box-shadow: none;
   color: var(--text);
   opacity: 0;
   overflow-y: auto;
   padding: 20px;
   pointer-events: none;
   text-align: left;
+  text-shadow: none;
   transform: translateY(6px);
   transition:
     opacity 180ms ease,

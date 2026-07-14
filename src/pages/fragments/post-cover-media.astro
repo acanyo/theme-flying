@@ -1,0 +1,56 @@
+---
+
+---
+
+<th:block
+  th:fragment="media(post, mediaClass, eager)"
+  th:with="videoCover=${#annotations.getOrDefault(post, 'fly_video_cover', '')},cover=${#strings.isEmpty(post.spec.cover) ? #theme.assets('/images/fallback-cover.svg') : post.spec.cover}"
+>
+  <img
+    class="fly-post-cover-media fly-post-cover-media--image"
+    th:classappend="${mediaClass}"
+    src="/assets/images/fallback-cover.svg"
+    th:src="${cover}"
+    th:alt="${post.spec.title}"
+    alt=""
+    th:attr="loading=${eager ? 'eager' : 'lazy'},fetchpriority=${eager ? 'high' : null}"
+  />
+  <video
+    class="fly-post-cover-media fly-post-cover-media--video"
+    th:classappend="${mediaClass}"
+    th:if="${not #strings.isEmpty(videoCover)}"
+    poster="/assets/images/fallback-cover.svg"
+    th:attr="poster=${cover}"
+    autoplay
+    loop
+    muted
+    playsinline
+    preload="metadata"
+    tabindex="-1"
+    aria-hidden="true"
+    data-fly-post-cover-video
+  >
+    <source th:src="${videoCover}" />
+  </video>
+</th:block>
+
+<th:block
+  th:fragment="badge(post)"
+  th:with="videoCover=${#annotations.getOrDefault(post, 'fly_video_cover', '')}"
+>
+  <span
+    class="fly-post-video-badge"
+    th:if="${not #strings.isEmpty(videoCover)}"
+    data-fly-post-video-badge
+  >
+    <span class="fly-iconify fly-iconify--video-camera" aria-hidden="true"
+    ></span>
+    <span class="fly-sr-only">视频文章</span>
+    <span
+      class="fly-post-video-tooltip"
+      role="tooltip"
+      popover="manual"
+      data-fly-post-video-tooltip>视频文章</span
+    >
+  </span>
+</th:block>

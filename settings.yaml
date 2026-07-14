@@ -18,27 +18,60 @@ spec:
           options:
             - label: 网格
               value: grid
-              render: /themes/theme-flying/assets/images/layout-grid.svg
+              render: /themes/theme-flying/assets/images/layout-grid.svg?v=1.0.96
             - label: 横幅
               value: slider
-              render: /themes/theme-flying/assets/images/layout-slider.svg
+              render: /themes/theme-flying/assets/images/layout-slider.svg?v=1.0.96
             - label: 轮播
               value: carousel
-              render: /themes/theme-flying/assets/images/layout-carousel.svg
-        - $formkit: switch
-          name: show_copyright
-          id: basic_show_copyright
-          key: basic_show_copyright
-          label: 显示版权
-          value: true
-        - $formkit: text
-          if: "$get(basic_show_copyright).value === true"
-          name: copyright
-          id: basic_copyright
-          key: basic_copyright
-          label: 版权文案
-          value: "版权所有 · 架构于"
-          help: 显示在 Halo 文字链接之前；建议保持为“版权所有 · 架构于”。
+              render: /themes/theme-flying/assets/images/layout-carousel.svg?v=1.0.96
+        - $formkit: array
+          name: home_featured_posts
+          label: 首页精选文章
+          value: []
+          max: 5
+          addLabel: 添加精选文章
+          emptyText: 未选择文章时，自动展示最新文章。
+          help: 最多选择并排序 5 篇 Halo 文章；第一篇用于网格大图或轮播首屏。留空时自动读取最新文章。网格风格建议选择 5 篇以保持完整布局。
+          itemLabels:
+            - type: text
+              label: $value.post
+          children:
+            - $formkit: postSelect
+              name: post
+              label: Halo 文章
+              value: ""
+              validation: required
+              clearable: true
+              searchable: true
+        - $formkit: array
+          name: home_sections
+          label: 首页其他模块顺序
+          value:
+            - section: feed
+            - section: authors
+            - section: newsletter
+            - section: topics
+            - section: friends
+          help: 顶部分类筛选和精选文章固定展示；拖动数组项调整其余模块顺序，删除数组项可隐藏对应模块。请勿重复添加同一模块。
+          children:
+            - $formkit: select
+              name: section
+              label: 首页模块
+              value: ""
+              validation: required
+              clearable: false
+              options:
+                - label: 最新文章
+                  value: feed
+                - label: 我们的作者
+                  value: authors
+                - label: 订阅
+                  value: newsletter
+                - label: 分类专题
+                  value: topics
+                - label: 友情链接
+                  value: friends
         - $formkit: text
           name: icp_beian
           label: ICP备案号

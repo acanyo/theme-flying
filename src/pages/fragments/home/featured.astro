@@ -2,20 +2,26 @@
 
 ---
 
-<th:block th:fragment="featured(posts, homeLayout)">
+<th:block th:fragment="featured(posts, homeLayout, featuredPostItems)">
   <section
     class="fly-featured-section"
     data-fly-reveal
     aria-labelledby="fly-featured-heading"
     th:attr="data-fly-featured-layout=${homeLayout}"
-    th:if="${posts != null and not #lists.isEmpty(posts.items)}"
+    th:if="${not #lists.isEmpty(featuredPostItems) or (posts != null and not #lists.isEmpty(posts.items))}"
+    th:with="useManualPosts=${not #lists.isEmpty(featuredPostItems)}"
   >
     <h1 id="fly-featured-heading" class="fly-sr-only">精选文章</h1>
 
     <div class="fly-featured-grid" th:if="${homeLayout == 'grid'}">
-      <th:block th:each="post, iter : ${posts.items}" th:if="${iter.index < 5}">
+      <th:block
+        th:each="entry, iter : ${useManualPosts ? featuredPostItems : posts.items}"
+        th:if="${iter.index < 5}"
+        th:with="post=${useManualPosts ? postFinder.getByName(entry['post']) : entry}"
+      >
         <article
           class="fly-featured-card"
+          th:if="${post != null}"
           th:classappend="${iter.index == 0 ? ' fly-featured-card--lead' : ' fly-featured-card--side'}"
           data-fly-featured
         >
@@ -23,15 +29,15 @@
             class="fly-card-hit"
             href="/"
             th:href="@{${post.status.permalink}}"
-            th:attr="aria-label=|阅读：${post.spec.title}|"></a>
-          <img
-            class="fly-featured-image"
-            src="/assets/images/fallback-cover.svg"
-            th:src="${#strings.isEmpty(post.spec.cover) ? #theme.assets('/images/fallback-cover.svg') : post.spec.cover}"
-            th:alt="${post.spec.title}"
-            alt=""
-            th:attr="loading=${iter.index == 0 ? 'eager' : 'lazy'},fetchpriority=${iter.index == 0 ? 'high' : null}"
-          />
+            th:attr="aria-label=|阅读：${post.spec.title}|"
+          >
+            <th:block
+              th:replace="~{fragments/post-cover-media :: badge(post=${post})}"
+            ></th:block>
+          </a>
+          <th:block
+            th:replace="~{fragments/post-cover-media :: media(post=${post}, mediaClass=${'fly-featured-image'}, eager=${iter.index == 0})}"
+          ></th:block>
           <div class="fly-image-shade" aria-hidden="true"></div>
           <div class="fly-featured-content">
             <a
@@ -56,21 +62,9 @@
               文章摘要
             </p>
             <footer class="fly-post-meta fly-post-meta--light">
-              <a
-                class="fly-author-pill"
-                href="/"
-                th:href="@{${post.owner?.permalink ?: post.status.permalink}}"
-              >
-                <img
-                  src="/assets/images/avatar.svg"
-                  th:src="${post.owner?.avatar ?: #theme.assets('/images/avatar.svg')}"
-                  th:alt="${post.owner?.displayName ?: site.title}"
-                  alt=""
-                />
-                <span th:text="${post.owner?.displayName ?: site.title}"
-                  >作者</span
-                >
-              </a>
+              <th:block
+                th:replace="~{fragments/home/featured :: featuredAuthor(post=${post})}"
+              ></th:block>
               <span class="fly-dot" aria-hidden="true"></span>
               <time
                 th:datetime="${post.spec.publishTime}"
@@ -97,76 +91,69 @@
         class="fly-home-slider-rail"
         data-fly-carousel-rail
       >
-        <article
-          class="fly-home-slide"
-          th:each="post, iter : ${posts.items}"
+        <th:block
+          th:each="entry, iter : ${useManualPosts ? featuredPostItems : posts.items}"
           th:if="${iter.index < 5}"
-          data-fly-carousel-item
-          role="group"
-          aria-roledescription="幻灯片"
-          th:attr="aria-label=|第 ${iter.index + 1} 篇：${post.spec.title}|"
+          th:with="post=${useManualPosts ? postFinder.getByName(entry['post']) : entry}"
         >
-          <a
-            class="fly-card-hit"
-            href="/"
-            th:href="@{${post.status.permalink}}"
-            th:attr="aria-label=|阅读：${post.spec.title}|"></a>
-          <img
-            class="fly-home-slide-image"
-            src="/assets/images/fallback-cover.svg"
-            th:src="${#strings.isEmpty(post.spec.cover) ? #theme.assets('/images/fallback-cover.svg') : post.spec.cover}"
-            th:alt="${post.spec.title}"
-            alt=""
-            th:attr="loading=${iter.index == 0 ? 'eager' : 'lazy'},fetchpriority=${iter.index == 0 ? 'high' : null}"
-          />
-          <div class="fly-image-shade" aria-hidden="true"></div>
-          <div class="fly-home-slide-content">
+          <article
+            class="fly-home-slide"
+            th:if="${post != null}"
+            data-fly-carousel-item
+            role="group"
+            aria-roledescription="幻灯片"
+            th:attr="aria-label=|第 ${iter.index + 1} 篇：${post.spec.title}|"
+          >
             <a
-              class="fly-post-chip fly-post-chip--glass"
+              class="fly-card-hit"
               href="/"
-              th:href="@{${not #lists.isEmpty(post.categories) ? post.categories[0].status.permalink : post.status.permalink}}"
-              th:text="${not #lists.isEmpty(post.categories) ? post.categories[0].spec.displayName : '焦点'}"
-              >焦点</a
+              th:href="@{${post.status.permalink}}"
+              th:attr="aria-label=|阅读：${post.spec.title}|"
             >
-            <h2>
+              <th:block
+                th:replace="~{fragments/post-cover-media :: badge(post=${post})}"
+              ></th:block>
+            </a>
+            <th:block
+              th:replace="~{fragments/post-cover-media :: media(post=${post}, mediaClass=${'fly-home-slide-image'}, eager=${iter.index == 0})}"
+            ></th:block>
+            <div class="fly-image-shade" aria-hidden="true"></div>
+            <div class="fly-home-slide-content">
               <a
+                class="fly-post-chip fly-post-chip--glass"
                 href="/"
-                th:href="@{${post.status.permalink}}"
-                th:text="${post.spec.title}">文章标题</a
+                th:href="@{${not #lists.isEmpty(post.categories) ? post.categories[0].status.permalink : post.status.permalink}}"
+                th:text="${not #lists.isEmpty(post.categories) ? post.categories[0].spec.displayName : '焦点'}"
+                >焦点</a
               >
-            </h2>
-            <p
-              th:if="${not #strings.isEmpty(post.status.excerpt)}"
-              th:text="${post.status.excerpt}"
-            >
-              文章摘要
-            </p>
-            <footer class="fly-post-meta fly-post-meta--light">
-              <a
-                class="fly-author-pill"
-                href="/"
-                th:href="@{${post.owner?.permalink ?: post.status.permalink}}"
-              >
-                <img
-                  src="/assets/images/avatar.svg"
-                  th:src="${post.owner?.avatar ?: #theme.assets('/images/avatar.svg')}"
-                  th:alt="${post.owner?.displayName ?: site.title}"
-                  alt=""
-                />
-                <span th:text="${post.owner?.displayName ?: site.title}"
-                  >作者</span
+              <h2>
+                <a
+                  href="/"
+                  th:href="@{${post.status.permalink}}"
+                  th:text="${post.spec.title}">文章标题</a
                 >
-              </a>
-              <span class="fly-dot" aria-hidden="true"></span>
-              <time
-                th:datetime="${post.spec.publishTime}"
-                th:text="${#dates.format(post.spec.publishTime, 'yyyy年MM月dd日')}"
+              </h2>
+              <p
+                th:if="${not #strings.isEmpty(post.status.excerpt)}"
+                th:text="${post.status.excerpt}"
               >
-                2026年07月08日
-              </time>
-            </footer>
-          </div>
-        </article>
+                文章摘要
+              </p>
+              <footer class="fly-post-meta fly-post-meta--light">
+                <th:block
+                  th:replace="~{fragments/home/featured :: featuredAuthor(post=${post})}"
+                ></th:block>
+                <span class="fly-dot" aria-hidden="true"></span>
+                <time
+                  th:datetime="${post.spec.publishTime}"
+                  th:text="${#dates.format(post.spec.publishTime, 'yyyy年MM月dd日')}"
+                >
+                  2026年07月08日
+                </time>
+              </footer>
+            </div>
+          </article>
+        </th:block>
       </div>
       <th:block
         th:replace="~{fragments/home/featured :: carouselControls(label='焦点文章', railId='fly-home-slider-rail')}"
@@ -187,120 +174,145 @@
         class="fly-home-carousel-rail"
         data-fly-carousel-rail
       >
-        <article
-          class="fly-home-carousel-card"
-          th:each="post, iter : ${posts.items}"
+        <th:block
+          th:each="entry, iter : ${useManualPosts ? featuredPostItems : posts.items}"
           th:if="${iter.index < 5}"
-          th:with="carouselTerms=${not #lists.isEmpty(post.tags) ? post.tags : post.categories}"
-          data-fly-carousel-item
-          role="group"
-          aria-roledescription="幻灯片"
-          th:attr="aria-label=|第 ${iter.index + 1} 篇：${post.spec.title}|"
+          th:with="post=${useManualPosts ? postFinder.getByName(entry['post']) : entry}"
         >
-          <a
-            class="fly-home-carousel-media"
-            href="/"
-            th:href="@{${post.status.permalink}}"
+          <article
+            class="fly-home-carousel-card"
+            th:if="${post != null}"
+            th:with="carouselTerms=${not #lists.isEmpty(post.tags) ? post.tags : post.categories}"
+            data-fly-carousel-item
+            role="group"
+            aria-roledescription="幻灯片"
+            th:attr="aria-label=|第 ${iter.index + 1} 篇：${post.spec.title}|"
           >
-            <img
-              src="/assets/images/fallback-cover.svg"
-              th:src="${#strings.isEmpty(post.spec.cover) ? #theme.assets('/images/fallback-cover.svg') : post.spec.cover}"
-              th:alt="${post.spec.title}"
-              alt=""
-              th:attr="loading=${iter.index == 0 ? 'eager' : 'lazy'},fetchpriority=${iter.index == 0 ? 'high' : null}"
-            />
-            <span class="fly-home-carousel-media-meta">
-              <time
-                th:datetime="${post.spec.publishTime}"
-                th:text="${#dates.format(post.spec.publishTime, 'yyyy年MM月dd日')}"
-              >
-                2026年07月08日
-              </time>
-              <span
-                th:if="${post.stats != null}"
-                th:text="|${post.stats.visit} 次阅读|">0 次阅读</span
-              >
-            </span>
-          </a>
-          <div class="fly-home-carousel-copy">
-            <div
-              class="fly-home-carousel-avatars"
-              th:if="${not #lists.isEmpty(post.contributors)}"
-            >
-              <th:block
-                th:each="contributor, contributorStat : ${post.contributors}"
-                th:if="${contributorStat.index < 3}"
-              >
-                <th:block
-                  th:replace="~{fragments/author-popover :: trigger(author=${contributor}, fallbackPermalink=${post.status.permalink})}"
-                ></th:block>
-              </th:block>
-            </div>
-            <div
-              class="fly-home-carousel-avatars"
-              th:if="${#lists.isEmpty(post.contributors) and post.owner != null}"
-            >
-              <th:block
-                th:replace="~{fragments/author-popover :: trigger(author=${post.owner}, fallbackPermalink=${post.status.permalink})}"
-              ></th:block>
-            </div>
-            <div
-              class="fly-home-carousel-terms"
-              th:if="${not #lists.isEmpty(carouselTerms)}"
-            >
-              <th:block
-                th:each="term, termStat : ${carouselTerms}"
-                th:if="${termStat.index < 3}"
-              >
-                <a
-                  href="/"
-                  th:href="@{${term.status.permalink}}"
-                  th:text="${term.spec.displayName}">分类</a
-                >
-                <span
-                  aria-hidden="true"
-                  th:if="${termStat.index < 2 and termStat.index < carouselTerms.size() - 1}"
-                  >•</span
-                >
-              </th:block>
-            </div>
-            <h2>
-              <a
-                href="/"
-                th:href="@{${post.status.permalink}}"
-                th:text="${post.spec.title}">文章标题</a
-              >
-            </h2>
-            <p
-              th:if="${not #strings.isEmpty(post.status.excerpt)}"
-              th:text="${post.status.excerpt}"
-            >
-              文章摘要
-            </p>
             <a
-              class="fly-home-carousel-read"
+              class="fly-home-carousel-media"
               href="/"
               th:href="@{${post.status.permalink}}"
-              data-fly-motion-button
             >
-              <span class="fly-motion-label">
-                <span class="fly-motion-label-copy">阅读全文</span>
-                <span class="fly-motion-label-copy" aria-hidden="true"
-                  >阅读全文</span
+              <th:block
+                th:replace="~{fragments/post-cover-media :: media(post=${post}, mediaClass=${'fly-home-carousel-image'}, eager=${iter.index == 0})}"
+              ></th:block>
+              <th:block
+                th:replace="~{fragments/post-cover-media :: badge(post=${post})}"
+              ></th:block>
+              <span class="fly-home-carousel-media-meta">
+                <time
+                  th:datetime="${post.spec.publishTime}"
+                  th:text="${#dates.format(post.spec.publishTime, 'yyyy年MM月dd日')}"
+                >
+                  2026年07月08日
+                </time>
+                <span
+                  th:if="${post.stats != null}"
+                  th:text="|${post.stats.visit} 次阅读|">0 次阅读</span
                 >
               </span>
-              <span
-                class="fly-iconify fly-iconify--chevron fly-motion-icon"
-                aria-hidden="true"></span>
             </a>
-          </div>
-        </article>
+            <div class="fly-home-carousel-copy">
+              <div
+                class="fly-home-carousel-avatars"
+                th:if="${not #lists.isEmpty(post.contributors)}"
+              >
+                <th:block
+                  th:each="contributor, contributorStat : ${post.contributors}"
+                  th:if="${contributorStat.index < 3}"
+                >
+                  <th:block
+                    th:replace="~{fragments/author-popover :: trigger(author=${contributor}, fallbackPermalink=${post.status.permalink}, variant=${'avatar'})}"
+                  ></th:block>
+                </th:block>
+              </div>
+              <div
+                class="fly-home-carousel-avatars"
+                th:if="${#lists.isEmpty(post.contributors) and post.owner != null}"
+              >
+                <th:block
+                  th:replace="~{fragments/author-popover :: trigger(author=${post.owner}, fallbackPermalink=${post.status.permalink}, variant=${'avatar'})}"
+                ></th:block>
+              </div>
+              <div
+                class="fly-home-carousel-terms"
+                th:if="${not #lists.isEmpty(carouselTerms)}"
+              >
+                <th:block
+                  th:each="term, termStat : ${carouselTerms}"
+                  th:if="${termStat.index < 3}"
+                >
+                  <a
+                    href="/"
+                    th:href="@{${term.status.permalink}}"
+                    th:text="${term.spec.displayName}">分类</a
+                  >
+                  <span
+                    aria-hidden="true"
+                    th:if="${termStat.index < 2 and termStat.index < carouselTerms.size() - 1}"
+                    >•</span
+                  >
+                </th:block>
+              </div>
+              <h2>
+                <a
+                  href="/"
+                  th:href="@{${post.status.permalink}}"
+                  th:text="${post.spec.title}">文章标题</a
+                >
+              </h2>
+              <p
+                th:if="${not #strings.isEmpty(post.status.excerpt)}"
+                th:text="${post.status.excerpt}"
+              >
+                文章摘要
+              </p>
+              <a
+                class="fly-home-carousel-read"
+                href="/"
+                th:href="@{${post.status.permalink}}"
+                data-fly-motion-button
+              >
+                <span class="fly-motion-label">
+                  <span class="fly-motion-label-copy">阅读全文</span>
+                  <span class="fly-motion-label-copy" aria-hidden="true"
+                    >阅读全文</span
+                  >
+                </span>
+                <span
+                  class="fly-iconify fly-iconify--arrow-right fly-motion-icon"
+                  aria-hidden="true"></span>
+              </a>
+            </div>
+          </article>
+        </th:block>
       </div>
       <th:block
         th:replace="~{fragments/home/featured :: carouselControls(label='精选文章', railId='fly-home-carousel-rail')}"
       ></th:block>
     </div>
   </section>
+</th:block>
+
+<th:block th:fragment="featuredAuthor(post)">
+  <th:block
+    th:if="${post.owner != null}"
+    th:replace="~{fragments/author-popover :: trigger(author=${post.owner}, fallbackPermalink=${post.status.permalink}, variant=${'named'})}"
+  ></th:block>
+  <a
+    class="fly-author-pill"
+    href="/"
+    th:unless="${post.owner != null}"
+    th:href="@{${post.status.permalink}}"
+  >
+    <img
+      src="/assets/images/avatar.svg"
+      th:src="${#theme.assets('/images/avatar.svg')}"
+      th:alt="${site.title}"
+      alt=""
+    />
+    <span th:text="${site.title}">作者</span>
+  </a>
 </th:block>
 
 <div

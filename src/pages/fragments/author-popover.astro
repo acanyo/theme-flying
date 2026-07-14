@@ -4,7 +4,8 @@
 
 <div
   class="fly-author-popover-trigger"
-  th:fragment="trigger(author, fallbackPermalink)"
+  th:fragment="trigger(author, fallbackPermalink, variant)"
+  th:classappend="${variant == 'named' ? ' fly-author-popover-trigger--named' : (variant == 'name' ? ' fly-author-popover-trigger--name-only' : '')}"
   th:with="authorName=${author.displayName ?: site.title},authorPermalink=${author.permalink ?: fallbackPermalink},authorQq=${#annotations.getOrDefault(author, 'fly_qq', '')},authorWechat=${#annotations.getOrDefault(author, 'fly_wechat', '')},authorEmail=${#annotations.getOrDefault(author, 'fly_email', '')},authorWebsite=${#annotations.getOrDefault(author, 'fly_website', '')}"
 >
   <a
@@ -17,11 +18,17 @@
     data-fly-author-popover-anchor
   >
     <img
+      th:if="${variant != 'name'}"
       src="/assets/images/avatar.svg"
       th:src="${author.avatar ?: #theme.assets('/images/avatar.svg')}"
       th:alt="${authorName}"
       alt=""
     />
+    <span
+      class="fly-author-popover-label"
+      th:if="${variant != 'avatar'}"
+      th:text="${authorName}">作者</span
+    >
   </a>
 
   <div

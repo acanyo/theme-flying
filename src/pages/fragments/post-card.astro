@@ -15,14 +15,12 @@
       th:href="@{${post.status.permalink}}"
       th:attr="aria-label=|阅读：${post.spec.title}|"
     >
-      <img
-        class="fly-post-cover"
-        src="/assets/images/fallback-cover.svg"
-        th:src="${#strings.isEmpty(post.spec.cover) ? #theme.assets('/images/fallback-cover.svg') : post.spec.cover}"
-        th:alt="${post.spec.title}"
-        alt=""
-        loading="lazy"
-      />
+      <th:block
+        th:replace="~{fragments/post-cover-media :: media(post=${post}, mediaClass=${'fly-post-cover'}, eager=${false})}"
+      ></th:block>
+      <th:block
+        th:replace="~{fragments/post-cover-media :: badge(post=${post})}"
+      ></th:block>
     </a>
     <a
       class="fly-post-chip fly-post-chip--image"
@@ -65,10 +63,11 @@
       <div class="fly-author-pill">
         <th:block
           th:if="${post.owner != null}"
-          th:replace="~{fragments/author-popover :: trigger(author=${post.owner}, fallbackPermalink=${post.status.permalink})}"
+          th:replace="~{fragments/author-popover :: trigger(author=${post.owner}, fallbackPermalink=${post.status.permalink}, variant=${'named'})}"
         ></th:block>
         <a
           class="fly-author-name-link"
+          th:unless="${post.owner != null}"
           href="/"
           th:href="@{${post.owner?.permalink ?: post.status.permalink}}"
         >

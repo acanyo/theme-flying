@@ -1,13 +1,20 @@
 export const homeFeedPreflight = {
   getCSS: () => String.raw`
 .fly-category-filter {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: -4px 0 clamp(20px, 2vw, 30px);
+}
+
+.fly-category-filter-rail {
   display: flex;
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  gap: 4px;
-  margin: 0 0 clamp(20px, 2vw, 30px);
-  padding: 0 0 6px;
+  gap: 6px;
+  padding: 4px 0;
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-inline: contain;
@@ -18,13 +25,12 @@ export const homeFeedPreflight = {
   -webkit-overflow-scrolling: touch;
 }
 
-.fly-category-filter::-webkit-scrollbar {
+.fly-category-filter-rail::-webkit-scrollbar {
   display: none;
 }
 
 .fly-filter-chip {
   min-width: max-content;
-  min-height: 34px;
   flex: 0 0 auto;
   border: 0;
   border-radius: 8px;
@@ -34,7 +40,7 @@ export const homeFeedPreflight = {
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0;
-  line-height: 22px;
+  line-height: normal;
   scroll-snap-align: start;
   white-space: nowrap;
   transition: background-color 180ms ease, transform 180ms ease;
@@ -54,6 +60,85 @@ export const homeFeedPreflight = {
 .fly-filter-chip:focus-visible {
   outline: 2px solid var(--text);
   outline-offset: 2px;
+}
+
+.fly-category-filter-arrow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  width: 33px;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: var(--page);
+  box-shadow: 0 5px 20px -7px rgba(0, 0, 0, 0.2);
+  color: var(--text);
+  padding: 0;
+  isolation: isolate;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    opacity 150ms ease,
+    visibility 150ms ease;
+}
+
+.fly-category-filter-arrow[hidden] {
+  display: none;
+}
+
+.fly-category-filter-arrow::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  width: 90px;
+  content: "";
+  pointer-events: none;
+}
+
+.fly-category-filter-arrow:hover,
+.fly-category-filter-arrow:focus-visible {
+  background: var(--text);
+  color: var(--page);
+}
+
+.fly-category-filter-arrow--prev {
+  left: 0;
+}
+
+.fly-category-filter-arrow--prev::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--page) 33px, transparent 100%);
+}
+
+.fly-category-filter-arrow--next {
+  right: 0;
+}
+
+.fly-category-filter-arrow--next::before {
+  right: 0;
+  background: linear-gradient(90deg, transparent 0, var(--page) calc(100% - 33px));
+}
+
+.fly-category-filter-arrow .fly-iconify--chevron {
+  width: 20px;
+  height: 20px;
+  flex-basis: 20px;
+  margin-left: 0;
+  opacity: 1;
+  transition: none;
+}
+
+.fly-category-filter-arrow--prev .fly-iconify--chevron {
+  transform: rotate(90deg);
+}
+
+.fly-category-filter-arrow--next .fly-iconify--chevron {
+  transform: rotate(-90deg);
 }
 
 .fly-latest-section,
@@ -144,7 +229,7 @@ export const homeFeedPreflight = {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 2;
+  z-index: 4;
   padding: 60px 16px 12px;
   pointer-events: none;
 }
@@ -348,7 +433,12 @@ export const homeFeedPreflight = {
   font-size: 11px;
 }
 
-.fly-home-shell[data-fly-home-layout="slider"] .fly-post-card .fly-author-popover-trigger {
+.fly-home-shell[data-fly-home-layout="slider"] .fly-post-card .fly-author-popover-anchor {
+  height: auto;
+  gap: 0;
+}
+
+.fly-home-shell[data-fly-home-layout="slider"] .fly-post-card .fly-author-popover-anchor img {
   display: none;
 }
 
@@ -369,6 +459,22 @@ export const homeFeedPreflight = {
   width: 36px;
   height: 36px;
   flex-basis: 36px;
+}
+
+.fly-home-shell[data-fly-home-layout="carousel"] .fly-post-card .fly-author-popover-anchor {
+  width: 36px;
+  height: 36px;
+  gap: 0;
+}
+
+.fly-home-shell[data-fly-home-layout="carousel"] .fly-post-card .fly-author-popover-anchor img {
+  width: 36px;
+  height: 36px;
+  flex-basis: 36px;
+}
+
+.fly-home-shell[data-fly-home-layout="carousel"] .fly-post-card .fly-author-popover-label {
+  display: none;
 }
 
 .fly-post-card[hidden],
@@ -408,32 +514,6 @@ export const homeFeedPreflight = {
   position: relative;
   display: grid;
   gap: 20px;
-}
-
-.fly-topic-marker {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  margin-left: 8px;
-  border-radius: 50%;
-  background: var(--fly-topic-color, var(--accent-secondary));
-  vertical-align: 0.1em;
-}
-
-.fly-topic-block:nth-of-type(4n + 1) .fly-topic-marker {
-  --fly-topic-color: #1fb4ff;
-}
-
-.fly-topic-block:nth-of-type(4n + 2) .fly-topic-marker {
-  --fly-topic-color: #ff6a1a;
-}
-
-.fly-topic-block:nth-of-type(4n + 3) .fly-topic-marker {
-  --fly-topic-color: #f52ff9;
-}
-
-.fly-topic-block:nth-of-type(4n) .fly-topic-marker {
-  --fly-topic-color: #962eff;
 }
 
 .fly-topic-rail {

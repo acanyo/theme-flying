@@ -1,13 +1,13 @@
 export const homeNewsletterPreflight = {
   getCSS: () => String.raw`
 .fly-newsletter-panel {
+  position: relative;
   display: flex;
   min-width: 0;
-  align-items: center;
   justify-content: space-between;
   gap: 30px;
   margin: 0 0 var(--section-gap);
-  border-radius: var(--radius-section);
+  border-radius: clamp(16px, calc(11.25px + 1.25vw), 32px);
   background: var(--page-alt);
   padding: 30px;
 }
@@ -15,6 +15,7 @@ export const homeNewsletterPreflight = {
 .fly-newsletter-panel > div {
   width: 100%;
   max-width: 40%;
+  flex: 1 0 0%;
 }
 
 .fly-newsletter-panel h2 {
@@ -34,12 +35,20 @@ export const homeNewsletterPreflight = {
 
 .fly-newsletter-form {
   position: relative;
-  width: min(100%, 400px);
+  display: flex;
+  width: 100%;
+  min-height: 34px;
+  max-width: 400px;
   flex: 1 0 0%;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: flex-end;
+  gap: 12px;
 }
 
 .fly-newsletter-form label {
   display: block;
+  width: 100%;
 }
 
 .fly-newsletter-form input {
@@ -69,6 +78,8 @@ export const homeNewsletterPreflight = {
   padding: 6px 16px;
   font-size: 14px;
   font-weight: 600;
+  line-height: 21px;
+  gap: 6px;
 }
 
 .fly-newsletter-status {
@@ -77,7 +88,12 @@ export const homeNewsletterPreflight = {
   left: 20px;
   margin: 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.fly-newsletter-status:empty {
+  display: none;
 }
 
 .fly-newsletter-status[data-fly-state="error"] {
@@ -88,9 +104,8 @@ export const homeNewsletterPreflight = {
   color: #348f3f;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 766px) {
   .fly-newsletter-panel {
-    align-items: stretch;
     flex-direction: column;
   }
 
@@ -101,22 +116,28 @@ export const homeNewsletterPreflight = {
   .fly-newsletter-form {
     width: 100%;
     flex: 0 0 auto;
+    align-self: flex-start;
   }
 }
 
-@media (max-width: 439px) {
+@media (max-width: 538px) {
+  .fly-newsletter-form input {
+    padding: 10px 128px 10px 20px;
+  }
+}
+
+@media (max-width: 438px) {
   .fly-newsletter-panel {
     padding: 20px;
   }
 
   .fly-newsletter-form {
-    display: grid;
     gap: 8px;
   }
 
   .fly-newsletter-form input {
     height: 48px;
-    padding-right: 20px;
+    padding: 10px 20px;
   }
 
   .fly-newsletter-form .fly-button {
@@ -126,8 +147,7 @@ export const homeNewsletterPreflight = {
 
   .fly-newsletter-status {
     position: static;
-    min-height: 16px;
-    padding-left: 4px;
+    width: 100%;
   }
 }
 `,

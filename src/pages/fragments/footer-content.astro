@@ -4,26 +4,8 @@
 
 <div
   class="fly-footer-identity"
-  th:fragment="identity(copyrightText, showCopyright, icpBeian, gonganBeian, gonganBeianUrl)"
-  th:if="${showCopyright or not #strings.isEmpty(icpBeian) or not #strings.isEmpty(gonganBeian)}"
+  th:fragment="identity(icpBeian, gonganBeian, gonganBeianUrl)"
 >
-  <p class="fly-footer-copyright" th:if="${showCopyright}">
-    <span
-      th:text="|© ${#dates.format(#dates.createNow(), 'yyyy')} ${site.title} ·|"
-      >© 2026 站点 ·</span
-    >
-    <span th:text="${copyrightText}">版权所有 · 架构于</span>
-    <a href="https://halo.run/" target="_blank" rel="noopener noreferrer"
-      ><strong>Halo</strong></a
-    >
-    <span>及为您增强体验的</span>
-    <a
-      href="https://github.com/acanyo/theme-flying"
-      target="_blank"
-      rel="noopener noreferrer">Flying</a
-    >
-  </p>
-
   <div
     class="fly-footer-records"
     aria-label="备案信息"
@@ -67,6 +49,25 @@
       <span th:text="${gonganBeian}">公安备案号</span>
     </a>
   </div>
+
+  <p class="fly-footer-copyright">
+    <span
+      class="fly-iconify fly-iconify--copyright fly-footer-copyright-icon"
+      aria-hidden="true"></span>
+    <span th:text="|${site.title}版权所有 · 架构于|"
+      >站点标题版权所有 · 架构于</span
+    >
+    <a href="https://halo.run/" target="_blank" rel="noopener noreferrer"
+      ><strong>Halo</strong></a
+    >
+    <span>及为您增强体验的</span>
+    <a
+      href="https://github.com/acanyo/theme-flying"
+      target="_blank"
+      rel="noopener noreferrer">Flying</a
+    >
+    <span>主题</span>
+  </p>
 </div>
 
 <nav

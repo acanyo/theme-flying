@@ -13,6 +13,8 @@ import { homeMotionPreflight } from "./home-motion";
 import { homeNewsletterPreflight } from "./home-newsletter";
 import { iconPreflight } from "./icons";
 import { layoutPreflight } from "./layout";
+import { postCoverMediaPreflight } from "./post-cover-media";
+import { postPagePreflight } from "./post-page";
 import { searchWidgetPreflight } from "./search-widget";
 import { scrollRevealPreflight } from "./scroll-reveal";
 import { sidebarPreflight } from "./sidebar";
@@ -29,6 +31,7 @@ export const preflights = [
   searchWidgetPreflight,
   sidebarPreflight,
   cardPreflight,
+  postCoverMediaPreflight,
   authorPopoverPreflight,
   homeFeaturedPreflight,
   homeLayoutsPreflight,
@@ -40,6 +43,7 @@ export const preflights = [
   homeMotionPreflight,
   scrollRevealPreflight,
   contentPreflight,
+  postPagePreflight,
   footerPreflight,
   transitionPreflight,
 ];

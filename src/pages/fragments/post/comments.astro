@@ -1,0 +1,42 @@
+---
+
+---
+
+<div
+  id="fly-post-comments"
+  class="fly-post-comments-layer"
+  th:fragment="comments(post, enabled)"
+  th:if="${enabled}"
+  data-fly-comments-layer
+  aria-hidden="true"
+>
+  <button
+    class="fly-post-comments-backdrop"
+    type="button"
+    data-fly-comments-close
+    aria-label="Close comments"></button>
+  <aside
+    class="fly-post-comments-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="fly-post-comments-title"
+  >
+    <header>
+      <h2 id="fly-post-comments-title">Comments</h2>
+      <button
+        class="fly-post-comments-close"
+        type="button"
+        data-fly-comments-close
+        aria-label="Close comments"
+      >
+        <span class="fly-iconify fly-iconify--close" aria-hidden="true"></span>
+      </button>
+    </header>
+    <div class="fly-post-comments-body">
+      <halo:comment
+        group="content.halo.run"
+        kind="Post"
+        th:attr="name=${post.metadata.name}"></halo:comment>
+    </div>
+  </aside>
+</div>

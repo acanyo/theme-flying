@@ -3,7 +3,7 @@
 ---
 
 <th:block
-  th:fragment="content(mainMenu, featureMenu, footerLinks, selectedTags, socialLinks, copyrightText, showCopyright, icpBeian, gonganBeian, gonganBeianUrl)"
+  th:fragment="content(mainMenu, featureMenu, footerLinks, selectedTags, socialLinks, icpBeian, gonganBeian, gonganBeianUrl)"
 >
   <div class="fly-sidebar-inner">
     <nav
@@ -37,8 +37,19 @@
       aria-label="标签"
       th:if="${not #lists.isEmpty(selectedTags)}"
     >
-      <a class="fly-sidebar-section-link" href="/tags" th:href="@{/tags}">
-        <span>标签</span>
+      <span class="fly-sidebar-section-title fly-sidebar-tags-title"
+        >标签</span
+      >
+      <a
+        class="fly-sidebar-section-link fly-sidebar-tags-trigger"
+        href="/tags"
+        th:href="@{/tags}"
+        aria-label="标签"
+        data-fly-tip="标签"
+      >
+        <span
+          class="fly-menu-icon fly-iconify fly-iconify--tag"
+          aria-hidden="true"></span>
       </a>
       <a
         class="fly-sidebar-tag-link"
@@ -46,9 +57,11 @@
         th:each="tag : ${selectedTags}"
         th:href="@{${tag.status.permalink}}"
         th:style="${not #strings.isEmpty(tag.spec.color) ? '--fly-tag-color: ' + tag.spec.color + ';' : ''}"
+        th:attr="data-fly-tip=${tag.spec.displayName}"
       >
         <span class="fly-tag-dot" aria-hidden="true"></span>
-        <span th:text="${tag.spec.displayName}">灵感</span>
+        <span class="fly-nav-label" th:text="${tag.spec.displayName}">灵感</span
+        >
       </a>
     </nav>
   </div>
@@ -86,7 +99,7 @@
       th:replace="~{fragments/footer-content :: navigation(footerLinks=${footerLinks}, placement='sidebar')}"
     ></th:block>
     <th:block
-      th:replace="~{fragments/footer-content :: identity(copyrightText=${copyrightText}, showCopyright=${showCopyright}, icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl})}"
+      th:replace="~{fragments/footer-content :: identity(icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl})}"
     ></th:block>
   </footer>
 </th:block>

@@ -27,7 +27,6 @@
               th:href="@{${category.status.permalink}}"
               th:text="${category.spec.displayName}">分类</a
             >
-            <span class="fly-topic-marker" aria-hidden="true"></span>
           </h2>
           <p
             th:if="${not #strings.isEmpty(category.spec.description)}"

@@ -1,0 +1,16 @@
+---
+
+---
+
+<div class="fly-post-page-body" th:fragment="content(post)">
+  <section
+    class="fly-post-content fly-prose fly-post-page-content"
+    data-fly-post-content
+    th:utext="${post.content.content}"
+  >
+  </section>
+
+  <th:block
+    th:replace="~{fragments/post/author-card :: card(post=${post}, variant='compact')}"
+  ></th:block>
+</div>

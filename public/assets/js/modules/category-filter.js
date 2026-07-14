@@ -10,11 +10,53 @@ export function setupCategoryFilter(root) {
 
   const feed =
     first("[data-fly-feed]", root) || first(".fly-article-grid", root);
+  const filterNavigation = first("[data-fly-category-filter]", root);
+  const filterRail = filterNavigation
+    ? first("[data-fly-category-filter-rail]", filterNavigation)
+    : null;
+  const previousButton = filterNavigation
+    ? first("[data-fly-category-filter-prev]", filterNavigation)
+    : null;
+  const nextButton = filterNavigation
+    ? first("[data-fly-category-filter-next]", filterNavigation)
+    : null;
   const chips = all("[data-fly-filter]", root);
   const empty =
     first("[data-fly-feed-empty]", root) || first(".fly-empty-state", root);
   let activeFilter = "all";
   let collapsedBeforeFilter = null;
+
+  function updateRailControls() {
+    if (!filterRail) {
+      return;
+    }
+
+    const maximumScrollLeft = Math.max(
+      0,
+      filterRail.scrollWidth - filterRail.clientWidth,
+    );
+    const hasOverflow = maximumScrollLeft > 1;
+    const currentScrollLeft = Math.max(0, filterRail.scrollLeft);
+
+    if (previousButton) {
+      previousButton.hidden = !hasOverflow || currentScrollLeft <= 1;
+    }
+    if (nextButton) {
+      nextButton.hidden =
+        !hasOverflow || currentScrollLeft >= maximumScrollLeft - 1;
+    }
+  }
+
+  function scrollRail(direction) {
+    if (!filterRail) {
+      return;
+    }
+
+    filterRail.scrollBy({
+      left: direction * Math.max(160, filterRail.clientWidth * 0.65),
+      behavior: "smooth",
+    });
+  }
 
   function cards() {
     return feed ? all("[data-fly-post-card]", feed) : [];
@@ -67,6 +109,29 @@ export function setupCategoryFilter(root) {
       { signal: controller.signal },
     );
   });
+
+  if (filterRail) {
+    filterRail.addEventListener("scroll", updateRailControls, {
+      passive: true,
+      signal: controller.signal,
+    });
+
+    previousButton?.addEventListener("click", () => scrollRail(-1), {
+      signal: controller.signal,
+    });
+    nextButton?.addEventListener("click", () => scrollRail(1), {
+      signal: controller.signal,
+    });
+
+    const resizeObserver = new ResizeObserver(updateRailControls);
+    resizeObserver.observe(filterRail);
+    controller.signal.addEventListener(
+      "abort",
+      () => resizeObserver.disconnect(),
+      { once: true },
+    );
+    requestAnimationFrame(updateRailControls);
+  }
 
   root.addEventListener("fly:posts-appended", render, {
     signal: controller.signal,

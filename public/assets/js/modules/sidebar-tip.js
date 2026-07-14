@@ -69,6 +69,11 @@ function hasClippedLabel(target) {
 }
 
 function getSubmenuLinks(target) {
+  const tags = target.closest(".fly-sidebar-tags");
+  if (tags && target.matches(".fly-sidebar-tags-trigger")) {
+    return all(".fly-sidebar-tag-link", tags);
+  }
+
   const section = target.closest(".fly-sidebar-section");
   const list = section && section.querySelector(".fly-sidebar-sub-list");
   return list ? all("a", list) : [];
@@ -88,9 +93,9 @@ function positionPanel(panel, target, options = {}) {
   panel.style.top = `${top}px`;
 }
 
-function cloneIcon(link) {
-  const icon = link.querySelector(".fly-menu-icon");
-  return icon ? icon.cloneNode(true) : null;
+function cloneIndicator(link) {
+  const indicator = link.querySelector(".fly-menu-icon, .fly-tag-dot");
+  return indicator ? indicator.cloneNode(true) : null;
 }
 
 function buildFlyout(flyout, links) {
@@ -103,7 +108,7 @@ function buildFlyout(flyout, links) {
     const target = link.getAttribute("target");
     const rel = link.getAttribute("rel");
     const text = link.dataset.flyTip || link.textContent.trim();
-    const icon = cloneIcon(link);
+    const indicator = cloneIndicator(link);
 
     item.className = "fly-sidebar-flyout-link";
     item.textContent = "";
@@ -118,8 +123,13 @@ function buildFlyout(flyout, links) {
     }
     item.setAttribute("aria-label", text);
 
-    if (icon) {
-      item.appendChild(icon);
+    const tagColor = link.style.getPropertyValue("--fly-tag-color");
+    if (tagColor) {
+      item.style.setProperty("--fly-tag-color", tagColor);
+    }
+
+    if (indicator) {
+      item.appendChild(indicator);
     }
 
     const label = document.createElement("span");

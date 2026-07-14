@@ -12,15 +12,14 @@
     class="fly-overlay-post-hit"
     href="/"
     th:href="@{${post.status.permalink}}"
-    th:attr="aria-label=|阅读：${post.spec.title}|"></a>
-  <img
-    class="fly-overlay-post-image"
-    src="/assets/images/fallback-cover.svg"
-    th:src="${#strings.isEmpty(post.spec.cover) ? #theme.assets('/images/fallback-cover.svg') : post.spec.cover}"
-    th:alt="${post.spec.title}"
-    alt=""
-    loading="lazy"
-  />
+    th:attr="aria-label=|阅读：${post.spec.title}|"
+  >
+    <th:block th:replace="~{fragments/post-cover-media :: badge(post=${post})}"
+    ></th:block>
+  </a>
+  <th:block
+    th:replace="~{fragments/post-cover-media :: media(post=${post}, mediaClass=${'fly-overlay-post-image'}, eager=${false})}"
+  ></th:block>
   <div class="fly-overlay-post-shade" aria-hidden="true"></div>
   <div class="fly-overlay-post-content">
     <h3>
@@ -30,8 +29,13 @@
         th:text="${post.spec.title}">文章标题</a
       >
     </h3>
-    <p class="fly-overlay-post-meta">
-      <span th:text="${post.owner?.displayName ?: site.title}">作者</span>
+    <div class="fly-overlay-post-meta">
+      <th:block
+        th:if="${post.owner != null}"
+        th:replace="~{fragments/author-popover :: trigger(author=${post.owner}, fallbackPermalink=${post.status.permalink}, variant=${'name'})}"
+      ></th:block>
+      <span th:unless="${post.owner != null}" th:text="${site.title}">作者</span
+      >
       <span aria-hidden="true">·</span>
       <time
         th:datetime="${post.spec.publishTime}"
@@ -45,6 +49,6 @@
         th:if="${not #lists.isEmpty(post.categories)}"
         th:text="${post.categories[0].spec.displayName}">分类</span
       >
-    </p>
+    </div>
   </div>
 </article>

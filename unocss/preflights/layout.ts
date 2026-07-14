@@ -128,6 +128,21 @@ kbd {
   margin: 42px 0 78px;
 }
 
+@media (min-width: 768px) {
+  .fly-mobile-header {
+    isolation: isolate;
+  }
+
+  .fly-mobile-header::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--page);
+    content: "";
+    opacity: 0.9;
+  }
+}
+
 @media (min-width: 768px) and (max-width: 1199px) {
   body .fly-site-main {
     margin-left: var(--sidebar-collapsed-width);

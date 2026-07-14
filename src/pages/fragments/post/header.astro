@@ -1,0 +1,171 @@
+---
+
+---
+
+<header
+  class="fly-post-page-header"
+  th:fragment="header(post, commentsEnabled)"
+>
+  <h1 class="fly-post-page-title" th:text="${post.spec.title}">
+    Article title
+  </h1>
+
+  <p
+    class="fly-post-page-excerpt"
+    th:if="${not #strings.isEmpty(post.status.excerpt)}"
+    th:text="${post.status.excerpt}"
+  >
+    Article excerpt
+  </p>
+
+  <nav
+    class="fly-post-page-tags"
+    th:if="${not #lists.isEmpty(post.tags)}"
+    aria-label="Article tags"
+  >
+    <ul>
+      <li th:each="tag : ${post.tags}">
+        <a
+          href="/"
+          th:href="@{${tag.status.permalink}}"
+          th:text="${tag.spec.displayName}">Tag</a
+        >
+      </li>
+    </ul>
+  </nav>
+
+  <div class="fly-post-page-header-info">
+    <ul class="fly-post-page-meta" aria-label="Article information">
+      <li class="fly-post-page-meta-author">
+        <a
+          class="fly-post-page-meta-avatar"
+          href="/"
+          th:href="@{${post.owner?.permalink ?: post.status.permalink}}"
+          th:attr="aria-label=${post.owner?.displayName ?: site.title}"
+        >
+          <img
+            src="/assets/images/avatar.svg"
+            th:src="${post.owner?.avatar ?: #theme.assets('/images/avatar.svg')}"
+            th:alt="${post.owner?.displayName ?: site.title}"
+            alt=""
+            loading="eager"
+          />
+        </a>
+        <span>by</span>
+        <a
+          class="fly-post-page-meta-author-name"
+          href="/"
+          th:href="@{${post.owner?.permalink ?: post.status.permalink}}"
+          th:text="${post.owner?.displayName ?: site.title}">Author</a
+        >
+      </li>
+      <li class="fly-post-page-meta-separator" aria-hidden="true">•</li>
+      <li>
+        <time
+          th:datetime="${post.spec.publishTime}"
+          th:text="${#dates.format(post.spec.publishTime, 'MMMM d, yyyy')}"
+          >July 11, 2024</time
+        >
+      </li>
+      <li class="fly-post-page-meta-separator" aria-hidden="true">•</li>
+      <li><span data-fly-reading-time>1 min read</span></li>
+    </ul>
+
+    <div class="fly-post-page-actions">
+      <button
+        class="fly-post-page-action"
+        type="button"
+        data-fly-comments-open
+        th:if="${commentsEnabled}"
+        aria-controls="fly-post-comments"
+        aria-expanded="false"
+      >
+        <span class="fly-iconify fly-iconify--comment" aria-hidden="true"
+        ></span>
+        <span>Comments</span>
+        <span
+          class="fly-post-comment-count"
+          th:if="${post.status.commentsCount != null and post.status.commentsCount > 0}"
+          th:text="${post.status.commentsCount}">0</span
+        >
+      </button>
+
+      <div class="fly-post-page-share">
+        <button
+          class="fly-post-page-action"
+          type="button"
+          data-fly-share-toggle
+          aria-haspopup="menu"
+          aria-expanded="false"
+        >
+          <span class="fly-iconify fly-iconify--share" aria-hidden="true"
+          ></span>
+          <span>Share</span>
+        </button>
+        <div
+          class="fly-post-share-menu"
+          data-fly-share-menu
+          role="menu"
+          aria-hidden="true"
+        >
+          <button type="button" role="menuitem" data-fly-share-copy>
+            <span class="fly-iconify fly-iconify--link" aria-hidden="true"
+            ></span>
+            <span data-fly-share-copy-label>Copy link</span>
+          </button>
+          <a
+            href="#"
+            role="menuitem"
+            data-fly-share-x
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="fly-post-share-letter" aria-hidden="true">X</span>
+            <span>Share on X</span>
+          </a>
+          <a
+            href="#"
+            role="menuitem"
+            data-fly-share-facebook
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="fly-iconify fly-iconify--facebook" aria-hidden="true"
+            ></span>
+            <span>Share on Facebook</span>
+          </a>
+          <a
+            href="#"
+            role="menuitem"
+            data-fly-share-linkedin
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="fly-post-share-letter" aria-hidden="true">in</span>
+            <span>Share on LinkedIn</span>
+          </a>
+          <a href="#" role="menuitem" data-fly-share-email>
+            <span class="fly-iconify fly-iconify--mail" aria-hidden="true"
+            ></span>
+            <span>Email</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div
+  class="fly-post-page-media"
+  th:fragment="media(post)"
+  th:if="${not #strings.isEmpty(post.spec.cover)}"
+>
+  <figure>
+    <img
+      th:src="${post.spec.cover}"
+      th:alt="${post.spec.title}"
+      alt=""
+      loading="eager"
+    />
+  </figure>
+</div>

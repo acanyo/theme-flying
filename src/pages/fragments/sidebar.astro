@@ -9,8 +9,6 @@
            footerLinks=${theme.config.navigation?.footer_links},
            tagNames=${theme.config.navigation?.tags},
            socialLinks=${theme.config.navigation?.sidebar_links},
-           showCopyright=${theme.config.basic?.show_copyright != false},
-           copyrightText=${theme.config.basic?.copyright ?: '版权所有 · 架构于'},
            icpBeian=${theme.config.basic?.icp_beian ?: ''},
            gonganBeian=${theme.config.basic?.gongan_beian ?: ''},
            gonganBeianUrl=${theme.config.basic?.gongan_beian_url ?: ''},
@@ -24,7 +22,7 @@
     aria-label="站点导航"
   >
     <th:block
-      th:replace="~{fragments/sidebar-content :: content(mainMenu=${mainMenu}, featureMenu=${featureMenu}, footerLinks=${footerLinks}, selectedTags=${selectedTags}, socialLinks=${socialLinks}, copyrightText=${copyrightText}, showCopyright=${showCopyright}, icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl})}"
+      th:replace="~{fragments/sidebar-content :: content(mainMenu=${mainMenu}, featureMenu=${featureMenu}, footerLinks=${footerLinks}, selectedTags=${selectedTags}, socialLinks=${socialLinks}, icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl})}"
     ></th:block>
   </aside>
 
@@ -63,7 +61,7 @@
       </header>
 
       <th:block
-        th:replace="~{fragments/sidebar-content :: content(mainMenu=${mainMenu}, featureMenu=${featureMenu}, footerLinks=${footerLinks}, selectedTags=${selectedTags}, socialLinks=${socialLinks}, copyrightText=${copyrightText}, showCopyright=${showCopyright}, icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl})}"
+        th:replace="~{fragments/sidebar-content :: content(mainMenu=${mainMenu}, featureMenu=${featureMenu}, footerLinks=${footerLinks}, selectedTags=${selectedTags}, socialLinks=${socialLinks}, icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl})}"
       ></th:block>
     </aside>
   </div>

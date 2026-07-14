@@ -1,3 +1,4 @@
+// Shared structural shortcuts; component-specific navigation styles live in preflights.
 export const componentShortcuts = {
   "fly-brand":
     "inline-flex min-w-0 items-center text-[var(--text)] font-sans font-500 leading-none",
@@ -13,7 +14,6 @@ export const componentShortcuts = {
   "fly-featured-content":
     "relative z-2 flex min-h-full flex-col justify-end p-4 pointer-events-none sm:p-6",
 
-  "fly-category-filter": "flex min-w-0 items-center overflow-x-auto",
   "fly-article-grid": "grid min-w-0",
   "fly-post-card": "relative min-w-0",
   "fly-post-image-frame": "relative",

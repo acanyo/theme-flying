@@ -1,28 +1,65 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200" role="img" aria-label="轮播首页布局预览">
-  <rect x="1" y="1" width="318" height="198" rx="12" fill="#f5f6f8" stroke="#d8dce3" stroke-width="2"/>
-  <rect x="12" y="12" width="296" height="18" rx="5" fill="#ffffff"/>
-  <circle cx="23" cy="21" r="3" fill="#111111"/>
-  <rect x="31" y="18" width="36" height="6" rx="3" fill="#b7bdc7"/>
-  <rect x="242" y="17" width="42" height="8" rx="4" fill="#e2e5ea"/>
-  <circle cx="297" cy="21" r="5" fill="#111111"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200" role="img" aria-labelledby="title desc">
+  <title id="title">轮播布局预览</title>
+  <desc id="desc">左侧文章信息与右侧封面图片组成的分栏文章轮播</desc>
+  <defs>
+    <linearGradient id="carousel-media" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a1a1aa"/>
+      <stop offset=".48" stop-color="#52525b"/>
+      <stop offset="1" stop-color="#18181b"/>
+    </linearGradient>
+    <linearGradient id="carousel-shade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset=".42" stop-color="#09090b" stop-opacity="0"/>
+      <stop offset="1" stop-color="#09090b" stop-opacity=".46"/>
+    </linearGradient>
+    <clipPath id="carousel-window">
+      <rect x="11" y="11" width="298" height="178" rx="11"/>
+    </clipPath>
+    <clipPath id="carousel-image">
+      <rect x="175" y="63" width="119" height="92" rx="8"/>
+    </clipPath>
+  </defs>
 
-  <rect x="12" y="38" width="46" height="150" rx="7" fill="#e7e9ed"/>
-  <rect x="20" y="49" width="30" height="8" rx="4" fill="#ffffff"/>
-  <rect x="20" y="64" width="23" height="5" rx="2.5" fill="#b6bbc4"/>
-  <rect x="20" y="76" width="26" height="5" rx="2.5" fill="#b6bbc4"/>
-  <rect x="20" y="88" width="20" height="5" rx="2.5" fill="#b6bbc4"/>
+  <rect x="1" y="1" width="318" height="198" rx="15" fill="#fafafa" stroke="#d4d4d8" stroke-width="2"/>
+  <g clip-path="url(#carousel-window)">
+    <rect x="11" y="11" width="298" height="178" fill="#fff"/>
 
-  <rect x="66" y="38" width="242" height="108" rx="9" fill="#e2e5e9"/>
-  <rect x="80" y="58" width="91" height="9" rx="4.5" fill="#111111"/>
-  <rect x="80" y="75" width="72" height="7" rx="3.5" fill="#4f545d"/>
-  <rect x="80" y="93" width="88" height="5" rx="2.5" fill="#a3a9b2"/>
-  <rect x="80" y="104" width="61" height="5" rx="2.5" fill="#a3a9b2"/>
-  <rect x="80" y="121" width="48" height="14" rx="7" fill="#111111"/>
-  <rect x="187" y="48" width="111" height="88" rx="8" fill="#111111"/>
-  <circle cx="286" cy="137" r="9" fill="#ffffff"/>
-  <path d="M283 133l5 4-5 4" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <g aria-hidden="true">
+      <circle cx="25" cy="26" r="5" fill="#18181b"/>
+      <rect x="35" y="23" width="29" height="6" rx="3" fill="#52525b"/>
+      <rect x="218" y="23" width="17" height="5" rx="2.5" fill="#d4d4d8"/>
+      <rect x="242" y="23" width="17" height="5" rx="2.5" fill="#d4d4d8"/>
+      <rect x="266" y="23" width="17" height="5" rx="2.5" fill="#d4d4d8"/>
+      <circle cx="296" cy="26" r="5" fill="#e4e4e7"/>
+      <path d="M11 42.5h298" stroke="#e4e4e7"/>
+    </g>
 
-  <rect x="66" y="154" width="72" height="34" rx="7" fill="#d9dde3"/>
-  <rect x="146" y="154" width="72" height="34" rx="7" fill="#c8cdd5"/>
-  <rect x="226" y="154" width="82" height="34" rx="7" fill="#e2e5e9"/>
+    <g aria-hidden="true">
+      <rect x="23" y="53" width="284" height="124" rx="12" fill="#f4f4f5"/>
+
+      <circle cx="43" cy="72" r="8" fill="#52525b" stroke="#fff" stroke-width="2"/>
+      <circle cx="56" cy="72" r="8" fill="#a1a1aa" stroke="#f4f4f5" stroke-width="2"/>
+      <rect x="35" y="88" width="46" height="4" rx="2" fill="#a1a1aa"/>
+      <circle cx="87" cy="90" r="2" fill="#d4d4d8"/>
+      <rect x="93" y="88" width="25" height="4" rx="2" fill="#a1a1aa"/>
+      <rect x="35" y="101" width="112" height="8" rx="4" fill="#27272a"/>
+      <rect x="35" y="114" width="87" height="6" rx="3" fill="#52525b"/>
+      <rect x="35" y="128" width="101" height="4" rx="2" fill="#a1a1aa"/>
+      <rect x="35" y="136" width="69" height="4" rx="2" fill="#d4d4d8"/>
+      <rect x="35" y="150" width="48" height="17" rx="8.5" fill="#18181b"/>
+      <path d="M68 156.5h5m-2-2 2 2-2 2" fill="none" stroke="#fff" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <g clip-path="url(#carousel-image)">
+        <rect x="175" y="63" width="119" height="92" fill="url(#carousel-media)"/>
+        <circle cx="267" cy="82" r="27" fill="#fff" fill-opacity=".07"/>
+        <path d="m175 127 29-27 24 22 15-14 51 47H175z" fill="#18181b" fill-opacity=".24"/>
+        <rect x="175" y="63" width="119" height="92" fill="url(#carousel-shade)"/>
+        <rect x="248" y="137" width="37" height="10" rx="4" fill="#09090b" fill-opacity=".58"/>
+      </g>
+
+      <circle cx="135" cy="159" r="9" fill="#e4e4e7"/>
+      <path d="m137 156-3 3 3 3" fill="none" stroke="#71717a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="155" cy="159" r="9" fill="#fff"/>
+      <path d="m153 156 3 3-3 3" fill="none" stroke="#18181b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
 </svg>

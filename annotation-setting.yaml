@@ -65,3 +65,20 @@ spec:
       accepts:
         - image/*
       help: 可选。用于首页“我们的作者”卡片，建议上传竖向图片；未设置时使用用户头像。
+---
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: theme-flying-post-video-cover
+spec:
+  targetRef:
+    group: content.halo.run
+    kind: Post
+  formSchema:
+    - $formkit: attachment
+      name: fly_video_cover
+      label: 视频封面
+      value: ""
+      accepts:
+        - video/*
+      help: 可选。设置后文章卡片会自动循环播放该视频，并显示“视频文章”标识；文章封面图将作为视频加载前的封面。

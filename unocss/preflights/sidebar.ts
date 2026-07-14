@@ -95,7 +95,7 @@ export const sidebarPreflight = {
   transition: color 300ms ease;
 }
 
-:is(.fly-sidebar-parent, .fly-sidebar-link, .fly-sidebar-sub-link, .fly-sidebar-flyout-link):is(
+:is(.fly-sidebar-parent, .fly-sidebar-link, .fly-sidebar-sub-link, .fly-sidebar-tags-trigger, .fly-sidebar-flyout-link):is(
     :hover,
     :focus-visible,
     .fly-is-open,
@@ -178,6 +178,17 @@ export const sidebarPreflight = {
   gap: 16px;
   padding: 8px 12px;
   color: var(--faint);
+}
+
+.fly-sidebar-tags-trigger {
+  gap: 16px;
+}
+
+.fly-sidebar-tags-arrow {
+  width: 20px;
+  height: 20px;
+  flex-basis: 20px;
+  margin-left: auto;
 }
 
 .fly-sidebar-tag-link {
@@ -313,19 +324,21 @@ export const sidebarPreflight = {
   width: 180px;
   max-width: min(220px, calc(100vw - 112px));
   max-height: min(360px, calc(100vh - 24px));
-  border: 1px solid var(--line);
-  border-radius: 12px;
+  border: 0;
+  border-radius: 14px;
   background: var(--page);
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 20px 60px -10px rgba(177, 170, 170, 0.24), 0 4px 20px -8px rgba(0, 0, 0, 0.24);
   opacity: 0;
   overflow: visible;
-  padding: 4px;
+  padding: 7px 4px;
   pointer-events: none;
   transform: translate(-4px, -4px);
-  transition: opacity 120ms ease, transform 120ms ease;
+  visibility: hidden;
+  transition: transform 150ms ease, visibility 150ms ease, opacity 150ms ease;
 }
 
 .fly-sidebar-flyout::before {
+  display: none;
   content: "";
   position: absolute;
   top: 18px;
@@ -342,6 +355,7 @@ export const sidebarPreflight = {
   opacity: 1;
   pointer-events: auto;
   transform: translate(0, -4px);
+  visibility: visible;
 }
 
 .fly-sidebar-flyout-list {
@@ -381,6 +395,15 @@ export const sidebarPreflight = {
   width: 16px;
   height: 16px;
   flex-basis: 16px;
+}
+
+.fly-sidebar-flyout-link .fly-tag-dot {
+  width: 6px;
+  height: 6px;
+  flex-basis: 6px;
+  margin: 0 4px 0 0;
+  border: 0;
+  background: var(--fly-tag-color, currentColor);
 }
 
 .fly-navigation-popup {
@@ -489,7 +512,7 @@ body[data-fly-menu-open="true"] .fly-navigation-panel {
   body[data-fly-sidebar-collapsed="true"]
     .fly-site-sidebar--static
     .fly-sidebar-inner {
-    padding: 14px 16px 14px 15px;
+    padding: 14px calc(var(--fly-responsive-gutter) - 14px) 14px 15px;
   }
 
   body[data-fly-sidebar-collapsed="true"]
@@ -546,10 +569,31 @@ body[data-fly-menu-open="true"] .fly-navigation-panel {
     .fly-sidebar-section-title,
   body[data-fly-sidebar-collapsed="true"]
     .fly-site-sidebar--static
-    .fly-sidebar-sub-list,
+    .fly-sidebar-sub-list {
+    display: none;
+  }
+
   body[data-fly-sidebar-collapsed="true"]
     .fly-site-sidebar--static
     .fly-sidebar-tags {
+    display: flex;
+  }
+
+  body[data-fly-sidebar-collapsed="true"]
+    .fly-site-sidebar--static
+    .fly-sidebar-tags-trigger {
+    width: 100%;
+    height: 38px;
+    justify-content: flex-start;
+    gap: 0;
+    border-radius: 8px;
+    margin-left: -3px;
+    padding: 8px 10px;
+  }
+
+  body[data-fly-sidebar-collapsed="true"]
+    .fly-site-sidebar--static
+    :is(.fly-sidebar-tags-trigger .fly-nav-label, .fly-sidebar-tags-arrow, .fly-sidebar-tag-link) {
     display: none;
   }
 
@@ -566,7 +610,7 @@ body[data-fly-menu-open="true"] .fly-navigation-panel {
   }
 
   .fly-site-sidebar--static .fly-sidebar-inner {
-    padding: 14px 16px 14px 15px;
+    padding: 14px calc(var(--fly-responsive-gutter) - 14px) 14px 15px;
   }
 
   .fly-site-sidebar--static .fly-sidebar-parent,
@@ -606,8 +650,26 @@ body[data-fly-menu-open="true"] .fly-navigation-panel {
   .fly-site-sidebar--static .fly-iconify--chevron,
   .fly-site-sidebar--static .fly-sidebar-section-title,
   .fly-site-sidebar--static .fly-sidebar-sub-list,
-  .fly-site-sidebar--static .fly-sidebar-tags,
   .fly-site-sidebar--static .fly-sidebar-socials {
+    display: none;
+  }
+
+  .fly-site-sidebar--static .fly-sidebar-tags {
+    display: flex;
+  }
+
+  .fly-site-sidebar--static .fly-sidebar-tags-trigger {
+    width: 100%;
+    height: 38px;
+    justify-content: flex-start;
+    gap: 0;
+    border-radius: 8px;
+    margin-left: -3px;
+    padding: 8px 10px;
+  }
+
+  .fly-site-sidebar--static
+    :is(.fly-sidebar-tags-trigger .fly-nav-label, .fly-sidebar-tags-arrow, .fly-sidebar-tag-link) {
     display: none;
   }
 }

@@ -12,8 +12,9 @@ export const homeFeaturedPreflight = {
 }
 
 .fly-featured-section .fly-post-meta--light,
-.fly-featured-section .fly-post-meta--light a,
-.fly-featured-section .fly-post-meta--light time {
+.fly-featured-section .fly-post-meta--light > .fly-author-pill,
+.fly-featured-section .fly-post-meta--light > time,
+.fly-featured-section .fly-post-meta--light .fly-author-popover-anchor {
   color: rgba(255, 255, 255, 0.94);
 }
 
@@ -484,15 +485,15 @@ export const homeFeaturedPreflight = {
   white-space: nowrap;
 }
 
-.fly-home-carousel-media img {
+.fly-home-carousel-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 1s cubic-bezier(0.2, 1, 0.2, 1);
 }
 
-.fly-home-carousel-media:hover img,
-.fly-home-carousel-media:focus-visible img {
+.fly-home-carousel-media:hover .fly-home-carousel-image,
+.fly-home-carousel-media:focus-visible .fly-home-carousel-image {
   transform: scale(1.03);
 }
 
@@ -500,23 +501,30 @@ export const homeFeaturedPreflight = {
   display: inline-flex;
   min-height: 40px;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 6px;
   margin-top: 20px;
-  border-radius: 999px;
+  border-radius: 20px;
   background: var(--text);
   color: var(--page);
   padding: 8px 20px;
   font-size: 14px;
   font-weight: 600;
-  line-height: 1;
+  line-height: 21px;
 }
 
-.fly-home-carousel-read .fly-iconify--chevron {
-  width: 14px;
-  height: 14px;
+.fly-home-carousel-read[data-fly-motion-button]:hover,
+.fly-home-carousel-read[data-fly-motion-button]:focus-visible {
+  opacity: 1;
+}
+
+.fly-home-carousel-read .fly-iconify--arrow-right {
+  width: 16px;
+  height: 16px;
+  flex-basis: 16px;
   margin: 0;
   opacity: 1;
-  transform: rotate(-90deg);
+  transform: none;
 }
 
 .fly-home-carousel > .fly-carousel-controls {
@@ -679,7 +687,7 @@ export const homeFeaturedPreflight = {
 @media (prefers-reduced-motion: reduce) {
   .fly-featured-image,
   .fly-home-slide-image,
-  .fly-home-carousel-media img {
+  .fly-home-carousel-image {
     transition-duration: 1ms;
   }
 }
