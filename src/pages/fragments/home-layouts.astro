@@ -2,7 +2,7 @@
 
 ---
 
-<th:block th:fragment="home(posts, categories, homeLayout, localPagination)">
+<th:block th:fragment="home(posts, categories, homeLayout)">
   <th:block
     th:replace="~{fragments/home/category-filter :: categoryFilter(categories=${categories})}"
   ></th:block>
@@ -10,7 +10,7 @@
     th:replace="~{fragments/home/featured :: featured(posts=${posts}, homeLayout=${homeLayout})}"
   ></th:block>
   <th:block
-    th:replace="~{fragments/home/feed :: feed(posts=${posts}, homeLayout=${homeLayout}, localPagination=${localPagination})}"
+    th:replace="~{fragments/home/feed :: feed(posts=${posts}, homeLayout=${homeLayout})}"
   ></th:block>
   <th:block th:replace="~{fragments/home/authors :: authors(posts=${posts})}"
   ></th:block>

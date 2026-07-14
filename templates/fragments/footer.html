@@ -1,6 +1,6 @@
-<!DOCTYPE html><footer class="fly-site-footer" th:fragment="footer" th:with="showCopyright=${theme.config.basic?.show_copyright != false},
-           copyrightTemplate=${theme.config.basic?.copyright ?: '© {year} {site}'},
-           copyrightYear=${#dates.format(#dates.createNow(), 'yyyy')},
-           footerCopyright=${#strings.replace(#strings.replace(copyrightTemplate, '{year}', copyrightYear), '{site}', site.title)}"> <div class="fly-footer-shell"> <p class="fly-copyright" th:if="${showCopyright and not #strings.isEmpty(footerCopyright)}" th:text="${footerCopyright}">
-© 2026 flying
-</p> </div> <halo:footer></halo:footer> </footer>
+<!DOCTYPE html><footer class="fly-site-footer" th:fragment="footer" th:with="footerLinks=${theme.config.navigation?.footer_links},
+           showCopyright=${theme.config.basic?.show_copyright != false},
+           copyrightText=${theme.config.basic?.copyright ?: '版权所有 · 架构于'},
+           icpBeian=${theme.config.basic?.icp_beian ?: ''},
+           gonganBeian=${theme.config.basic?.gongan_beian ?: ''},
+           gonganBeianUrl=${theme.config.basic?.gongan_beian_url ?: ''}"> <div class="fly-footer-shell" th:if="${showCopyright or not #lists.isEmpty(footerLinks) or not #strings.isEmpty(icpBeian) or not #strings.isEmpty(gonganBeian)}"> <th:block th:replace="~{fragments/footer-content :: identity(copyrightText=${copyrightText}, showCopyright=${showCopyright}, icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl})}"></th:block> <th:block th:replace="~{fragments/footer-content :: navigation(footerLinks=${footerLinks}, placement='content')}"></th:block> </div> <halo:footer></halo:footer> </footer>

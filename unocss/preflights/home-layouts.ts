@@ -21,6 +21,11 @@ export const homeLayoutsPreflight = {
   user-select: none;
 }
 
+[data-fly-carousel-rail].fly-is-animating {
+  scroll-behavior: auto;
+  scroll-snap-type: none;
+}
+
 @media (hover: hover) and (pointer: fine) {
   [data-fly-carousel-buttons-only] [data-fly-carousel-rail] {
     overflow-x: hidden;
@@ -68,19 +73,16 @@ export const homeLayoutsPreflight = {
   opacity: 0.34;
 }
 
-.fly-carousel-arrow .fly-iconify--chevron {
-  width: 14px;
-  height: 14px;
+.fly-carousel-arrow .fly-iconify--arrow-right {
+  width: 20px;
+  height: 20px;
+  flex-basis: 20px;
   margin: 0;
-  opacity: 0.78;
+  opacity: 1;
 }
 
-.fly-carousel-arrow--prev .fly-iconify--chevron {
-  transform: rotate(90deg);
-}
-
-.fly-carousel-arrow--next .fly-iconify--chevron {
-  transform: rotate(-90deg);
+.fly-carousel-arrow--prev .fly-iconify--arrow-right {
+  transform: rotate(180deg);
 }
 
 .fly-carousel-dots {

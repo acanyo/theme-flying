@@ -22,10 +22,7 @@ export function setupLoadMore(root) {
   const loadLabelCopies = all("[data-fly-load-label-copy]", loadLink);
   const loadComplete = first("[data-fly-load-complete]", loadLink);
   const loadStatus = first("[data-fly-load-status]", root);
-  const localLoadMore = loadLink.dataset.flyLocalLoadMore === "true";
-  const endText = localLoadMore
-    ? "全部文章已显示"
-    : loadLink.dataset.flyEndText || DEFAULT_END_TEXT;
+  const endText = loadLink.dataset.flyEndText || DEFAULT_END_TEXT;
   let loading = false;
 
   function setLoadState(state, message = "") {
@@ -119,18 +116,6 @@ export function setupLoadMore(root) {
       return;
     }
 
-    if (localLoadMore) {
-      feed.dataset.flyFeedCollapsed = "false";
-      feed.dispatchEvent(
-        new CustomEvent("fly:posts-appended", {
-          bubbles: true,
-          detail: { count: all("[data-fly-post-card]", feed).length, feed },
-        }),
-      );
-      completeLoading();
-      return;
-    }
-
     const nextUrl = loadLink.getAttribute("href");
     if (!nextUrl || loadLink.dataset.flyExhausted === "true") {
       completeLoading();
@@ -176,6 +161,7 @@ export function setupLoadMore(root) {
       if (error && error.name === "AbortError") {
         return;
       }
+      loadLink.setAttribute("href", nextUrl);
       setLoadState("error", "加载失败，请重试。");
     }
   }

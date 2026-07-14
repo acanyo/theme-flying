@@ -10,10 +10,10 @@
     <div
       class="fly-content-shell fly-home-shell"
       th:attr="data-fly-home-layout=${theme.config.basic?.home_layout ?: 'grid'}"
-      th:with="homeLayout=${theme.config.basic?.home_layout ?: 'grid'}, homePosts=${postFinder.list({page: 1, size: 100, sort: {'spec.publishTime,desc'}})}, categories=${categoryFinder.listAll()}"
+      th:with="homeLayout=${theme.config.basic?.home_layout ?: 'grid'}, categories=${categoryFinder.listAll()}"
     >
       <th:block
-        th:replace="~{fragments/home-layouts :: home(posts=${homePosts}, categories=${categories}, homeLayout=${homeLayout}, localPagination=true)}"
+        th:replace="~{fragments/home-layouts :: home(posts=${posts}, categories=${categories}, homeLayout=${homeLayout})}"
       ></th:block>
     </div>
   </th:block>

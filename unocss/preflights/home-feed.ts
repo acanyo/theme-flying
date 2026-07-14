@@ -457,14 +457,29 @@ export const homeFeedPreflight = {
 
 .fly-topic-block > .fly-carousel-controls {
   position: absolute;
-  right: -20px;
-  bottom: calc(50% - 42px);
+  left: -18px;
+  right: -18px;
+  top: var(--fly-topic-control-center-y);
+  height: 36px;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
   z-index: 4;
+  pointer-events: none;
 }
 
-.fly-topic-block > .fly-carousel-controls .fly-carousel-arrow--prev,
 .fly-topic-block > .fly-carousel-controls .fly-carousel-dots {
   display: none;
+}
+
+.fly-topic-block > .fly-carousel-controls .fly-carousel-arrow {
+  pointer-events: auto;
+}
+
+.fly-topic-block > .fly-carousel-controls .fly-carousel-arrow:disabled {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .fly-section-action {
@@ -488,10 +503,6 @@ export const homeFeedPreflight = {
   width: 12px;
   height: 12px;
   transform: rotate(-90deg);
-}
-
-[data-fly-feed-collapsed="true"] > :nth-child(n + 7) {
-  display: none;
 }
 
 .fly-topic-header {
@@ -549,7 +560,7 @@ export const homeFeedPreflight = {
 }
 
 @media (min-width: 1200px) {
-  body[data-fly-sidebar-collapsed="true"] .fly-article-grid.fly-latest-grid {
+  .fly-article-grid.fly-latest-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
@@ -557,27 +568,15 @@ export const homeFeedPreflight = {
     flex-basis: calc((100% - var(--content-padding-x) * 3) / 4);
   }
 
-  .fly-home-shell[data-fly-home-layout="slider"]
-    [data-fly-feed-collapsed="true"]
-    > :nth-child(7),
-  .fly-home-shell[data-fly-home-layout="slider"]
-    [data-fly-feed-collapsed="true"]
-    > :nth-child(8) {
-    display: flex;
-  }
 }
 
 @media (min-width: 1575px) {
   .fly-article-grid.fly-latest-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .fly-topic-slide {
     flex-basis: calc((100% - var(--content-padding-x) * 3) / 4);
-  }
-
-  body[data-fly-sidebar-collapsed="true"] .fly-article-grid.fly-latest-grid {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   body[data-fly-sidebar-collapsed="true"] .fly-topic-slide {

@@ -3,14 +3,14 @@ export const layoutPreflight = {
 .fly-mobile-header {
   position: sticky;
   top: 0;
-  z-index: 30;
+  z-index: 9999;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(280px, 424px) minmax(0, 1fr);
   height: var(--navbar-height);
   align-items: center;
   gap: 16px;
   padding: 8px var(--content-padding-x) 8px 16px;
-  background: color-mix(in srgb, var(--page) 82%, transparent);
+  background: transparent;
   backdrop-filter: blur(10px);
 }
 
@@ -31,7 +31,8 @@ export const layoutPreflight = {
   gap: 8px;
 }
 
-.fly-icon-button.fly-menu-button {
+.fly-icon-button.fly-menu-button,
+.fly-icon-button.fly-sidebar-collapse-button {
   display: grid;
   width: 36px;
   height: 36px;
@@ -41,7 +42,8 @@ export const layoutPreflight = {
   transition: background-color 160ms ease, color 160ms ease;
 }
 
-.fly-menu-button .fly-iconify {
+.fly-menu-button .fly-iconify,
+.fly-sidebar-collapse-button .fly-iconify {
   grid-area: 1 / 1;
   width: 20px;
   height: 20px;
@@ -60,8 +62,9 @@ export const layoutPreflight = {
   border-radius: 10px;
   outline: 0;
   background: var(--page-alt);
-  color: var(--text);
-  padding: 0;
+  gap: 10px;
+  color: var(--faint);
+  padding: 4px 16px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -69,7 +72,7 @@ export const layoutPreflight = {
 }
 
 .fly-navbar-search:hover {
-  background: var(--border);
+  background: var(--hover-bg-color);
 }
 
 .fly-navbar-search:focus-visible {
@@ -78,68 +81,39 @@ export const layoutPreflight = {
 }
 
 .fly-search-placeholder {
-  width: 100%;
+  width: auto;
+  flex: 1 1 auto;
   overflow: hidden;
-  padding: 4px 42px;
+  padding: 0;
   text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .fly-navbar-search .fly-search-icon {
-  position: absolute;
-  left: 16px;
   width: 16px;
   height: 16px;
-  color: var(--muted);
+  color: var(--faint);
 }
 
 .fly-navbar-search kbd {
-  right: 16px;
-}
-
-.fly-navbar-user {
-  position: relative;
-  display: grid;
-  width: 36px;
-  height: 36px;
-  flex: 0 0 36px;
-  place-items: center;
-  border: 0;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--text);
-  justify-self: end;
-  transition: background-color 160ms ease, color 160ms ease;
+  position: static;
+  margin-left: auto;
 }
 
 .fly-icon-button.fly-menu-button:hover,
-.fly-navbar-user:hover {
+.fly-icon-button.fly-sidebar-collapse-button:hover {
   background: var(--page-alt);
 }
 
 .fly-icon-button.fly-menu-button:focus-visible,
-.fly-navbar-user:focus-visible {
+.fly-icon-button.fly-sidebar-collapse-button:focus-visible {
   outline: 2px solid var(--text);
   outline-offset: 2px;
 }
 
-.fly-navbar-user .fly-iconify {
-  grid-area: 1 / 1;
-  width: 17px;
-  height: 17px;
-  flex-basis: 17px;
-}
-
-.fly-page-overlay {
-  background: rgba(12, 18, 28, 0.24);
-  backdrop-filter: blur(2px);
-  transition: opacity 240ms ease;
-}
-
-body[data-fly-menu-open="true"] .fly-page-overlay {
-  pointer-events: auto;
-  opacity: 1;
+.fly-sidebar-collapse-button {
+  display: none !important;
 }
 
 kbd {
@@ -154,7 +128,33 @@ kbd {
   margin: 42px 0 78px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 1199px) {
+  body .fly-site-main {
+    margin-left: var(--sidebar-collapsed-width);
+    transition: margin-left 220ms ease;
+  }
+
+  body .fly-content-shell,
+  body .fly-footer-shell {
+    padding-right: var(--content-padding-x);
+    padding-left: var(--content-padding-x);
+  }
+
+  body .fly-content-shell {
+    padding-top: 16px;
+  }
+
+}
+
+@media (min-width: 1200px) {
+  .fly-menu-button {
+    display: none !important;
+  }
+
+  .fly-sidebar-collapse-button {
+    display: grid !important;
+  }
+
   body .fly-site-main {
     margin-left: var(--sidebar-width);
     transition: margin-left 220ms ease;
@@ -173,7 +173,6 @@ kbd {
   body .fly-content-shell {
     padding-top: 16px;
   }
-
 }
 
 @media (max-width: 767px) {
@@ -194,26 +193,23 @@ kbd {
     padding: 8px 16px;
   }
 
-  body[data-fly-menu-open="true"] .fly-mobile-header {
-    z-index: 60;
-  }
-
   .fly-navbar-brand {
     width: auto;
     flex: 1 1 auto;
   }
 
   .fly-navbar-search {
+    display: grid;
     width: 36px;
     max-width: none;
     flex: 0 0 36px;
     margin-left: auto;
+    padding: 0;
+    place-items: center;
   }
 
   .fly-search-placeholder {
-    border-radius: 999px;
-    padding: 0;
-    font-size: 0;
+    display: none;
   }
 
   .fly-navbar-search kbd {

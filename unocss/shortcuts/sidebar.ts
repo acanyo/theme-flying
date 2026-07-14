@@ -19,7 +19,7 @@ export const sidebarShortcuts = {
     "flex h-[34px] w-full items-center gap-4 rounded-[10px] px-3 py-1.75 text-sm font-500",
   "fly-sidebar-tag-link":
     "flex h-[38px] w-full items-center rounded-[10px] px-3 py-2 text-sm font-500",
-  "fly-sidebar-socials": "mt-auto hidden w-full px-5 pb-4 xl:block",
+  "fly-sidebar-socials": "mt-auto",
   "fly-social-icons": "flex items-center gap-0.5",
   "fly-social-icon":
     "inline-flex h-8 w-8 items-center justify-center rounded-full",

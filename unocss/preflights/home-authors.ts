@@ -60,9 +60,10 @@ export const homeAuthorsPreflight = {
   right: -18px;
 }
 
-.fly-author-controls .fly-iconify--chevron {
+.fly-author-controls .fly-iconify--arrow-right {
   width: 18px;
   height: 18px;
+  flex-basis: 18px;
 }
 
 .fly-authors-list {

@@ -1,8 +1,11 @@
 export const tokenPreflight = {
   getCSS: () => String.raw`
 :root {
-  --sidebar-width: 261.25px;
-  --sidebar-collapsed-width: 81.25px;
+  --fly-responsive-gutter: clamp(16px, calc(11.25px + 1.25vw), 30px);
+  --sidebar-width: calc(232px + var(--fly-responsive-gutter));
+  --sidebar-collapsed-width: calc(52px + var(--fly-responsive-gutter));
+  --navigation-panel-width: calc(244px + var(--fly-responsive-gutter));
+  --navigation-overlay: #e8e8e8;
   --content-width: none;
   --content-padding-x: clamp(16px, 2.1vw, 29.25px);
   --content-padding-mobile: 1rem;
@@ -40,6 +43,7 @@ export const tokenPreflight = {
   --mute: #747474;
   --line: #2a3038;
   --hover-bg-color: #252a31;
+  --navigation-overlay: #212121;
   --accent: var(--fly-primary-color-dark);
   --accent-strong: var(--fly-primary-color-dark);
   --accent-secondary: var(--fly-secondary-color-dark);
@@ -47,9 +51,8 @@ export const tokenPreflight = {
   color-scheme: dark;
 }
 
-@media (min-width: 768px) and (max-width: 1179px) {
+@media (min-width: 768px) and (max-width: 1199px) {
   :root {
-    --sidebar-collapsed-width: 73px;
     --content-padding-x: 20.85px;
   }
 }

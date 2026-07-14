@@ -1,22 +1,28 @@
 ---
-import ThemeSwitcher from "../../components/ThemeSwitcher.vue";
+import ThemeSwitcher from "../../components/theme/ThemeSwitcher.vue";
 ---
 
 <header class="fly-mobile-header" th:fragment="mobileHeader">
   <div class="fly-navbar-brand">
+    <button
+      class="fly-icon-button fly-sidebar-collapse-button"
+      type="button"
+      data-fly-sidebar-toggle
+      aria-label="收缩侧栏"
+      aria-expanded="true"
+      aria-controls="fly-site-sidebar"
+    >
+      <span class="fly-iconify fly-iconify--menu" aria-hidden="true"></span>
+    </button>
     <button
       class="fly-icon-button fly-menu-button"
       type="button"
       data-fly-menu-toggle
       aria-label="打开菜单"
       aria-expanded="false"
+      aria-controls="fly-navigation-popup"
     >
-      <span
-        class="fly-iconify fly-iconify--menu fly-menu-icon-open"
-        aria-hidden="true"></span>
-      <span
-        class="fly-iconify fly-iconify--close fly-menu-icon-close"
-        aria-hidden="true"></span>
+      <span class="fly-iconify fly-iconify--menu" aria-hidden="true"></span>
     </button>
     <a
       class="fly-brand fly-brand--mobile"

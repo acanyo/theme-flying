@@ -37,8 +37,26 @@ spec:
           id: basic_copyright
           key: basic_copyright
           label: 版权文案
-          value: "© {year} {site}"
-          help: 支持占位符 {year} 和 {site}，例如 © {year} {site}。
+          value: "版权所有 · 架构于"
+          help: 显示在 Halo 文字链接之前；建议保持为“版权所有 · 架构于”。
+        - $formkit: text
+          name: icp_beian
+          label: ICP备案号
+          value: ""
+          placeholder: 请输入 ICP备案号
+          help: 留空时不显示 ICP备案信息。
+        - $formkit: text
+          name: gongan_beian
+          label: 公安备案号
+          value: ""
+          placeholder: 请输入公安备案号
+          help: 留空时不显示公安备案信息。
+        - $formkit: text
+          name: gongan_beian_url
+          label: 公安备案查询链接
+          value: ""
+          placeholder: 请输入完整查询链接
+          help: 留空时跳转公安部互联网安全管理服务平台查询页。
         - $formkit: select
           name: home_link_group
           label: 首页友情链接分组
@@ -72,6 +90,28 @@ spec:
           label: 更多功能菜单
           value: ""
           help: 选择侧栏“更多功能”区域展示的菜单；不选择则隐藏此区域。
+        - $formkit: array
+          name: footer_links
+          label: 底部导航
+          value: []
+          help: 添加展示在展开侧栏和页面底部的导航链接；没有链接时自动隐藏底部导航。
+          children:
+            - $formkit: text
+              name: label
+              label: 名称
+              value: ""
+              validation: required
+              placeholder: 例如 关于
+            - $formkit: text
+              name: url
+              label: 链接
+              value: ""
+              validation: required
+              placeholder: 例如 /about 或 https://example.com
+            - $formkit: switch
+              name: new_tab
+              label: 新窗口打开
+              value: false
         - $formkit: tagSelect
           name: tags
           label: 侧栏标签

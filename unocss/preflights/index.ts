@@ -17,6 +17,7 @@ import { searchWidgetPreflight } from "./search-widget";
 import { scrollRevealPreflight } from "./scroll-reveal";
 import { sidebarPreflight } from "./sidebar";
 import { tokenPreflight } from "./tokens";
+import { themeSwitcherPreflight } from "./theme-switcher";
 import { transitionPreflight } from "./transitions";
 
 export const preflights = [
@@ -24,6 +25,7 @@ export const preflights = [
   basePreflight,
   iconPreflight,
   layoutPreflight,
+  themeSwitcherPreflight,
   searchWidgetPreflight,
   sidebarPreflight,
   cardPreflight,

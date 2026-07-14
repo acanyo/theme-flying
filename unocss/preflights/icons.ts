@@ -26,8 +26,16 @@ export const iconPreflight = {
   transition: transform 160ms ease, opacity 160ms ease;
 }
 
+.fly-iconify--arrow-right {
+  --fly-icon-url: url("../icons/iconify/arrow-right.svg");
+}
+
 .fly-iconify--close {
   --fly-icon-url: url("../icons/iconify/close.svg");
+}
+
+.fly-iconify--enter-door {
+  --fly-icon-url: url("../icons/iconify/enter-door.svg");
 }
 
 .fly-iconify--globe {
@@ -36,6 +44,10 @@ export const iconPreflight = {
 
 .fly-iconify--menu {
   --fly-icon-url: url("../icons/iconify/menu.svg");
+}
+
+.fly-iconify--mode {
+  --fly-icon-url: url("../icons/iconify/mode.svg");
 }
 
 .fly-iconify--loader {
@@ -62,14 +74,16 @@ export const iconPreflight = {
   --fly-icon-url: url("../icons/iconify/sun.svg");
 }
 
+.fly-iconify--user {
+  --fly-icon-url: url("../icons/iconify/user.svg");
+}
+
 .fly-iconify--wechat {
   --fly-icon-url: url("../icons/iconify/wechat.svg");
 }
 
 body[data-fly-menu-open="true"] .fly-menu-icon-open,
-body:not([data-fly-menu-open="true"]) .fly-menu-icon-close,
-[data-theme="dark"] .fly-theme-icon-dark,
-[data-theme="light"] .fly-theme-icon-light {
+body:not([data-fly-menu-open="true"]) .fly-menu-icon-close {
   display: none;
 }
 

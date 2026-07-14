@@ -524,6 +524,8 @@ export const homeFeaturedPreflight = {
   right: calc(50% + 40px);
   bottom: 40px;
   z-index: 5;
+  width: 72px;
+  height: 36px;
   gap: 0;
 }
 
@@ -532,14 +534,20 @@ export const homeFeaturedPreflight = {
 }
 
 .fly-home-carousel .fly-carousel-arrow {
-  border-color: transparent;
+  border: 0;
   background: transparent;
+  color: var(--text);
+  transition: color 150ms ease, background-color 150ms ease, opacity 150ms ease, visibility 150ms ease;
 }
 
 .fly-home-carousel .fly-carousel-arrow:not(:disabled):hover {
-  border-color: transparent;
-  background: var(--hover-bg-color);
+  background: color-mix(in srgb, var(--text) 14.5%, var(--page));
   transform: none;
+}
+
+.fly-home-carousel .fly-carousel-arrow:disabled {
+  visibility: visible;
+  opacity: 0.5;
 }
 
 .fly-home-carousel .fly-carousel-dot.fly-is-active {

@@ -11,6 +11,22 @@ html.is-changing #swup {
   transform: none;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html.fly-document-enter body:not(.fly-swup-revealing) #swup {
+    animation: fly-content-fade-in 240ms ease-out both;
+  }
+}
+
+@keyframes fly-content-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 body.fly-swup-revealing #swup {
   --fly-view-transition-progress: 0;
 

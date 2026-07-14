@@ -7,7 +7,7 @@
   aria-labelledby="fly-latest-heading"
   aria-busy="false"
   data-fly-feed-region
-  th:fragment="feed(posts, homeLayout, localPagination)"
+  th:fragment="feed(posts, homeLayout)"
 >
   <header
     class="fly-section-heading"
@@ -22,8 +22,6 @@
     class="fly-article-grid fly-latest-grid"
     data-fly-feed
     data-fly-reveal-group
-    data-fly-feed-collapsed="true"
-    th:attr="data-fly-local-feed=${localPagination ? 'true' : null}"
   >
     <th:block th:each="post : ${posts.items}">
       <th:block th:if="${homeLayout == 'grid'}">
@@ -44,22 +42,17 @@
 
   <th:block
     th:replace="~{fragments/home/load-more-preview :: decoration}"
-    th:if="${(localPagination and posts.total > (homeLayout == 'slider' ? 8 : 6)) or (not localPagination and posts.hasNext())}"
-  ></th:block>
+    th:if="${posts.hasNext()}"></th:block>
 
-  <div
-    class="fly-load-more-wrap"
-    th:if="${(localPagination and posts.total > (homeLayout == 'slider' ? 8 : 6)) or (not localPagination and posts.hasNext())}"
-  >
+  <div class="fly-load-more-wrap" th:if="${posts.hasNext()}">
     <a
       class="fly-button fly-button--dark fly-load-more"
       href="/"
-      th:href="${localPagination ? '#fly-latest-feed' : (posts != null ? posts.nextUrl : '#fly-latest-feed')}"
+      th:href="${posts.nextUrl}"
       aria-controls="fly-latest-feed"
       aria-describedby="fly-load-status"
       data-fly-end-text="全部文章已显示"
       data-fly-load-more
-      th:attr="data-fly-local-load-more=${localPagination ? 'true' : null}"
       data-fly-motion-button
       data-fly-no-swup
     >

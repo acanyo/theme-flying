@@ -1,6 +1,9 @@
 import { all } from "../utils/dom.js?fly=1.0.30";
 
-const desktopQuery = window.matchMedia("(min-width: 1180px)");
+const compactRailQuery = window.matchMedia(
+  "(min-width: 768px) and (max-width: 1199px)",
+);
+const wideDesktopQuery = window.matchMedia("(min-width: 1200px)");
 const HIDE_DELAY = 120;
 
 function createTip() {
@@ -30,19 +33,32 @@ function createFlyout() {
   return flyout;
 }
 
-function shouldShow(target) {
+function isCollapsedStaticSidebar(target) {
+  if (!target.closest(".fly-site-sidebar--static")) {
+    return false;
+  }
+
   return (
-    desktopQuery.matches &&
-    (document.body.dataset.flySidebarCollapsed === "true" ||
-      hasClippedLabel(target)) &&
+    compactRailQuery.matches ||
+    (wideDesktopQuery.matches &&
+      document.body.dataset.flySidebarCollapsed === "true")
+  );
+}
+
+function shouldShow(target) {
+  if (target.closest(".fly-site-sidebar--popup")) {
+    return false;
+  }
+
+  return (
+    (isCollapsedStaticSidebar(target) || hasClippedLabel(target)) &&
     Boolean(target.dataset.flyTip && target.dataset.flyTip.trim())
   );
 }
 
 function shouldShowCollapsedPanel(target) {
   return (
-    desktopQuery.matches &&
-    document.body.dataset.flySidebarCollapsed === "true" &&
+    isCollapsedStaticSidebar(target) &&
     Boolean(target.dataset.flyTip && target.dataset.flyTip.trim())
   );
 }

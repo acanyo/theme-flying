@@ -12,6 +12,7 @@
     "format": "prettier --write ."
   },
   "prettier": {
+    "endOfLine": "auto",
     "plugins": [
       "prettier-plugin-astro"
     ],
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
     "@iconify-json/mingcute": "^1.2.7",
+    "@iconify-json/ph": "^1.2.2",
     "@unocss/cli": "^66.7.4",
     "nodemon": "^3.1.14",
     "prettier": "3.8.1",

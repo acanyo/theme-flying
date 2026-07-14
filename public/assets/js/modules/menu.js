@@ -1,7 +1,8 @@
 import { all } from "../utils/dom.js?fly=1.0.42";
 import { syncCurrentMenu } from "./menu-current.js?fly=1.0.42";
+import { setupNavigationPopup } from "./navigation-popup.js?fly=1.0.79";
 
-const desktopQuery = window.matchMedia("(min-width: 768px)");
+const wideDesktopQuery = window.matchMedia("(min-width: 1200px)");
 const COLLAPSED_STORAGE_KEY = "flying-sidebar-collapsed";
 
 function readStoredCollapsed() {
@@ -23,12 +24,10 @@ function storeCollapsed(collapsed) {
 function initialCollapsed() {
   const home = document.querySelector(".fly-home-shell[data-fly-home-layout]");
   if (!home) return readStoredCollapsed();
-  if (window.innerWidth < 1180) return true;
-
-  return home.dataset.flyHomeLayout === "slider";
+  return home.dataset.flyHomeLayout === "slider" || readStoredCollapsed();
 }
 
-function setupSidebarGroups(root, isDesktop, isCollapsed) {
+function setupSidebarGroups(root, isWideDesktop, isCollapsed) {
   const parents = all(".fly-sidebar-parent", root);
 
   parents.forEach((button) => {
@@ -39,7 +38,10 @@ function setupSidebarGroups(root, isDesktop, isCollapsed) {
 
     sync();
     button.addEventListener("click", () => {
-      if (isDesktop() && isCollapsed()) {
+      const isStaticSidebar = Boolean(
+        button.closest(".fly-site-sidebar--static"),
+      );
+      if (isStaticSidebar && (!isWideDesktop() || isCollapsed())) {
         return;
       }
 
@@ -52,39 +54,23 @@ function setupSidebarGroups(root, isDesktop, isCollapsed) {
 
 export function setupMenu(root) {
   const body = document.body;
-  const toggles = all("[data-fly-menu-toggle]", root);
-  const closers = all("[data-fly-menu-close]", root);
-  const sidebarLinks = all(".fly-site-sidebar a", root);
+  const collapseToggles = all("[data-fly-sidebar-toggle]", root);
+  const navigationPopup = setupNavigationPopup(root);
 
-  function isDesktop() {
-    return desktopQuery.matches;
+  function isWideDesktop() {
+    return wideDesktopQuery.matches;
   }
 
-  function syncToggles() {
-    const menuOpen = body.dataset.flyMenuOpen === "true";
+  function syncCollapseToggles() {
     const sidebarCollapsed = body.dataset.flySidebarCollapsed === "true";
 
-    toggles.forEach((button) => {
-      if (isDesktop()) {
-        button.setAttribute(
-          "aria-expanded",
-          sidebarCollapsed ? "false" : "true",
-        );
-        button.setAttribute(
-          "aria-label",
-          sidebarCollapsed ? "展开侧栏" : "收缩侧栏",
-        );
-        return;
-      }
-
-      button.setAttribute("aria-expanded", menuOpen ? "true" : "false");
-      button.setAttribute("aria-label", menuOpen ? "关闭菜单" : "打开菜单");
+    collapseToggles.forEach((button) => {
+      button.setAttribute("aria-expanded", sidebarCollapsed ? "false" : "true");
+      button.setAttribute(
+        "aria-label",
+        sidebarCollapsed ? "展开侧栏" : "收缩侧栏",
+      );
     });
-  }
-
-  function setMenuOpen(open) {
-    body.dataset.flyMenuOpen = open ? "true" : "false";
-    syncToggles();
   }
 
   function setSidebarCollapsed(collapsed, persist = true) {
@@ -92,54 +78,39 @@ export function setupMenu(root) {
     if (persist) {
       storeCollapsed(collapsed);
     }
-    syncToggles();
+    syncCollapseToggles();
     window.dispatchEvent(
       new CustomEvent("fly:sidebar-collapse-change", { detail: { collapsed } }),
     );
   }
 
-  toggles.forEach((button) => {
+  collapseToggles.forEach((button) => {
     button.addEventListener("click", () => {
-      if (isDesktop()) {
-        setSidebarCollapsed(body.dataset.flySidebarCollapsed !== "true");
-        setMenuOpen(false);
-        return;
-      }
-
-      setMenuOpen(body.dataset.flyMenuOpen !== "true");
+      if (!isWideDesktop()) return;
+      setSidebarCollapsed(body.dataset.flySidebarCollapsed !== "true");
     });
   });
 
-  closers.forEach((element) => {
-    element.addEventListener("click", () => setMenuOpen(false));
-  });
-
-  sidebarLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-      if (!isDesktop()) {
-        setMenuOpen(false);
-      }
-    });
-  });
-
-  desktopQuery.addEventListener("change", () => {
-    if (isDesktop()) {
-      setMenuOpen(false);
-    }
-    syncToggles();
+  wideDesktopQuery.addEventListener("change", () => {
+    navigationPopup.close();
+    syncCollapseToggles();
   });
 
   setupSidebarGroups(
     root,
-    isDesktop,
+    isWideDesktop,
     () => body.dataset.flySidebarCollapsed === "true",
   );
   syncCurrentMenu(root);
   setSidebarCollapsed(initialCollapsed(), false);
-  setMenuOpen(false);
+  navigationPopup.sync();
 
   return {
-    close: () => setMenuOpen(false),
-    refresh: () => syncCurrentMenu(root),
+    close: () => navigationPopup.close({ restoreFocus: true }),
+    refresh: () => {
+      syncCurrentMenu(root);
+      navigationPopup.sync();
+      syncCollapseToggles();
+    },
   };
 }

@@ -2,169 +2,69 @@
 
 ---
 
-<aside
-  class="fly-site-sidebar"
+<th:block
   th:fragment="sidebar"
   th:with="mainMenuName=${theme.config.navigation?.main_menu ?: ''},
            featureMenuName=${theme.config.navigation?.feature_menu ?: ''},
+           footerLinks=${theme.config.navigation?.footer_links},
            tagNames=${theme.config.navigation?.tags},
            socialLinks=${theme.config.navigation?.sidebar_links},
            showCopyright=${theme.config.basic?.show_copyright != false},
-           copyrightTemplate=${theme.config.basic?.copyright ?: '© {year} {site}'},
-           copyrightYear=${#dates.format(#dates.createNow(), 'yyyy')},
-           sidebarCopyright=${#strings.replace(#strings.replace(copyrightTemplate, '{year}', copyrightYear), '{site}', site.title)},
+           copyrightText=${theme.config.basic?.copyright ?: '版权所有 · 架构于'},
+           icpBeian=${theme.config.basic?.icp_beian ?: ''},
+           gonganBeian=${theme.config.basic?.gongan_beian ?: ''},
+           gonganBeianUrl=${theme.config.basic?.gongan_beian_url ?: ''},
            mainMenu=${#strings.isEmpty(mainMenuName) ? null : menuFinder.getByName(mainMenuName)},
            featureMenu=${#strings.isEmpty(featureMenuName) ? null : menuFinder.getByName(featureMenuName)},
            selectedTags=${#lists.isEmpty(tagNames) ? null : tagFinder.getByNames(tagNames)}"
 >
-  <div class="fly-sidebar-inner">
-    <nav
-      class="fly-sidebar-nav"
-      aria-label="主导航"
-      th:if="${(mainMenu != null and not #lists.isEmpty(mainMenu.menuItems)) or (featureMenu != null and not #lists.isEmpty(featureMenu.menuItems))}"
-    >
-      <th:block
-        th:if="${mainMenu != null and not #lists.isEmpty(mainMenu.menuItems)}"
-        th:replace="~{fragments/sidebar :: menuItems(menuItems=${mainMenu.menuItems})}"
-      ></th:block>
-
-      <th:block
-        th:if="${featureMenu != null and not #lists.isEmpty(featureMenu.menuItems)}"
-      >
-        <div
-          class="fly-sidebar-menu-separator"
-          aria-hidden="true"
-          th:if="${mainMenu != null and not #lists.isEmpty(mainMenu.menuItems)}"
-        >
-        </div>
-        <span class="fly-sidebar-section-title">更多功能</span>
-        <th:block
-          th:replace="~{fragments/sidebar :: menuItems(menuItems=${featureMenu.menuItems})}"
-        ></th:block>
-      </th:block>
-    </nav>
-
-    <nav
-      class="fly-sidebar-tags"
-      aria-label="标签"
-      th:if="${not #lists.isEmpty(selectedTags)}"
-    >
-      <a class="fly-sidebar-section-link" href="/tags" th:href="@{/tags}">
-        <span>标签</span>
-      </a>
-      <a
-        class="fly-sidebar-tag-link"
-        href="/tags/design"
-        th:each="tag : ${selectedTags}"
-        th:href="@{${tag.status.permalink}}"
-        th:style="${not #strings.isEmpty(tag.spec.color) ? '--fly-tag-color: ' + tag.spec.color + ';' : ''}"
-      >
-        <span class="fly-tag-dot" aria-hidden="true"></span>
-        <span th:text="${tag.spec.displayName}">灵感</span>
-      </a>
-    </nav>
-  </div>
-
-  <footer
-    class="fly-sidebar-socials"
-    aria-label="站点链接"
-    th:if="${not #lists.isEmpty(socialLinks) or (showCopyright and not #strings.isEmpty(sidebarCopyright))}"
+  <aside
+    id="fly-site-sidebar"
+    class="fly-site-sidebar fly-site-sidebar--static"
+    aria-label="站点导航"
   >
-    <div class="fly-social-icons" th:if="${not #lists.isEmpty(socialLinks)}">
-      <a
-        href="/"
-        th:each="link : ${socialLinks}"
-        th:if="${not #strings.isEmpty(link['label']) and not #strings.isEmpty(link['url'])}"
-        th:class="${link['show_label'] == true ? 'fly-sidebar-foot-link' : 'fly-social-icon'}"
-        th:href="@{${link['url']}}"
-        th:target="${link['new_tab'] == false ? null : '_blank'}"
-        th:rel="${link['new_tab'] == false ? null : 'noopener'}"
-        th:attr="aria-label=${link['label']},data-fly-tip=${link['label']}"
-      >
-        <span
-          class="fly-social-custom-icon"
-          aria-hidden="true"
-          th:if="${not #strings.isEmpty(link['icon'])}"
-          th:utext="${link['icon']}"></span>
-        <span
-          th:if="${link['show_label'] == true or #strings.isEmpty(link['icon'])}"
-          th:text="${link['label']}"
-        >
-          链接
-        </span>
-      </a>
-    </div>
-    <p
-      class="fly-sidebar-copyright"
-      th:if="${showCopyright and not #strings.isEmpty(sidebarCopyright)}"
-      th:text="${sidebarCopyright}"
-    >
-      © 2026 flying
-    </p>
-  </footer>
-</aside>
+    <th:block
+      th:replace="~{fragments/sidebar-content :: content(mainMenu=${mainMenu}, featureMenu=${featureMenu}, footerLinks=${footerLinks}, selectedTags=${selectedTags}, socialLinks=${socialLinks}, copyrightText=${copyrightText}, showCopyright=${showCopyright}, icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl})}"
+    ></th:block>
+  </aside>
 
-<th:block th:fragment="menuItems(menuItems)">
-  <th:block th:each="item : ${menuItems}">
-    <section
-      class="fly-sidebar-section"
-      th:if="${not #lists.isEmpty(item.children)}"
-      th:with="icon=${#annotations.get(item, 'fly_icon') ?: ''}"
+  <div
+    id="fly-navigation-popup"
+    class="fly-navigation-popup"
+    data-fly-navigation-popup
+    aria-hidden="true"
+    inert
+  >
+    <button
+      class="fly-navigation-backdrop"
+      type="button"
+      data-fly-menu-close
+      aria-label="关闭菜单"></button>
+    <aside
+      class="fly-site-sidebar fly-site-sidebar--popup fly-navigation-panel"
+      aria-label="弹出导航"
     >
-      <button
-        class="fly-sidebar-parent"
-        type="button"
-        aria-expanded="false"
-        th:attr="aria-label=${item.status.displayName},data-fly-tip=${item.status.displayName}"
-      >
-        <span
-          class="fly-menu-icon"
-          aria-hidden="true"
-          th:if="${not #strings.isEmpty(icon)}"
-          th:utext="${icon}"></span>
-        <span class="fly-nav-label" th:text="${item.status.displayName}"
-          >菜单</span
+      <header class="fly-navigation-panel-header">
+        <button
+          class="fly-icon-button fly-navigation-close"
+          type="button"
+          data-fly-menu-close
+          aria-label="关闭菜单"
         >
-        <span class="fly-iconify fly-iconify--chevron" aria-hidden="true"
-        ></span>
-      </button>
-      <div class="fly-sidebar-sub-list">
+          <span class="fly-iconify fly-iconify--close" aria-hidden="true"
+          ></span>
+        </button>
         <a
-          class="fly-sidebar-sub-link"
+          class="fly-brand fly-navigation-brand"
           href="/"
-          th:each="child : ${item.children}"
-          th:with="childIcon=${#annotations.get(child, 'fly_icon') ?: ''}"
-          th:href="@{${child.status.href}}"
-          th:target="${child.spec.target?.value}"
-          th:attr="aria-label=${child.status.displayName},data-fly-tip=${child.status.displayName}"
+          th:href="@{/}"
+          th:text="${site.title}">站点</a
         >
-          <span
-            class="fly-menu-icon fly-menu-icon--sub"
-            aria-hidden="true"
-            th:if="${not #strings.isEmpty(childIcon)}"
-            th:utext="${childIcon}"></span>
-          <span th:text="${child.status.displayName}">子菜单</span>
-        </a>
-      </div>
-    </section>
+      </header>
 
-    <a
-      class="fly-sidebar-link"
-      href="/"
-      th:unless="${not #lists.isEmpty(item.children)}"
-      th:with="icon=${#annotations.get(item, 'fly_icon') ?: ''}"
-      th:href="@{${item.status.href}}"
-      th:target="${item.spec.target?.value}"
-      th:attr="aria-label=${item.status.displayName},data-fly-tip=${item.status.displayName}"
-    >
-      <span
-        class="fly-menu-icon"
-        aria-hidden="true"
-        th:if="${not #strings.isEmpty(icon)}"
-        th:utext="${icon}"></span>
-      <span class="fly-nav-label" th:text="${item.status.displayName}"
-        >菜单</span
-      >
-    </a>
-  </th:block>
+      <th:block
+        th:replace="~{fragments/sidebar-content :: content(mainMenu=${mainMenu}, featureMenu=${featureMenu}, footerLinks=${footerLinks}, selectedTags=${selectedTags}, socialLinks=${socialLinks}, copyrightText=${copyrightText}, showCopyright=${showCopyright}, icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl})}"
+      ></th:block>
+    </aside>
+  </div>
 </th:block>
