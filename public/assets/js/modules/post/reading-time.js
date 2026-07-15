@@ -15,5 +15,5 @@ export function setupReadingTime(page) {
     .filter(Boolean).length;
   const minutes = Math.max(1, Math.ceil(cjkCount / 500 + latinWords / 220));
 
-  output.textContent = `${minutes} min read`;
+  output.textContent = `${minutes} 分钟阅读`;
 }

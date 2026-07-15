@@ -14,6 +14,7 @@ import { homeNewsletterPreflight } from "./home-newsletter";
 import { iconPreflight } from "./icons";
 import { layoutPreflight } from "./layout";
 import { postCoverMediaPreflight } from "./post-cover-media";
+import { postContentPreflight } from "./post-content";
 import { postPagePreflight } from "./post-page";
 import { searchWidgetPreflight } from "./search-widget";
 import { scrollRevealPreflight } from "./scroll-reveal";
@@ -44,6 +45,7 @@ export const preflights = [
   scrollRevealPreflight,
   contentPreflight,
   postPagePreflight,
+  postContentPreflight,
   footerPreflight,
   transitionPreflight,
 ];

@@ -123,7 +123,9 @@ function buildFlyout(flyout, links) {
     }
     item.setAttribute("aria-label", text);
 
-    const tagColor = link.style.getPropertyValue("--fly-tag-color");
+    const tagColor = window
+      .getComputedStyle(link)
+      .getPropertyValue("--fly-tag-color");
     if (tagColor) {
       item.style.setProperty("--fly-tag-color", tagColor);
     }

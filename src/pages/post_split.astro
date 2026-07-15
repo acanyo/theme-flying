@@ -1,0 +1,15 @@
+---
+
+---
+
+<html
+  lang="zh-CN"
+  th:replace="~{fragments/layout :: page(pageTitle=|${post.spec.title} - ${site.title}|, bodyClass='fly-post', content=~{::content})}"
+>
+  <th:block th:fragment="content" th:with="articleLayout=${'split'}">
+    <th:block
+      th:replace="~{fragments/post/article-shell :: shell(post=${post}, commentsEnabled=${haloCommentEnabled}, layout=${articleLayout})}"
+    ></th:block>
+  </th:block>
+
+</html>

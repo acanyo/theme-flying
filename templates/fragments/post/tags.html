@@ -1,1 +1,1 @@
-<!DOCTYPE html><nav class="fly-post-page-tags" aria-label="文章标签" th:fragment="tags(post)" th:if="${not #lists.isEmpty(post.tags)}"> <a href="/" th:each="tag : ${post.tags}" th:href="@{${tag.status.permalink}}" th:text="${tag.spec.displayName}">标签</a> </nav>
+<!DOCTYPE html><nav class="fly-post-page-tags" th:fragment="tags(post)" th:if="${not #lists.isEmpty(post.tags)}" aria-label="文章标签"> <a href="/" th:each="tag : ${post.tags}" th:href="@{${tag.status.permalink}}" th:text="${tag.spec.displayName}">标签</a> </nav>

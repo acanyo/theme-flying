@@ -23,7 +23,7 @@ function setStatus(status, state, message) {
 function setBusy(form, button, busy, idleLabel) {
   form.setAttribute("aria-busy", String(busy));
   button.disabled = busy;
-  button.textContent = busy ? "Sending..." : idleLabel;
+  button.textContent = busy ? "提交中..." : idleLabel;
 }
 
 async function submitNewsletter(form, endpoint, signal) {
@@ -86,14 +86,14 @@ export function setupNewsletter(root) {
         const email = input.value ? input.value.trim() : "";
         if (!email) {
           input.setAttribute("aria-invalid", "true");
-          setStatus(status, "error", "Please enter your email address.");
+          setStatus(status, "error", "请输入邮箱地址。");
           input.focus();
           return;
         }
 
         if (!isValidEmail(email)) {
           input.setAttribute("aria-invalid", "true");
-          setStatus(status, "error", "Please enter a valid email address.");
+          setStatus(status, "error", "请输入有效的邮箱地址。");
           input.focus();
           return;
         }
@@ -101,28 +101,20 @@ export function setupNewsletter(root) {
         input.removeAttribute("aria-invalid");
         const endpoint = getEndpoint(form);
         if (!endpoint) {
-          setStatus(
-            status,
-            "notice",
-            "Thanks! This local demo does not send subscription requests.",
-          );
+          setStatus(status, "notice", "订阅功能尚未配置。");
           return;
         }
 
         setBusy(form, button, true, idleLabel);
-        setStatus(status, "pending", "Sending your subscription request...");
+        setStatus(status, "pending", "正在提交订阅请求...");
 
         try {
           await submitNewsletter(form, endpoint, controller.signal);
           form.reset();
-          setStatus(status, "success", "Subscribed. Please check your inbox.");
+          setStatus(status, "success", "订阅成功，请检查邮箱。");
         } catch (error) {
           if (error.name !== "AbortError") {
-            setStatus(
-              status,
-              "error",
-              "Subscription failed. Please try again.",
-            );
+            setStatus(status, "error", "订阅失败，请稍后重试。");
           }
         } finally {
           if (!controller.signal.aborted) {

@@ -4,9 +4,9 @@
 
 <nav
   class="fly-post-page-tags"
-  aria-label="文章标签"
   th:fragment="tags(post)"
   th:if="${not #lists.isEmpty(post.tags)}"
+  aria-label="文章标签"
 >
   <a
     href="/"

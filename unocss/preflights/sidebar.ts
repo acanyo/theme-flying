@@ -34,6 +34,7 @@ export const sidebarPreflight = {
 .fly-sidebar-parent,
 .fly-sidebar-link,
 .fly-sidebar-section-link,
+.fly-sidebar-tags-trigger,
 .fly-sidebar-tag-link,
 .fly-sidebar-sub-link {
   position: relative;
@@ -61,10 +62,12 @@ export const sidebarPreflight = {
 .fly-sidebar-parent:is(:hover, :focus-visible, .fly-is-open, .fly-is-active, [aria-current="page"]),
 .fly-sidebar-link:is(:hover, :focus-visible, .fly-is-open, .fly-is-active, [aria-current="page"]),
 .fly-sidebar-sub-link:is(:hover, :focus-visible, .fly-is-open, .fly-is-active, [aria-current="page"]),
-.fly-sidebar-section-link:hover,
-.fly-sidebar-section-link:focus-visible,
-.fly-sidebar-tag-link:hover,
-.fly-sidebar-tag-link:focus-visible {
+.fly-sidebar-tag-link:is(:hover, :focus-visible) {
+  background: var(--hover-bg-color);
+  color: var(--text);
+}
+
+.fly-sidebar-tags-trigger:is(:hover, :focus-visible, .fly-is-active, [aria-current="page"]) {
   background: var(--hover-bg-color);
   color: var(--text);
 }
@@ -95,7 +98,7 @@ export const sidebarPreflight = {
   transition: color 300ms ease;
 }
 
-:is(.fly-sidebar-parent, .fly-sidebar-link, .fly-sidebar-sub-link, .fly-sidebar-tags-trigger, .fly-sidebar-flyout-link):is(
+:is(.fly-sidebar-parent, .fly-sidebar-link, .fly-sidebar-sub-link, .fly-sidebar-flyout-link):is(
     :hover,
     :focus-visible,
     .fly-is-open,
@@ -159,51 +162,94 @@ export const sidebarPreflight = {
 }
 
 .fly-sidebar-tags {
-  margin-top: 14px;
-  padding-top: 0;
-}
-
-.fly-sidebar-section-link,
-.fly-sidebar-tag-link {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.fly-sidebar-section-link {
-  height: 34px;
-  gap: 16px;
-  padding: 8px 12px;
-  color: var(--faint);
+  position: relative;
+  margin-top: 16px;
+  background: transparent;
 }
 
 .fly-sidebar-tags-trigger {
+  display: flex;
+  width: 100%;
+  height: 36px;
+  align-items: center;
   gap: 16px;
+  border-radius: 10px;
+  background: transparent;
+  overflow: hidden;
+  padding: 8px 12px;
+  color: var(--faint);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
 }
 
 .fly-sidebar-tags-arrow {
+  width: 16px;
+  height: 16px;
+  flex-basis: 16px;
+  margin-left: auto;
+  overflow: hidden;
+  clip-path: inset(0 100% 0 0);
+  transform: translateX(-2px);
+  transition: clip-path 300ms, transform 300ms;
+}
+
+.fly-sidebar-tags-trigger:hover .fly-sidebar-tags-arrow,
+.fly-sidebar-tags-trigger:focus-visible .fly-sidebar-tags-arrow {
+  clip-path: inset(0);
+  transform: translateX(0);
+}
+
+.fly-sidebar-tags-trigger .fly-iconify--tag {
+  display: none;
   width: 20px;
   height: 20px;
-  flex-basis: 20px;
-  margin-left: auto;
+  flex: 0 0 20px;
+}
+
+.fly-sidebar-tag-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .fly-sidebar-tag-link {
+  display: flex;
+  width: 100%;
   height: 38px;
+  min-height: 38px;
+  align-items: center;
+  gap: 16px;
+  border-radius: 10px;
+  background: transparent;
+  overflow: hidden;
   padding: 8px 12px;
   color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
 }
 
 .fly-tag-dot {
-  width: 10px;
-  height: 10px;
-  flex: 0 0 10px;
-  margin-right: 24px;
-  border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--text) 18%, var(--page));
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+}
+
+.fly-tag-dot::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: 50%;
   background: var(--fly-tag-color, var(--line));
 }
 
@@ -400,9 +446,14 @@ export const sidebarPreflight = {
 .fly-sidebar-flyout-link .fly-tag-dot {
   width: 6px;
   height: 6px;
-  flex-basis: 6px;
+  flex: 0 0 6px;
   margin: 0 4px 0 0;
-  border: 0;
+}
+
+.fly-sidebar-flyout-link .fly-tag-dot::before {
+  width: 6px;
+  height: 6px;
+  flex-basis: 6px;
   background: var(--fly-tag-color, currentColor);
 }
 
@@ -582,18 +633,25 @@ body[data-fly-menu-open="true"] .fly-navigation-panel {
   body[data-fly-sidebar-collapsed="true"]
     .fly-site-sidebar--static
     .fly-sidebar-tags-trigger {
-    width: 100%;
+    width: 38px;
     height: 38px;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 0;
     border-radius: 8px;
-    margin-left: -3px;
+    margin-left: 0;
     padding: 8px 10px;
   }
 
   body[data-fly-sidebar-collapsed="true"]
     .fly-site-sidebar--static
-    :is(.fly-sidebar-tags-trigger .fly-nav-label, .fly-sidebar-tags-arrow, .fly-sidebar-tag-link) {
+    .fly-sidebar-tags-trigger
+    .fly-iconify--tag {
+    display: inline-flex;
+  }
+
+  body[data-fly-sidebar-collapsed="true"]
+    .fly-site-sidebar--static
+    :is(.fly-sidebar-tags-trigger .fly-nav-label, .fly-sidebar-tags-arrow, .fly-sidebar-tag-list) {
     display: none;
   }
 
@@ -659,17 +717,23 @@ body[data-fly-menu-open="true"] .fly-navigation-panel {
   }
 
   .fly-site-sidebar--static .fly-sidebar-tags-trigger {
-    width: 100%;
+    width: 38px;
     height: 38px;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 0;
     border-radius: 8px;
-    margin-left: -3px;
+    margin-left: 0;
     padding: 8px 10px;
   }
 
   .fly-site-sidebar--static
-    :is(.fly-sidebar-tags-trigger .fly-nav-label, .fly-sidebar-tags-arrow, .fly-sidebar-tag-link) {
+    .fly-sidebar-tags-trigger
+    .fly-iconify--tag {
+    display: inline-flex;
+  }
+
+  .fly-site-sidebar--static
+    :is(.fly-sidebar-tags-trigger .fly-nav-label, .fly-sidebar-tags-arrow, .fly-sidebar-tag-list) {
     display: none;
   }
 }

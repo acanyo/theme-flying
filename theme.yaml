@@ -13,7 +13,11 @@ spec:
   logo: https://www.halo.run/logo
   homepage: https://github.com/acanyo/theme-flying
   issues: https://github.com/acanyo/theme-flying/issues
-  version: "1.0.28"
+  customTemplates:
+    post:
+      - name: Aspect 分栏文章
+        file: post_split.html
+  version: "1.0.33"
   requires: ">=2.0.0"
   license:
     - name: "GPL-3.0"

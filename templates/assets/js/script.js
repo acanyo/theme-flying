@@ -1,11 +1,11 @@
 import { setupMenu } from "./modules/menu.js?fly=1.0.79";
-import { setupHomeLayout } from "./modules/home-layout.js?fly=1.0.95";
+import { setupHomeLayout } from "./modules/home-layout.js?fly=1.0.119";
 import { setupCategoryFilter } from "./modules/category-filter.js?fly=1.0.103";
 import { setupContactCopy } from "./modules/contact-copy.js?fly=1.0.68";
 import { setupAuthorPopover } from "./modules/author-popover.js?fly=1.0.74";
 import { setupPostCoverVideo } from "./modules/post-cover-video.js?fly=1.0.106";
 import { setupPostVideoTooltip } from "./modules/post-video-tooltip.js?fly=1.0.105";
-import { setupPostPage } from "./modules/post-page.js?fly=1.0.110";
+import { setupPostPage } from "./modules/post-page.js?fly=1.0.117";
 import {
   openSearchWidget,
   setupSearchWidget,
@@ -13,10 +13,10 @@ import {
 import { setupLoadMore } from "./modules/load-more.js?fly=1.0.75";
 import { setupMotion } from "./modules/motion.js?fly=1.0.60";
 import { setupScrollReveal } from "./modules/scroll-reveal.js?fly=1.0.62";
-import { setupNewsletter } from "./modules/newsletter.js?fly=1.0.60";
+import { setupNewsletter } from "./modules/newsletter.js?fly=1.0.117";
 import { setupKeyboardShortcuts } from "./modules/keyboard.js?fly=1.0.60";
 import { setupTransitions } from "./modules/transitions.js?fly=1.0.60";
-import { setupSidebarTip } from "./modules/sidebar-tip.js?fly=1.0.112";
+import { setupSidebarTip } from "./modules/sidebar-tip.js?fly=1.0.116";
 
 function boot() {
   const menu = setupMenu(document);

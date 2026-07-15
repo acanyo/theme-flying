@@ -1,5 +1,5 @@
 import { setupPostComments } from "./post/comments.js";
-import { setupReadingTime } from "./post/reading-time.js";
+import { setupReadingTime } from "./post/reading-time.js?fly=1.0.117";
 import { setupPostShare } from "./post/share.js";
 import { setupPostToc } from "./post/toc.js";
 

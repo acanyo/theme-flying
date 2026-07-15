@@ -165,9 +165,6 @@ function setupPointerDrag(rail, signal, onDragStart) {
       startX = event.clientX;
       startScrollLeft = rail.scrollLeft;
       didDrag = false;
-      rail.setPointerCapture(pointerId);
-      rail.classList.add("fly-is-dragging");
-      onDragStart();
     },
     { signal },
   );
@@ -177,14 +174,30 @@ function setupPointerDrag(rail, signal, onDragStart) {
     (event) => {
       if (event.pointerId !== pointerId) return;
       const distance = event.clientX - startX;
-      didDrag = didDrag || Math.abs(distance) > 5;
+
+      if (!didDrag) {
+        if (Math.abs(distance) <= 5) return;
+        didDrag = true;
+        rail.setPointerCapture(pointerId);
+        rail.classList.add("fly-is-dragging");
+        onDragStart();
+      }
+
+      event.preventDefault();
       rail.scrollLeft = startScrollLeft - distance;
     },
     { signal },
   );
 
   rail.addEventListener("pointerup", finishDrag, { signal });
-  rail.addEventListener("pointercancel", finishDrag, { signal });
+  rail.addEventListener(
+    "pointercancel",
+    (event) => {
+      finishDrag(event);
+      didDrag = false;
+    },
+    { signal },
+  );
   rail.addEventListener(
     "click",
     (event) => {

@@ -37,11 +37,8 @@
       aria-label="标签"
       th:if="${not #lists.isEmpty(selectedTags)}"
     >
-      <span class="fly-sidebar-section-title fly-sidebar-tags-title"
-        >标签</span
-      >
       <a
-        class="fly-sidebar-section-link fly-sidebar-tags-trigger"
+        class="fly-sidebar-tags-trigger"
         href="/tags"
         th:href="@{/tags}"
         aria-label="标签"
@@ -50,19 +47,27 @@
         <span
           class="fly-menu-icon fly-iconify fly-iconify--tag"
           aria-hidden="true"></span>
+        <span class="fly-nav-label">标签</span>
+        <span
+          class="fly-iconify fly-iconify--arrow-forward fly-sidebar-tags-arrow"
+          aria-hidden="true"></span>
       </a>
-      <a
-        class="fly-sidebar-tag-link"
-        href="/tags/design"
-        th:each="tag : ${selectedTags}"
-        th:href="@{${tag.status.permalink}}"
-        th:style="${not #strings.isEmpty(tag.spec.color) ? '--fly-tag-color: ' + tag.spec.color + ';' : ''}"
-        th:attr="data-fly-tip=${tag.spec.displayName}"
-      >
-        <span class="fly-tag-dot" aria-hidden="true"></span>
-        <span class="fly-nav-label" th:text="${tag.spec.displayName}">灵感</span
-        >
-      </a>
+      <ul class="fly-sidebar-tag-list">
+        <li th:each="tag : ${selectedTags}">
+          <a
+            class="fly-sidebar-tag-link"
+            href="/tags/design"
+            th:href="@{${tag.status.permalink}}"
+            th:style="${not #strings.isEmpty(tag.spec.color) ? '--fly-tag-color: ' + tag.spec.color + ';' : ''}"
+            th:attr="data-fly-tip=${tag.spec.displayName}"
+          >
+            <span class="fly-tag-dot" aria-hidden="true"></span>
+            <span class="fly-nav-label" th:text="${tag.spec.displayName}"
+              >灵感</span
+            >
+          </a>
+        </li>
+      </ul>
     </nav>
   </div>
 

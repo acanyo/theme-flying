@@ -7,39 +7,8 @@
   th:replace="~{fragments/layout :: page(pageTitle=|${post.spec.title} - ${site.title}|, bodyClass='fly-post', content=~{::content})}"
 >
   <th:block th:fragment="content">
-    <article
-      class="fly-post-page"
-      data-fly-post-page
-      th:with="relatedPosts=${postFinder.list({ page: 1, size: 10, sort: {'spec.publishTime,desc'} })}"
-    >
-      <th:block
-        th:replace="~{fragments/post/header :: header(post=${post}, commentsEnabled=${haloCommentEnabled})}"
-      ></th:block>
-
-      <th:block
-        th:replace="~{fragments/post/header :: media(post=${post})}"
-      ></th:block>
-
-      <div class="fly-post-page-grid">
-        <th:block
-          th:replace="~{fragments/post/body :: content(post=${post})}"
-        ></th:block>
-        <th:block
-          th:replace="~{fragments/post/sidebar :: sidebar(post=${post})}"
-        ></th:block>
-      </div>
-
-      <th:block
-        th:replace="~{fragments/post/related :: related(result=${relatedPosts}, currentPost=${post})}"
-      ></th:block>
-
-      <th:block
-        th:replace="~{fragments/post/newsletter :: newsletter}"
-      ></th:block>
-
-      <th:block
-        th:replace="~{fragments/post/comments :: comments(post=${post}, enabled=${haloCommentEnabled})}"
-      ></th:block>
-    </article>
+    <th:block
+      th:replace="~{fragments/post/article-shell :: shell(post=${post}, commentsEnabled=${haloCommentEnabled}, layout='classic')}"
+    ></th:block>
   </th:block>
 </html>
