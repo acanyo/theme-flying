@@ -1,0 +1,13 @@
+---
+
+---
+
+<th:block th:fragment="controls(result, feedId, autoLoad)">
+  <th:block th:if="${result != null and result.hasNext()}">
+    <th:block th:replace="~{fragments/home/load-more-preview :: decoration}"
+    ></th:block>
+  </th:block>
+  <th:block
+    th:replace="~{fragments/feed-controls :: loadMore(result=${result}, feedId=${feedId}, autoLoad=${autoLoad}, itemSelector=${'[data-fly-post-card]'}, itemAttribute=${'data-fly-post-name'}, loadingText=${'正在加载更多文章…'}, loadedUnit=${'篇文章'}, endText=${'全部文章已显示'}, appendEvent=${'fly:posts-appended'})}"
+  ></th:block>
+</th:block>

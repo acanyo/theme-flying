@@ -19,7 +19,10 @@
       th:src="${post.owner?.avatar ?: #theme.assets('/images/avatar.svg')}"
       th:alt="${post.owner?.displayName ?: site.title}"
       alt=""
+      width="46"
+      height="46"
       loading="lazy"
+      decoding="async"
     />
   </a>
 

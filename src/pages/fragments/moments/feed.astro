@@ -1,0 +1,34 @@
+---
+
+---
+
+<section
+  class="fly-moments-feed"
+  th:fragment="feed(moments)"
+  aria-busy="false"
+  data-fly-feed-region
+>
+  <h2 class="fly-sr-only">瞬间列表</h2>
+  <div
+    id="fly-moments-list"
+    class="fly-moments-list"
+    th:if="${not #lists.isEmpty(moments.items)}"
+    data-fly-feed
+    data-fly-reveal-group
+  >
+    <th:block th:each="moment : ${moments.items}">
+      <th:block th:replace="~{fragments/moments/card :: card(moment=${moment})}"
+      ></th:block>
+    </th:block>
+  </div>
+  <p
+    class="fly-moments-empty"
+    th:if="${#lists.isEmpty(moments.items)}"
+    data-fly-reveal
+  >
+    暂无瞬间。
+  </p>
+  <th:block
+    th:replace="~{fragments/feed-controls :: loadMore(result=${moments}, feedId=${'fly-moments-list'}, autoLoad=${false}, itemSelector=${'[data-fly-moment-name]'}, itemAttribute=${'data-fly-moment-name'}, loadingText=${'正在加载更多瞬间…'}, loadedUnit=${'条瞬间'}, endText=${'全部瞬间已显示'}, appendEvent=${'fly:moments-appended'})}"
+  ></th:block>
+</section>

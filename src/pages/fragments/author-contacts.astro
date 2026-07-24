@@ -1,0 +1,64 @@
+---
+
+---
+
+<th:block
+  th:fragment="contacts(author, authorName, email, variant)"
+  th:with="authorQq=${#annotations.getOrDefault(author, 'fly_qq', '')},authorWechat=${#annotations.getOrDefault(author, 'fly_wechat', '')},annotatedEmail=${#annotations.getOrDefault(author, 'fly_email', '')},authorEmail=${not #strings.isEmpty(email) ? email : annotatedEmail},authorWebsite=${#annotations.getOrDefault(author, 'fly_website', '')}"
+>
+  <ul
+    class="fly-author-contacts"
+    th:classappend="${variant == 'popover' ? 'fly-author-popover-contacts' : (variant == 'profile' ? 'fly-author-profile-contacts social-links social-links-author' : 'fly-author-card-contacts social-links social-links-author')}"
+    th:if="${not #strings.isEmpty(authorQq) or not #strings.isEmpty(authorWechat) or not #strings.isEmpty(authorEmail) or not #strings.isEmpty(authorWebsite)}"
+    th:attr="aria-label=|${authorName} 的联系方式|"
+  >
+    <li th:if="${not #strings.isEmpty(authorQq)}">
+      <button
+        class="fly-author-contact-action"
+        type="button"
+        th:attr="data-fly-contact-value=${authorQq},aria-label=|复制 ${authorName} 的 QQ 号|,title=|QQ：${authorQq}（点击复制）|"
+        data-fly-contact-copy
+        data-fly-contact-label="QQ"
+      >
+        <span class="fly-iconify fly-iconify--qq" aria-hidden="true"></span>
+        <span class="fly-author-contact-label">QQ</span>
+      </button>
+    </li>
+    <li th:if="${not #strings.isEmpty(authorWechat)}">
+      <button
+        class="fly-author-contact-action"
+        type="button"
+        th:attr="data-fly-contact-value=${authorWechat},aria-label=|复制 ${authorName} 的微信号|,title=|微信：${authorWechat}（点击复制）|"
+        data-fly-contact-copy
+        data-fly-contact-label="微信"
+      >
+        <span class="fly-iconify fly-iconify--wechat" aria-hidden="true"></span>
+        <span class="fly-author-contact-label">微信</span>
+      </button>
+    </li>
+    <li th:if="${not #strings.isEmpty(authorEmail)}">
+      <a
+        class="fly-author-contact-action"
+        th:href="|mailto:${authorEmail}|"
+        title="联系邮箱"
+        th:aria-label="|给 ${authorName} 发送邮件|"
+      >
+        <span class="fly-iconify fly-iconify--mail" aria-hidden="true"></span>
+        <span class="fly-author-contact-label">邮箱</span>
+      </a>
+    </li>
+    <li th:if="${not #strings.isEmpty(authorWebsite)}">
+      <a
+        class="fly-author-contact-action fly-author-contact-action--website"
+        th:href="${authorWebsite}"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="个人网站"
+        th:aria-label="|访问 ${authorName} 的个人网站|"
+      >
+        <span class="fly-iconify fly-iconify--globe" aria-hidden="true"></span>
+        <span class="fly-author-contact-label">网站</span>
+      </a>
+    </li>
+  </ul>
+</th:block>

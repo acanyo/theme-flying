@@ -310,6 +310,10 @@
       th:src="${#theme.assets('/images/avatar.svg')}"
       th:alt="${site.title}"
       alt=""
+      width="28"
+      height="28"
+      loading="lazy"
+      decoding="async"
     />
     <span th:text="${site.title}">作者</span>
   </a>
@@ -319,28 +323,16 @@
   class="fly-carousel-controls"
   th:fragment="carouselControls(label, railId)"
 >
-  <button
-    class="fly-carousel-arrow fly-carousel-arrow--prev"
-    type="button"
-    th:attr="aria-label=|${label}：上一篇|,aria-controls=${railId}"
-    data-fly-carousel-prev
-  >
-    <span class="fly-iconify fly-iconify--arrow-right" aria-hidden="true"
-    ></span>
-  </button>
+  <th:block
+    th:replace="~{fragments/carousel-arrow :: arrow(direction=${'prev'}, label=${label}, railId=${railId}, modifierClass=${null})}"
+  ></th:block>
   <div
     class="fly-carousel-dots"
     th:attr="aria-label=|选择${label}|"
     data-fly-carousel-dots
   >
   </div>
-  <button
-    class="fly-carousel-arrow fly-carousel-arrow--next"
-    type="button"
-    th:attr="aria-label=|${label}：下一篇|,aria-controls=${railId}"
-    data-fly-carousel-next
-  >
-    <span class="fly-iconify fly-iconify--arrow-right" aria-hidden="true"
-    ></span>
-  </button>
+  <th:block
+    th:replace="~{fragments/carousel-arrow :: arrow(direction=${'next'}, label=${label}, railId=${railId}, modifierClass=${null})}"
+  ></th:block>
 </div>

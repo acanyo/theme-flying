@@ -18,12 +18,22 @@ export function setupLoadMore(root) {
   }
 
   const region = loadLink.closest("[data-fly-feed-region]");
+  const decoration = first("[data-fly-pagination-decoration]", region || root);
   const loadLabel = first("[data-fly-load-label]", loadLink);
   const loadLabelCopies = all("[data-fly-load-label-copy]", loadLink);
   const loadComplete = first("[data-fly-load-complete]", loadLink);
   const loadStatus = first("[data-fly-load-status]", root);
   const endText = loadLink.dataset.flyEndText || DEFAULT_END_TEXT;
+  const itemSelector =
+    loadLink.dataset.flyLoadItemSelector || "[data-fly-post-card]";
+  const itemAttribute =
+    loadLink.dataset.flyLoadItemAttribute || "data-fly-post-name";
+  const loadingText = loadLink.dataset.flyLoadingText || "正在加载更多文章…";
+  const loadedUnit = loadLink.dataset.flyLoadedUnit || "篇文章";
+  const appendEvent = loadLink.dataset.flyAppendEvent || "fly:posts-appended";
   let loading = false;
+  let autoLoadBlocked = false;
+  let autoLoadObserver = null;
 
   function setLoadState(state, message = "") {
     loading = state === "loading";
@@ -40,6 +50,10 @@ export function setupLoadMore(root) {
 
     if (region) {
       region.setAttribute("aria-busy", loading ? "true" : "false");
+    }
+
+    if (decoration) {
+      decoration.hidden = complete;
     }
 
     if (loadLabel) {
@@ -68,26 +82,26 @@ export function setupLoadMore(root) {
     const nextFeed = nextDocument.querySelector("[data-fly-feed]");
 
     if (!nextFeed) {
-      throw new Error("下一页缺少文章列表");
+      throw new Error("下一页缺少内容列表");
     }
 
-    const knownNames = new Set(
-      all("[data-fly-post-card]", feed)
-        .map((card) => card.dataset.flyPostName)
+    const knownItems = new Set(
+      all(itemSelector, feed)
+        .map((item) => item.getAttribute(itemAttribute))
         .filter(Boolean),
     );
     let appended = 0;
 
-    all("[data-fly-post-card]", nextFeed).forEach((card) => {
-      const name = card.dataset.flyPostName;
+    all(itemSelector, nextFeed).forEach((item) => {
+      const itemKey = item.getAttribute(itemAttribute);
 
-      if (name && knownNames.has(name)) {
+      if (itemKey && knownItems.has(itemKey)) {
         return;
       }
 
-      feed.appendChild(document.importNode(card, true));
-      if (name) {
-        knownNames.add(name);
+      feed.appendChild(document.importNode(item, true));
+      if (itemKey) {
+        knownItems.add(itemKey);
       }
       appended += 1;
     });
@@ -102,17 +116,21 @@ export function setupLoadMore(root) {
   }
 
   function completeLoading() {
+    autoLoadObserver?.disconnect();
     loadLink.removeAttribute("href");
     loadLink.dataset.flyExhausted = "true";
     setLoadState("complete", endText);
   }
 
-  async function loadMore(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    event.stopImmediatePropagation();
+  async function loadMore(event, automatic = false) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      autoLoadBlocked = false;
+    }
 
-    if (loading) {
+    if (loading || (automatic && autoLoadBlocked)) {
       return;
     }
 
@@ -122,7 +140,7 @@ export function setupLoadMore(root) {
       return;
     }
 
-    setLoadState("loading", "正在加载更多文章…");
+    setLoadState("loading", loadingText);
 
     try {
       const response = await fetch(nextUrl, {
@@ -131,7 +149,7 @@ export function setupLoadMore(root) {
       });
 
       if (!response.ok) {
-        throw new Error("文章加载失败");
+        throw new Error("内容加载失败");
       }
 
       const html = await response.text();
@@ -140,7 +158,7 @@ export function setupLoadMore(root) {
 
       if (appended > 0) {
         feed.dispatchEvent(
-          new CustomEvent("fly:posts-appended", {
+          new CustomEvent(appendEvent, {
             bubbles: true,
             detail: { count: appended, feed },
           }),
@@ -150,9 +168,12 @@ export function setupLoadMore(root) {
       if (nextHref) {
         loadLink.setAttribute("href", nextHref);
         delete loadLink.dataset.flyExhausted;
+        autoLoadBlocked = false;
         setLoadState(
           "ready",
-          appended > 0 ? `已加载 ${appended} 篇文章。` : "没有可加载的新文章。",
+          appended > 0
+            ? `已加载 ${appended} ${loadedUnit}。`
+            : "没有可加载的新内容。",
         );
       } else {
         completeLoading();
@@ -161,11 +182,43 @@ export function setupLoadMore(root) {
       if (error && error.name === "AbortError") {
         return;
       }
+      autoLoadBlocked = true;
       loadLink.setAttribute("href", nextUrl);
       setLoadState("error", "加载失败，请重试。");
     }
   }
 
+  function setupAutoLoad() {
+    if (
+      !loadLink.hasAttribute("data-fly-load-more-auto") ||
+      typeof IntersectionObserver !== "function"
+    ) {
+      return;
+    }
+
+    autoLoadObserver = new IntersectionObserver(
+      (entries) => {
+        const intersecting = entries.some((entry) => entry.isIntersecting);
+        loadLink.classList.toggle("fly-is-intersecting", intersecting);
+
+        if (intersecting) {
+          loadMore(null, true);
+        }
+      },
+      {
+        rootMargin: "0px 0px 300px 0px",
+        threshold: 0,
+      },
+    );
+    autoLoadObserver.observe(loadLink);
+    controller.signal.addEventListener(
+      "abort",
+      () => autoLoadObserver?.disconnect(),
+      { once: true },
+    );
+  }
+
   loadLink.addEventListener("click", loadMore, { signal: controller.signal });
   setLoadState("ready");
+  setupAutoLoad();
 }

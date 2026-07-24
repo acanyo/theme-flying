@@ -2,18 +2,21 @@
 
 ---
 
-<th:block th:fragment="related(currentPost)">
+<th:block
+  th:fragment="related(currentPost)"
+  th:with="relatedCount=${10},relatedTitle=${'推荐阅读'}"
+>
   <th:block
     th:with="primaryCategoryName=${not #lists.isEmpty(currentPost.categories) ? currentPost.categories[0].metadata.name : null},primaryTagName=${not #lists.isEmpty(currentPost.tags) ? currentPost.tags[0].metadata.name : null}"
   >
     <th:block
-      th:with="categoryResult=${primaryCategoryName != null ? postFinder.list({ page: 1, size: 10, categoryName: primaryCategoryName, sort: {'spec.publishTime,desc'} }) : null}"
+      th:with="categoryResult=${primaryCategoryName != null ? postFinder.list({ page: 1, size: relatedCount, categoryName: primaryCategoryName, sort: {'spec.publishTime,desc'} }) : null}"
     >
       <th:block
-        th:with="tagResult=${(categoryResult == null or categoryResult.total <= 1) and primaryTagName != null ? postFinder.list({ page: 1, size: 10, tagName: primaryTagName, sort: {'spec.publishTime,desc'} }) : null}"
+        th:with="tagResult=${(categoryResult == null or categoryResult.total <= 1) and primaryTagName != null ? postFinder.list({ page: 1, size: relatedCount, tagName: primaryTagName, sort: {'spec.publishTime,desc'} }) : null}"
       >
         <th:block
-          th:with="latestResult=${(categoryResult == null or categoryResult.total <= 1) and (tagResult == null or tagResult.total <= 1) ? postFinder.list({ page: 1, size: 10, sort: {'spec.publishTime,desc'} }) : null}"
+          th:with="latestResult=${(categoryResult == null or categoryResult.total <= 1) and (tagResult == null or tagResult.total <= 1) ? postFinder.list({ page: 1, size: relatedCount, sort: {'spec.publishTime,desc'} }) : null}"
         >
           <th:block
             th:with="result=${categoryResult != null and categoryResult.total > 1 ? categoryResult : (tagResult != null and tagResult.total > 1 ? tagResult : (latestResult != null and latestResult.total > 1 ? latestResult : null))}"
@@ -24,10 +27,10 @@
               data-fly-carousel
               role="region"
               aria-roledescription="carousel"
-              aria-label="推荐阅读"
+              th:attr="aria-label=${relatedTitle}"
               tabindex="0"
             >
-              <h2>推荐阅读</h2>
+              <h2 th:text="${relatedTitle}">推荐阅读</h2>
 
               <div class="fly-post-related-track">
                 <div
@@ -107,7 +110,10 @@
         th:src="${item.owner?.avatar ?: #theme.assets('/images/avatar.svg')}"
         th:alt="${item.owner?.displayName ?: site.title}"
         alt=""
+        width="36"
+        height="36"
         loading="lazy"
+        decoding="async"
       />
     </a>
     <div>

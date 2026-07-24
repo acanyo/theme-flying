@@ -1,0 +1,1 @@
+<!DOCTYPE html><section class="fly-author-posts" th:fragment="posts(result)"> <h2 class="fly-sr-only">文章</h2> <th:block th:replace="~{fragments/article-feed :: feed(result=${result}, cardVariant=${'classic'}, feedId=${'fly-author-post-feed'}, emptyText=${'该作者暂未发布文章。'}, emptyHidden=${false})}"></th:block> </section>

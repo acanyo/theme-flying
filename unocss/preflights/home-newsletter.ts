@@ -46,6 +46,10 @@ export const homeNewsletterPreflight = {
   gap: 12px;
 }
 
+.fly-newsletter-form-control {
+  display: contents;
+}
+
 .fly-newsletter-form label {
   display: block;
   width: 100%;
@@ -66,7 +70,7 @@ export const homeNewsletterPreflight = {
 }
 
 .fly-newsletter-form input:focus {
-  box-shadow: 0 0 0 2px var(--text);
+  box-shadow: 0 0 0 2px var(--accent);
 }
 
 .fly-newsletter-form .fly-button {

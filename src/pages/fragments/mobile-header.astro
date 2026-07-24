@@ -1,5 +1,12 @@
 ---
 import ThemeSwitcher from "../../components/theme/ThemeSwitcher.vue";
+
+const authenticatedAuthorization = {
+  "sec:authorize": "isAuthenticated()",
+};
+const anonymousAuthorization = {
+  "sec:authorize": "isAnonymous()",
+};
 ---
 
 <header class="fly-mobile-header" th:fragment="mobileHeader">
@@ -45,6 +52,20 @@ import ThemeSwitcher from "../../components/theme/ThemeSwitcher.vue";
     <span class="fly-search-placeholder">搜索文章</span>
     <kbd aria-hidden="true">/</kbd>
   </button>
+
+  <span
+    {...authenticatedAuthorization}
+    hidden
+    data-fly-account-profile
+    data-fly-account-authenticated="true"
+    th:with="currentUser=${contributorFinder.getContributor(#authentication.name)}"
+    th:attr="data-fly-account-name=${currentUser?.displayName ?: #authentication.name},data-fly-account-avatar=${currentUser?.avatar ?: ''}"
+  ></span>
+  <span
+    {...anonymousAuthorization}
+    hidden
+    data-fly-account-profile
+    data-fly-account-authenticated="false"></span>
 
   <ThemeSwitcher client:load />
 </header>

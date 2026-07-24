@@ -1,0 +1,45 @@
+---
+
+---
+
+<div class="fly-content-shell" th:fragment="shell(singlePage, pageLayout)">
+  <article
+    class="fly-single-page"
+    th:with="pageCover=${singlePage.spec.cover ?: ''},resolvedPageLayout=${pageLayout == 'cover' and not #strings.isEmpty(#strings.trim(pageCover)) ? 'cover' : 'standard'}"
+    th:classappend="| fly-single-page--${resolvedPageLayout}|"
+  >
+    <th:block
+      th:replace="~{fragments/single-page/intro :: intro(singlePage=${singlePage})}"
+    ></th:block>
+
+    <div class="fly-single-page-grid">
+      <section
+        class="fly-post-content fly-post-page-content fly-single-page-content"
+        th:utext="${singlePage.content.content}"
+      >
+      </section>
+
+      <section
+        id="fly-single-page-comments"
+        class="fly-post-comments fly-single-page-comments"
+        th:if="${haloCommentEnabled and singlePage.spec.allowComment}"
+        aria-labelledby="fly-single-page-comments-title"
+        tabindex="-1"
+      >
+        <div class="fly-post-comments-heading">
+          <h2 id="fly-single-page-comments-title">评论</h2>
+          <span
+            class="fly-post-comments-count"
+            th:if="${singlePage.status.commentsCount != null and singlePage.status.commentsCount > 0}"
+            th:text="${singlePage.status.commentsCount}"></span>
+        </div>
+        <div class="fly-post-comments-body">
+          <halo:comment
+            group="content.halo.run"
+            kind="SinglePage"
+            th:attr="name=${singlePage.metadata.name}"></halo:comment>
+        </div>
+      </section>
+    </div>
+  </article>
+</div>

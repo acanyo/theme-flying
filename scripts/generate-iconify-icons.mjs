@@ -102,6 +102,7 @@ const icons = {
   copyright: ["mingcute", "copyright-line"],
   "enter-door": ["aspect", "enter-door"],
   facebook: ["aspect", "facebook"],
+  fingerprint: ["mingcute", "fingerprint-line"],
   globe: ["aspect", "globe"],
   link: ["aspect", "link"],
   list: ["aspect", "list"],
@@ -118,6 +119,8 @@ const icons = {
   user: ["aspect", "user"],
   "video-camera": ["aspect", "video-camera"],
   wechat: ["mingcute", "wechat-line"],
+  "zoom-in": ["phosphor", "magnifying-glass-plus"],
+  "zoom-out": ["phosphor", "magnifying-glass-minus"],
 };
 
 function svgFor(setName, iconName) {

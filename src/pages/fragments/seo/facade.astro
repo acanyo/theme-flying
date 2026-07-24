@@ -1,0 +1,16 @@
+---
+
+---
+
+<!-- SEO/GEO 公共门面：公共布局只依赖此文件，具体职责由子组件实现。 -->
+<th:block th:fragment="head(pageKind, pageTitle, pageUrl)">
+  <th:block
+    th:replace="~{fragments/seo/head :: head(pageKind=${pageKind}, pageTitle=${pageTitle}, pageUrl=${pageUrl})}"
+  ></th:block>
+</th:block>
+
+<th:block th:fragment="body(pageKind, pageTitle, pageUrl)">
+  <th:block
+    th:replace="~{fragments/seo/page :: page(pageKind=${pageKind}, pageTitle=${pageTitle}, pageUrl=${pageUrl})}"
+  ></th:block>
+</th:block>

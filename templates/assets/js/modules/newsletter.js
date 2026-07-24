@@ -1,13 +1,16 @@
 import { all } from "../utils/dom.js?fly=1.0.30";
+import {
+  NEWSLETTER_ENDPOINT,
+  NewsletterRequestError,
+  submitNewsletterRequest,
+} from "./newsletter/request.js?fly=1.0.1";
 
 function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
 function getEndpoint(form) {
-  const endpoint =
-    form.dataset.flyNewsletterEndpoint || form.getAttribute("action");
-  return endpoint && endpoint !== "#" ? endpoint.trim() : "";
+  return form.getAttribute("action")?.trim() || NEWSLETTER_ENDPOINT;
 }
 
 function setStatus(status, state, message) {
@@ -24,30 +27,6 @@ function setBusy(form, button, busy, idleLabel) {
   form.setAttribute("aria-busy", String(busy));
   button.disabled = busy;
   button.textContent = busy ? "提交中..." : idleLabel;
-}
-
-async function submitNewsletter(form, endpoint, signal) {
-  const method = (form.getAttribute("method") || "POST").toUpperCase();
-  const formData = new FormData(form);
-  const options = {
-    method,
-    headers: { Accept: "application/json" },
-    signal,
-  };
-
-  let requestUrl = endpoint;
-  if (method === "GET") {
-    const url = new URL(endpoint, window.location.href);
-    formData.forEach((value, key) => url.searchParams.set(key, String(value)));
-    requestUrl = url.toString();
-  } else {
-    options.body = formData;
-  }
-
-  const response = await fetch(requestUrl, options);
-  if (!response.ok) {
-    throw new Error(`Newsletter request failed with status ${response.status}`);
-  }
 }
 
 export function setupNewsletter(root) {
@@ -100,21 +79,31 @@ export function setupNewsletter(root) {
 
         input.removeAttribute("aria-invalid");
         const endpoint = getEndpoint(form);
-        if (!endpoint) {
-          setStatus(status, "notice", "订阅功能尚未配置。");
-          return;
-        }
 
         setBusy(form, button, true, idleLabel);
         setStatus(status, "pending", "正在提交订阅请求...");
 
         try {
-          await submitNewsletter(form, endpoint, controller.signal);
+          const result = await submitNewsletterRequest(
+            endpoint,
+            email,
+            controller.signal,
+          );
           form.reset();
-          setStatus(status, "success", "订阅成功，请检查邮箱。");
+          setStatus(
+            status,
+            "success",
+            result.message || "订阅成功，请检查邮箱。",
+          );
         } catch (error) {
-          if (error.name !== "AbortError") {
-            setStatus(status, "error", "订阅失败，请稍后重试。");
+          if (error?.name !== "AbortError") {
+            setStatus(
+              status,
+              "error",
+              error instanceof NewsletterRequestError
+                ? error.message
+                : "无法连接订阅服务，请稍后重试。",
+            );
           }
         } finally {
           if (!controller.signal.aborted) {

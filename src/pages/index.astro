@@ -4,7 +4,7 @@
 
 <html
   lang="zh-CN"
-  th:replace="~{fragments/layout :: page(pageTitle=${site.title}, bodyClass='fly-home', content=~{::content})}"
+  th:replace="~{fragments/layout :: page(pageTitle=${site.title}, pageKind='home', pageUrl=${site.url}, bodyClass='fly-home', content=~{::content})}"
 >
   <th:block th:fragment="content">
     <div

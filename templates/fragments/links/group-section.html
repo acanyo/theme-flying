@@ -1,0 +1,3 @@
+<!DOCTYPE html><section class="fly-links-group" th:fragment="group(title, linkItems, groupId)" th:if="${not #lists.isEmpty(linkItems)}" th:attr="aria-labelledby=|fly-links-group-${groupId}|"> <header class="fly-links-group-heading" data-fly-reveal> <h2 th:id="|fly-links-group-${groupId}|" th:text="${#strings.isEmpty(title) ? '未分组' : title}">
+链接分组
+</h2> <span th:text="|${#lists.size(linkItems)} 个站点|">0 个站点</span> </header> <div class="fly-friends-grid" data-fly-reveal-group> <th:block th:each="link : ${linkItems}"> <th:block th:replace="~{fragments/link-card :: card(link=${link})}"></th:block> </th:block> </div> </section>

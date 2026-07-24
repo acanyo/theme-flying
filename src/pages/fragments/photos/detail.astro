@@ -1,0 +1,55 @@
+---
+
+---
+
+<div
+  class="fly-content-shell fly-photo-detail-shell"
+  th:fragment="detail(photo, neighbors, prev, next, position, total, backUrl, photoUrl)"
+>
+  <article
+    class="fly-photo-detail"
+    th:attr="data-fly-photo-name=${photo.metadata.name}"
+    data-fly-photo-detail
+  >
+    <a class="fly-photo-back-link" href="/photos" th:href="@{${backUrl}}">
+      <span aria-hidden="true">←</span><span>返回图库</span>
+    </a>
+    <header class="fly-photo-detail-header" data-fly-reveal>
+      <p class="fly-photo-detail-position" th:text="|${position} / ${total}|">
+        1 / 1
+      </p>
+      <h1 th:text="${photo.spec.displayName ?: '图片'}">图片</h1>
+    </header>
+    <figure
+      class="fly-photo-detail-media"
+      data-fly-post-content
+      data-fly-reveal
+    >
+      <img
+        class="fly-photo-detail-image"
+        th:src="${photo.spec.url}"
+        src="/assets/images/fallback-cover.svg"
+        th:alt="${photo.spec.displayName ?: ''}"
+        loading="eager"
+        decoding="async"
+      />
+    </figure>
+    <div
+      class="fly-photo-detail-copy"
+      th:if="${not #strings.isEmpty(photo.spec.description)}"
+      data-fly-reveal
+    >
+      <p th:text="${photo.spec.description}">图片说明</p>
+    </div>
+    <th:block
+      th:replace="~{fragments/photos/metadata :: metadata(photo=${photo})}"
+    ></th:block>
+    <th:block
+      th:replace="~{fragments/photos/navigation :: navigation(photo=${photo}, neighbors=${neighbors}, prev=${prev}, next=${next}, photoUrl=${photoUrl})}"
+    ></th:block>
+    <th:block
+      th:replace="~{fragments/photos/comments :: comments(photo=${photo})}"
+    ></th:block>
+    <th:block th:replace="~{fragments/post/lightbox :: lightbox}"></th:block>
+  </article>
+</div>

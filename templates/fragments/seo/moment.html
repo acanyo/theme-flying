@@ -1,0 +1,25 @@
+<!DOCTYPE html><script type="application/ld+json" th:fragment="posting(moment, url)" th:inline="javascript" th:with="ownerName=${moment.owner?.displayName ?: site.title}, headline=|${moment.owner?.displayName ?: site.title} 的瞬间|, articleBody=${#strings.isEmpty(moment.spec.content.raw) ? headline : moment.spec.content.raw}">
+  {
+    "@context": "https://schema.org",
+    "@type": "SocialMediaPosting",
+    "@id": /*[[${url + '#posting'}]]*/ "https://example.com/moment#posting",
+    "url": /*[[${url}]]*/ "https://example.com/moment",
+    "headline": /*[[${headline}]]*/ "作者的瞬间",
+    "articleBody": /*[[${articleBody}]]*/ "瞬间内容",
+    "datePublished": /*[[${moment.spec.releaseTime}]]*/ "2026-01-01T00:00:00Z",
+    "author": {
+      "@type": "Person",
+      "name": /*[[${ownerName}]]*/ "作者"
+    },
+    "publisher": {
+      "@id": /*[[${site.url + '#organization'}]]*/ "https://example.com#organization"
+    },
+    "isPartOf": {
+      "@id": /*[[${site.url + '#website'}]]*/ "https://example.com#website"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": /*[[${url}]]*/ "https://example.com/moment"
+    }
+  }
+</script>

@@ -1,0 +1,42 @@
+---
+
+---
+
+<header
+  class="fly-moment-author"
+  th:fragment="author(owner, releaseTime, momentName, linkToMoment)"
+  th:with="ownerName=${owner?.displayName ?: site.title}"
+>
+  <span class="fly-moment-author-avatar">
+    <img
+      src="/assets/images/avatar.svg"
+      th:src="${owner?.avatar ?: #theme.assets('/images/avatar.svg')}"
+      th:alt="${ownerName}"
+      alt=""
+      width="48"
+      height="48"
+      loading="lazy"
+    />
+  </span>
+  <div class="fly-moment-author-copy">
+    <strong class="fly-moment-author-name" th:text="${ownerName}">作者</strong>
+    <a
+      class="fly-moment-author-time"
+      th:if="${linkToMoment}"
+      th:href="@{/moments/{name}(name=${momentName})}"
+    >
+      <time
+        th:datetime="${releaseTime}"
+        th:text="${#dates.format(releaseTime, 'yyyy年MM月dd日 HH:mm')}"
+        >2026年07月22日 12:00</time
+      >
+    </a>
+    <time
+      class="fly-moment-author-time"
+      th:unless="${linkToMoment}"
+      th:datetime="${releaseTime}"
+      th:text="${#dates.format(releaseTime, 'yyyy年MM月dd日 HH:mm')}"
+      >2026年07月22日 12:00</time
+    >
+  </div>
+</header>

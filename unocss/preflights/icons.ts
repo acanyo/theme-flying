@@ -118,6 +118,14 @@ export const iconPreflight = {
   --fly-icon-url: url("../icons/iconify/wechat.svg?fly=1.0.116");
 }
 
+.fly-iconify--zoom-in {
+  --fly-icon-url: url("../icons/iconify/zoom-in.svg?fly=1.0.117");
+}
+
+.fly-iconify--zoom-out {
+  --fly-icon-url: url("../icons/iconify/zoom-out.svg?fly=1.0.117");
+}
+
 body[data-fly-menu-open="true"] .fly-menu-icon-open,
 body:not([data-fly-menu-open="true"]) .fly-menu-icon-close {
   display: none;

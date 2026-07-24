@@ -1,0 +1,21 @@
+---
+
+---
+
+<a
+  class="fly-section-view-link"
+  href="/"
+  th:fragment="link(targetHref, label)"
+  th:href="@{${targetHref}}"
+  data-fly-motion-button
+>
+  <span class="fly-motion-label">
+    <span class="fly-motion-label-copy" th:text="${label}">查看</span>
+    <span class="fly-motion-label-copy" aria-hidden="true" th:text="${label}"
+      >查看</span
+    >
+  </span>
+  <span
+    class="fly-iconify fly-iconify--arrow-forward fly-motion-icon"
+    aria-hidden="true"></span>
+</a>

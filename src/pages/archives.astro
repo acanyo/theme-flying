@@ -4,69 +4,58 @@
 
 <html
   lang="zh-CN"
-  th:replace="~{fragments/layout :: page(pageTitle=|归档 - ${site.title}|, bodyClass='fly-archive', content=~{::content})}"
+  th:replace="~{fragments/layout :: page(pageTitle=|${theme.config.pages?.archives_title ?: '文章归档'} - ${site.title}|, pageKind='archive', pageUrl=${site.url + site.routes.archivesUri}, bodyClass='fly-archive', content=~{::content})}"
 >
   <th:block th:fragment="content">
     <div class="fly-content-shell">
-      <header class="fly-page-header">
-        <p class="fly-eyebrow">归档</p>
-        <h1>全部文章</h1>
-        <p>按发布时间浏览全部文章。</p>
-      </header>
-
-      <section
-        class="fly-archive-list"
-        aria-label="归档列表"
-        th:if="${archives != null and not #lists.isEmpty(archives.items)}"
+      <div
+        class="fly-archive-page"
+        data-fly-feed-region
+        th:with="archiveTags=${tagFinder.listAll()}"
       >
-        <th:block th:each="archive : ${archives.items}">
-          <th:block th:each="month : ${archive.months}">
-            <section class="fly-archive-group">
-              <h2
-                class="fly-archive-group__year"
-                th:text="|${archive.year} / ${month.month}|"
-              >
-                2026 / 07
-              </h2>
-              <ul class="fly-archive-group__items">
-                <li th:each="post : ${month.posts}" class="fly-archive-entry">
-                  <time
-                    class="fly-archive-entry__date"
-                    th:datetime="${post.spec.publishTime}"
-                    th:text="${#dates.format(post.spec.publishTime, 'MM/dd')}"
-                  >
-                    07/08
-                  </time>
-                  <div>
-                    <h3 class="fly-archive-entry__title">
-                      <a
-                        th:href="@{${post.status.permalink}}"
-                        th:text="${post.spec.title}">文章标题</a
-                      >
-                    </h3>
-                    <p
-                      class="fly-archive-entry__summary"
-                      th:if="${not #strings.isEmpty(post.status.excerpt)}"
-                      th:text="${post.status.excerpt}"
-                    >
-                      文章摘要
-                    </p>
-                  </div>
-                </li>
-              </ul>
-            </section>
-          </th:block>
-        </th:block>
-      </section>
+        <th:block
+          th:replace="~{fragments/taxonomy/hero :: hero(title=${theme.config.pages?.archives_title ?: '文章归档'}, description=${theme.config.pages?.archives_description ?: '汇集站点发布的全部文章，涵盖技术、生活与更多主题，在这里按时间探索感兴趣的内容。'}, imageUrl=${theme.config.pages?.archives_cover}, fallbackImagePath=${'/images/archive-hero.webp'})}"
+        ></th:block>
 
-      <p
-        class="fly-empty-state fly-empty-state--visible"
-        th:if="${archives == null or #lists.isEmpty(archives.items)}"
-      >
-        暂无文章。
-      </p>
-      <th:block th:replace="~{fragments/pagination :: pager(${archives})}"
-      ></th:block>
+        <nav
+          class="fly-archive-nav fly-horizontal-nav"
+          data-fly-taxonomy-carousel
+          data-fly-reveal
+          aria-label="文章标签导航"
+        >
+          <div
+            id="fly-archive-nav-rail"
+            class="fly-archive-nav-rail fly-horizontal-nav-rail"
+            data-fly-taxonomy-carousel-rail
+          >
+            <a
+              class="fly-archive-nav-item fly-horizontal-nav-item fly-is-active"
+              href="/archives"
+              th:href="@{/archives}"
+              aria-current="page"
+              data-fly-taxonomy-carousel-item>全部文章</a
+            >
+            <a
+              class="fly-archive-nav-item fly-horizontal-nav-item"
+              href="/"
+              data-fly-taxonomy-carousel-item
+              th:each="archiveTag : ${archiveTags}"
+              th:href="@{${archiveTag.status.permalink}}"
+              th:text="${archiveTag.spec.displayName}">标签</a
+            >
+          </div>
+          <th:block
+            th:replace="~{fragments/horizontal-nav-arrow :: arrow(direction=${'prev'}, label=${'向前浏览文章标签'}, railId=${'fly-archive-nav-rail'}, controller=${'taxonomy-carousel'}, modifierClass=${'fly-archive-nav-arrow fly-archive-nav-arrow--prev'})}"
+          ></th:block>
+          <th:block
+            th:replace="~{fragments/horizontal-nav-arrow :: arrow(direction=${'next'}, label=${'向后浏览文章标签'}, railId=${'fly-archive-nav-rail'}, controller=${'taxonomy-carousel'}, modifierClass=${'fly-archive-nav-arrow fly-archive-nav-arrow--next'})}"
+          ></th:block>
+        </nav>
+
+        <th:block
+          th:replace="~{fragments/archive/feed :: feed(archives=${archives}, feedId=${'fly-archive-post-feed'})}"
+        ></th:block>
+      </div>
     </div>
   </th:block>
 

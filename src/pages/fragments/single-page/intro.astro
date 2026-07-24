@@ -1,0 +1,39 @@
+---
+
+---
+
+<section
+  class="fly-single-page-intro"
+  th:fragment="intro(singlePage)"
+  aria-labelledby="fly-single-page-title"
+>
+  <header class="fly-single-page-hero">
+    <h1
+      id="fly-single-page-title"
+      class="fly-single-page-title"
+      th:text="${singlePage.spec.title}"
+    >
+    </h1>
+    <p
+      class="fly-single-page-excerpt"
+      th:if="${singlePage.status.excerpt != null and !#strings.isEmpty(#strings.trim(singlePage.status.excerpt))}"
+      th:text="${singlePage.status.excerpt}"
+    >
+    </p>
+  </header>
+
+  <figure
+    class="fly-single-page-media"
+    th:if="${singlePage.spec.cover != null and !#strings.isEmpty(#strings.trim(singlePage.spec.cover))}"
+  >
+    <img
+      width="2100"
+      height="900"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+      th:src="${singlePage.spec.cover}"
+      th:alt="${singlePage.spec.title}"
+    />
+  </figure>
+</section>

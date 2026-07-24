@@ -6,7 +6,8 @@
   class="fly-author-popover-trigger"
   th:fragment="trigger(author, fallbackPermalink, variant)"
   th:classappend="${variant == 'named' ? ' fly-author-popover-trigger--named' : (variant == 'name' ? ' fly-author-popover-trigger--name-only' : '')}"
-  th:with="authorName=${author.displayName ?: site.title},authorPermalink=${author.permalink ?: fallbackPermalink},authorQq=${#annotations.getOrDefault(author, 'fly_qq', '')},authorWechat=${#annotations.getOrDefault(author, 'fly_wechat', '')},authorEmail=${#annotations.getOrDefault(author, 'fly_email', '')},authorWebsite=${#annotations.getOrDefault(author, 'fly_website', '')}"
+  th:with="authorName=${author.displayName ?: site.title},authorPermalink=${author.permalink ?: fallbackPermalink},authorAvatar=${author.avatar ?: #theme.assets('/images/avatar.svg')},authorQq=${#annotations.getOrDefault(author, 'fly_qq', '')},authorWechat=${#annotations.getOrDefault(author, 'fly_wechat', '')},authorEmail=${#annotations.getOrDefault(author, 'fly_email', '')},authorWebsite=${#annotations.getOrDefault(author, 'fly_website', '')}"
+  th:attr="data-fly-author-name=${authorName},data-fly-author-permalink=${authorPermalink},data-fly-author-avatar=${authorAvatar},data-fly-author-bio=${author.bio ?: ''},data-fly-author-qq=${authorQq},data-fly-author-wechat=${authorWechat},data-fly-author-email=${authorEmail},data-fly-author-website=${authorWebsite}"
 >
   <a
     class="fly-author-popover-anchor"
@@ -15,14 +16,19 @@
     th:aria-label="|查看作者：${authorName}|"
     aria-haspopup="true"
     aria-expanded="false"
+    aria-controls="fly-author-popover"
     data-fly-author-popover-anchor
   >
     <img
       th:if="${variant != 'name'}"
       src="/assets/images/avatar.svg"
-      th:src="${author.avatar ?: #theme.assets('/images/avatar.svg')}"
+      th:src="${authorAvatar}"
       th:alt="${authorName}"
       alt=""
+      width="28"
+      height="28"
+      loading="lazy"
+      decoding="async"
     />
     <span
       class="fly-author-popover-label"
@@ -30,80 +36,85 @@
       th:text="${authorName}">作者</span
     >
   </a>
+</div>
 
-  <div
-    class="fly-author-popover"
-    popover="manual"
-    data-fly-author-popover
-    role="group"
-    th:attr="aria-label=|${authorName} 的联系信息|"
+<div
+  id="fly-author-popover"
+  class="fly-author-popover"
+  th:fragment="popover"
+  th:attr="data-fly-author-fallback-avatar=${#theme.assets('/images/avatar.svg')}"
+  popover="manual"
+  data-fly-author-popover
+  role="group"
+  aria-label="作者联系信息"
+>
+  <a
+    class="fly-author-popover-avatar"
+    href="/"
+    aria-label="查看作者主页"
+    data-fly-author-popover-profile
   >
-    <a
-      class="fly-author-popover-avatar"
-      href="/"
-      th:href="@{${authorPermalink}}"
-      th:aria-label="|查看作者：${authorName}|"
-    >
-      <img
-        src="/assets/images/avatar.svg"
-        th:src="${author.avatar ?: #theme.assets('/images/avatar.svg')}"
-        th:alt="${authorName}"
-        alt=""
-      />
-    </a>
-    <a
-      class="fly-author-popover-name"
-      href="/"
-      th:href="@{${authorPermalink}}"
-      th:text="${authorName}">作者</a
-    >
-    <p
-      class="fly-author-popover-bio"
-      th:if="${not #strings.isEmpty(author.bio)}"
-      th:text="${author.bio}"
-    >
-      作者简介
-    </p>
-    <div
-      class="fly-author-popover-contacts"
-      th:if="${not #strings.isEmpty(authorQq) or not #strings.isEmpty(authorWechat) or not #strings.isEmpty(authorEmail) or not #strings.isEmpty(authorWebsite)}"
-    >
+    <img
+      src="/assets/images/avatar.svg"
+      th:src="${#theme.assets('/images/avatar.svg')}"
+      alt=""
+      width="46"
+      height="46"
+      loading="lazy"
+      decoding="async"
+      data-fly-author-popover-avatar
+    />
+  </a>
+  <a
+    class="fly-author-popover-name"
+    href="/"
+    data-fly-author-popover-profile
+    data-fly-author-popover-name>作者</a
+  >
+  <p class="fly-author-popover-bio" hidden data-fly-author-popover-bio></p>
+  <ul
+    class="fly-author-contacts fly-author-popover-contacts"
+    hidden
+    data-fly-author-popover-contacts
+  >
+    <li hidden data-fly-author-contact="qq">
       <button
+        class="fly-author-contact-action"
         type="button"
-        th:if="${not #strings.isEmpty(authorQq)}"
-        th:attr="data-fly-contact-value=${authorQq},aria-label=|复制 ${authorName} 的 QQ 号|,title=|QQ：${authorQq}（点击复制）|"
         data-fly-contact-copy
-        data-fly-contact-label="QQ 号"
+        data-fly-contact-label="QQ"
       >
         <span class="fly-iconify fly-iconify--qq" aria-hidden="true"></span>
+        <span class="fly-author-contact-label">QQ</span>
       </button>
+    </li>
+    <li hidden data-fly-author-contact="wechat">
       <button
+        class="fly-author-contact-action"
         type="button"
-        th:if="${not #strings.isEmpty(authorWechat)}"
-        th:attr="data-fly-contact-value=${authorWechat},aria-label=|复制 ${authorName} 的微信号|,title=|微信：${authorWechat}（点击复制）|"
         data-fly-contact-copy
-        data-fly-contact-label="微信号"
+        data-fly-contact-label="微信"
       >
         <span class="fly-iconify fly-iconify--wechat" aria-hidden="true"></span>
+        <span class="fly-author-contact-label">微信</span>
       </button>
-      <a
-        th:if="${not #strings.isEmpty(authorEmail)}"
-        th:href="|mailto:${authorEmail}|"
-        title="联系邮箱"
-        th:aria-label="|给 ${authorName} 发送邮件|"
-      >
+    </li>
+    <li hidden data-fly-author-contact="email">
+      <a class="fly-author-contact-action" href="mailto:">
         <span class="fly-iconify fly-iconify--mail" aria-hidden="true"></span>
+        <span class="fly-author-contact-label">邮箱</span>
       </a>
+    </li>
+    <li hidden data-fly-author-contact="website">
       <a
-        th:if="${not #strings.isEmpty(authorWebsite)}"
-        th:href="${authorWebsite}"
+        class="fly-author-contact-action fly-author-contact-action--website"
+        href="/"
         target="_blank"
         rel="noopener noreferrer"
-        title="个人网站"
-        th:aria-label="|访问 ${authorName} 的个人网站|"
       >
         <span class="fly-iconify fly-iconify--globe" aria-hidden="true"></span>
+        <span class="fly-author-contact-label">网站</span>
       </a>
-    </div>
-  </div>
+    </li>
+  </ul>
 </div>

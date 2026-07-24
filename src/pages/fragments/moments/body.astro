@@ -1,0 +1,30 @@
+---
+
+---
+
+<div
+  class="fly-moment-body"
+  th:fragment="body(moment, detail)"
+  th:classappend="${detail ? ' fly-moment-body--detail' : ''}"
+  th:with="content=${moment.spec.content}"
+>
+  <div
+    class="fly-moment-rich-text"
+    th:if="${not #strings.isEmpty(content.html)}"
+    th:utext="${content.html}"
+  >
+  </div>
+  <p
+    class="fly-moment-raw-text"
+    th:if="${#strings.isEmpty(content.html) and not #strings.isEmpty(content.raw)}"
+    th:text="${content.raw}"
+  >
+    瞬间内容
+  </p>
+  <th:block
+    th:replace="~{fragments/moments/media :: media(content=${content}, momentName=${moment.metadata.name}, detail=${detail})}"
+  ></th:block>
+  <th:block
+    th:replace="~{fragments/moments/meta :: meta(moment=${moment}, showDetailLink=${not detail})}"
+  ></th:block>
+</div>

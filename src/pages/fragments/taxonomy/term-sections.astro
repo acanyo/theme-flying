@@ -1,0 +1,72 @@
+---
+
+---
+
+<div
+  class="fly-taxonomy-sections"
+  th:fragment="sections(terms, kind)"
+  th:if="${not #lists.isEmpty(terms)}"
+>
+  <th:block
+    th:each="term : ${terms}"
+    th:with="termPostLimit=${8},termPosts=${kind == 'tag' ? postFinder.list({ page: 1, size: termPostLimit, tagName: term.metadata.name, sort: {'spec.publishTime,desc'} }) : postFinder.list({ page: 1, size: termPostLimit, categoryName: term.metadata.name, sort: {'spec.publishTime,desc'} })}, railId=${'fly-taxonomy-' + kind + '-' + term.metadata.name}"
+  >
+    <section
+      class="fly-taxonomy-section"
+      data-fly-taxonomy-carousel
+      th:if="${termPosts != null and not #lists.isEmpty(termPosts.items)}"
+    >
+      <header class="fly-taxonomy-section-header" data-fly-reveal>
+        <div class="fly-taxonomy-section-header-copy">
+          <h2>
+            <a
+              href="/"
+              th:href="@{${term.status.permalink}}"
+              th:text="${term.spec.displayName}">术语</a
+            >
+          </h2>
+          <p
+            th:if="${not #strings.isEmpty(term.spec.description)}"
+            th:text="${term.spec.description}"
+          >
+            术语简介
+          </p>
+        </div>
+
+        <th:block
+          th:with="targetHref=${term.status.permalink}, label=|查看${term.spec.displayName}|"
+        >
+          <th:block
+            th:replace="~{fragments/section-view-link :: link(targetHref=${targetHref}, label=${label})}"
+          ></th:block>
+        </th:block>
+      </header>
+
+      <div class="fly-taxonomy-carousel">
+        <div
+          class="fly-taxonomy-rail"
+          data-fly-taxonomy-carousel-rail
+          data-fly-reveal-group
+          th:id="${railId}"
+        >
+          <div
+            class="fly-taxonomy-slide"
+            data-fly-taxonomy-carousel-item
+            th:each="post : ${termPosts.items}"
+          >
+            <th:block
+              th:replace="~{fragments/article-card :: card(post=${post}, variant=${'carousel'})}"
+            ></th:block>
+          </div>
+        </div>
+
+        <th:block
+          th:replace="~{fragments/carousel-arrow :: arrow(direction=${'prev'}, label=${term.spec.displayName}, railId=${railId}, modifierClass=${'fly-taxonomy-carousel-arrow'})}"
+        ></th:block>
+        <th:block
+          th:replace="~{fragments/carousel-arrow :: arrow(direction=${'next'}, label=${term.spec.displayName}, railId=${railId}, modifierClass=${'fly-taxonomy-carousel-arrow'})}"
+        ></th:block>
+      </div>
+    </section>
+  </th:block>
+</div>

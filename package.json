@@ -25,20 +25,18 @@
       }
     ]
   },
-  "dependencies": {
-    "@astrojs/vue": "^6.0.1",
-    "astro": "^6.1.4",
-    "vue": "^3.5.32"
-  },
   "devDependencies": {
+    "@astrojs/vue": "^6.0.1",
     "@astrojs/check": "^0.9.6",
     "@iconify-json/mingcute": "^1.2.7",
     "@iconify-json/ph": "^1.2.2",
     "@unocss/cli": "^66.7.4",
+    "astro": "^6.4.6",
     "nodemon": "^3.1.14",
     "prettier": "3.8.1",
     "prettier-plugin-astro": "0.14.1",
     "typescript": "^5.9.3",
-    "unocss": "^66.7.4"
+    "unocss": "^66.7.4",
+    "vue": "^3.5.32"
   }
 }

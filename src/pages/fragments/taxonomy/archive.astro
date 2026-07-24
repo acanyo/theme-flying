@@ -1,0 +1,61 @@
+---
+
+---
+
+<th:block th:fragment="archive(term, posts, terms, kind)">
+  <div class="fly-content-shell">
+    <div class="fly-taxonomy-detail" aria-busy="false" data-fly-feed-region>
+      <nav
+        class="fly-taxonomy-nav fly-horizontal-nav"
+        data-fly-taxonomy-carousel
+        aria-label="文章主题导航"
+      >
+        <div
+          id="fly-taxonomy-detail-nav"
+          class="fly-taxonomy-nav-rail fly-horizontal-nav-rail"
+          data-fly-taxonomy-carousel-rail
+        >
+          <a
+            class="fly-taxonomy-nav-item fly-horizontal-nav-item"
+            href="/"
+            th:href="@{/}"
+            data-fly-taxonomy-carousel-item>全部文章</a
+          >
+          <a
+            class="fly-taxonomy-nav-item fly-horizontal-nav-item"
+            href="/"
+            data-fly-taxonomy-carousel-item
+            th:each="navTerm : ${terms}"
+            th:classappend="${navTerm.metadata.name == term.metadata.name} ? 'fly-is-active'"
+            th:attr="aria-current=${navTerm.metadata.name == term.metadata.name ? 'page' : null}"
+            th:href="@{${navTerm.status.permalink}}"
+            th:text="${navTerm.spec.displayName}">术语</a
+          >
+        </div>
+        <th:block
+          th:replace="~{fragments/horizontal-nav-arrow :: arrow(direction=${'prev'}, label=${'向前浏览文章主题'}, railId=${'fly-taxonomy-detail-nav'}, controller=${'taxonomy-carousel'}, modifierClass=${'fly-taxonomy-nav-arrow fly-taxonomy-nav-arrow--prev'})}"
+        ></th:block>
+        <th:block
+          th:replace="~{fragments/horizontal-nav-arrow :: arrow(direction=${'next'}, label=${'向后浏览文章主题'}, railId=${'fly-taxonomy-detail-nav'}, controller=${'taxonomy-carousel'}, modifierClass=${'fly-taxonomy-nav-arrow fly-taxonomy-nav-arrow--next'})}"
+        ></th:block>
+      </nav>
+
+      <header class="fly-taxonomy-detail-hero" data-fly-reveal>
+        <p class="fly-taxonomy-detail-count" th:text="|${posts.total} 篇文章|">
+          0 篇文章
+        </p>
+        <h1 th:text="${term.spec.displayName}">术语</h1>
+        <p
+          th:if="${not #strings.isEmpty(term.spec.description)}"
+          th:text="${term.spec.description}"
+        >
+          术语简介
+        </p>
+      </header>
+
+      <th:block
+        th:replace="~{fragments/article-feed :: feed(result=${posts}, cardVariant=${'classic'}, feedId=${'fly-taxonomy-post-feed'}, emptyText=${'暂无文章。'}, emptyHidden=${false})}"
+      ></th:block>
+    </div>
+  </div>
+</th:block>

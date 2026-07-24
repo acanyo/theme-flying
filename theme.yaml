@@ -14,11 +14,19 @@ spec:
   homepage: https://github.com/acanyo/theme-flying
   issues: https://github.com/acanyo/theme-flying/issues
   customTemplates:
+    page:
+      - name: 所有作者
+        file: authors.html
+      - name: 全屏封面
+        file: page_cover.html
+      - name: RSS 朋友圈
+        description: 使用链接管理插件的 RSS 订阅动态展示朋友们的最新文章
+        file: page_friends.html
     post:
-      - name: Aspect 分栏文章
+      - name: 分栏模板
         file: post_split.html
-  version: "1.0.33"
-  requires: ">=2.0.0"
+  version: "1.0.45"
+  requires: ">=2.22.8"
   license:
     - name: "GPL-3.0"
       url: "https://www.gnu.org/licenses/gpl-3.0.en.html"

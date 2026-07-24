@@ -1,0 +1,50 @@
+---
+
+---
+
+<script
+  is:inline
+  type="application/ld+json"
+  th:fragment="image(photo, url)"
+  th:inline="javascript"
+  th:with="photoName=${photo.spec.displayName ?: '图片'}, photoDescription=${#strings.isEmpty(photo.spec.description) ? photoName : photo.spec.description}, rawThumbnailUrl=${#strings.isEmpty(photo.spec.cover) ? photo.spec.url : photo.spec.cover}, contentUrl=${#strings.startsWith(photo.spec.url, 'http') ? photo.spec.url : site.url + photo.spec.url}, thumbnailUrl=${#strings.startsWith(rawThumbnailUrl, 'http') ? rawThumbnailUrl : site.url + rawThumbnailUrl}"
+>
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": /*[[${url + '#webpage'}]]*/ "https://example.com/photo#webpage",
+        "url": /*[[${url}]]*/ "https://example.com/photo",
+        "name": /*[[${photoName}]]*/ "图片",
+        "description": /*[[${photoDescription}]]*/ "图片",
+        "inLanguage": "zh-CN",
+        "isPartOf": {
+          "@id": /*[[${site.url + '#website'}]]*/ "https://example.com#website"
+        },
+        "breadcrumb": {
+          "@id": /*[[${url + '#breadcrumb'}]]*/ "https://example.com/photo#breadcrumb"
+        },
+        "primaryImageOfPage": {
+          "@id": /*[[${url + '#primaryimage'}]]*/ "https://example.com/photo#primaryimage"
+        }
+      },
+      {
+        "@type": "ImageObject",
+        "@id": /*[[${url + '#primaryimage'}]]*/ "https://example.com/photo#primaryimage",
+        "url": /*[[${url}]]*/ "https://example.com/photo",
+        "contentUrl": /*[[${contentUrl}]]*/ "https://example.com/photo.jpg",
+        "thumbnailUrl": /*[[${thumbnailUrl}]]*/ "https://example.com/photo.jpg",
+        "name": /*[[${photoName}]]*/ "图片",
+        "caption": /*[[${photoDescription}]]*/ "图片",
+        "description": /*[[${photoDescription}]]*/ "图片",
+        "uploadDate": /*[[${photo.metadata.creationTimestamp}]]*/ "2026-01-01T00:00:00Z",
+        "representativeOfPage": true,
+        "isPartOf": {
+          "@type": "ImageGallery",
+          "@id": /*[[${site.url + '/photos#gallery'}]]*/ "https://example.com/photos#gallery"
+        }
+      }
+    ]
+  }
+</script>

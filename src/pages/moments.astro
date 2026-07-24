@@ -1,0 +1,17 @@
+---
+
+---
+
+<!doctype html>
+<html
+  lang="zh-CN"
+  th:replace="~{fragments/layout :: page(pageTitle=|${theme.config.pages?.moments_title ?: '瞬间'} - ${site.title}|, pageKind='moments', pageUrl=${site.url + '/moments'}, bodyClass='fly-moments', content=~{::content})}"
+>
+  <th:block th:fragment="content">
+    <th:block
+      th:replace="~{fragments/moments/shell :: shell(moments=${moments}, tags=${tags}, title=${theme.config.pages?.moments_title ?: '瞬间'}, description=${theme.config.pages?.moments_description ?: '记录生活中的片段、灵感与当下，让轻量的表达也能被认真收藏。'}, cover=${theme.config.pages?.moments_cover})}"
+    ></th:block>
+  </th:block>
+
+
+</html>

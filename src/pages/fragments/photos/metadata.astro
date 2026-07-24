@@ -1,0 +1,58 @@
+---
+
+---
+
+<section
+  class="fly-photo-metadata"
+  th:fragment="metadata(photo)"
+  th:if="${photo.exif != null or not #lists.isEmpty(photo.spec.tags)}"
+  data-fly-reveal
+  aria-labelledby="fly-photo-metadata-title"
+>
+  <h2 id="fly-photo-metadata-title">图片信息</h2>
+  <dl class="fly-photo-exif" th:if="${photo.exif != null}">
+    <div
+      th:if="${not #strings.isEmpty(photo.exif.make) or not #strings.isEmpty(photo.exif.model)}"
+    >
+      <dt>相机</dt>
+      <dd th:text="|${photo.exif.make ?: ''} ${photo.exif.model ?: ''}|">
+        相机型号
+      </dd>
+    </div>
+    <div th:if="${not #strings.isEmpty(photo.exif.lensModel)}">
+      <dt>镜头</dt>
+      <dd th:text="${photo.exif.lensModel}">镜头型号</dd>
+    </div>
+    <div th:if="${photo.exif.fNumber != null}">
+      <dt>光圈</dt>
+      <dd th:text="|ƒ/${photo.exif.fNumber}|">ƒ/1.8</dd>
+    </div>
+    <div th:if="${not #strings.isEmpty(photo.exif.exposureTime)}">
+      <dt>快门</dt>
+      <dd th:text="${photo.exif.exposureTime}">1/200</dd>
+    </div>
+    <div th:if="${photo.exif.iso != null}">
+      <dt>ISO</dt>
+      <dd th:text="${photo.exif.iso}">100</dd>
+    </div>
+    <div th:if="${photo.exif.focalLength != null}">
+      <dt>焦距</dt>
+      <dd th:text="|${photo.exif.focalLength} mm|">50 mm</dd>
+    </div>
+    <div
+      th:if="${photo.exif.imageWidth != null and photo.exif.imageHeight != null}"
+    >
+      <dt>尺寸</dt>
+      <dd th:text="|${photo.exif.imageWidth} × ${photo.exif.imageHeight}|">
+        4032 × 3024
+      </dd>
+    </div>
+  </dl>
+  <div
+    class="fly-photo-tags"
+    th:if="${not #lists.isEmpty(photo.spec.tags)}"
+    aria-label="图片标签"
+  >
+    <span th:each="tag : ${photo.spec.tags}" th:text="${tag}">标签</span>
+  </div>
+</section>

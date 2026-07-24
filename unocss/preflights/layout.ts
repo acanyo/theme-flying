@@ -76,7 +76,7 @@ export const layoutPreflight = {
 }
 
 .fly-navbar-search:focus-visible {
-  outline: 2px solid var(--text);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -108,7 +108,7 @@ export const layoutPreflight = {
 
 .fly-icon-button.fly-menu-button:focus-visible,
 .fly-icon-button.fly-sidebar-collapse-button:focus-visible {
-  outline: 2px solid var(--text);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 

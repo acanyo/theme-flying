@@ -1,0 +1,44 @@
+---
+
+---
+
+<nav
+  class="fly-moments-filter fly-horizontal-nav"
+  th:fragment="filter(tags)"
+  th:if="${not #lists.isEmpty(tags)}"
+  data-fly-moments-filter
+  data-fly-taxonomy-carousel
+  data-fly-reveal
+  aria-label="瞬间标签"
+>
+  <div
+    id="fly-moments-filter-rail"
+    class="fly-moments-filter-rail fly-horizontal-nav-rail"
+    data-fly-taxonomy-carousel-rail
+  >
+    <a
+      class="fly-moments-filter-item fly-horizontal-nav-item"
+      href="/moments"
+      th:href="@{/moments}"
+      aria-current="page"
+      data-fly-moment-tag=""
+      data-fly-taxonomy-carousel-item>全部</a
+    >
+    <a
+      class="fly-moments-filter-item fly-horizontal-nav-item"
+      th:each="momentTag : ${tags}"
+      th:href="@{${momentTag.permalink}}"
+      th:attr="data-fly-moment-tag=${momentTag.name}"
+      data-fly-taxonomy-carousel-item
+    >
+      <span th:text="${momentTag.name}">标签</span>
+      <small th:text="${momentTag.momentCount}">0</small>
+    </a>
+  </div>
+  <th:block
+    th:replace="~{fragments/horizontal-nav-arrow :: arrow(direction=${'prev'}, label=${'向前浏览瞬间标签'}, railId=${'fly-moments-filter-rail'}, controller=${'taxonomy-carousel'}, modifierClass=${'fly-moments-filter-arrow fly-moments-filter-arrow--prev'})}"
+  ></th:block>
+  <th:block
+    th:replace="~{fragments/horizontal-nav-arrow :: arrow(direction=${'next'}, label=${'向后浏览瞬间标签'}, railId=${'fly-moments-filter-rail'}, controller=${'taxonomy-carousel'}, modifierClass=${'fly-moments-filter-arrow fly-moments-filter-arrow--next'})}"
+  ></th:block>
+</nav>

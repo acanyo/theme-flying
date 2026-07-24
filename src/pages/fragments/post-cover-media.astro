@@ -13,6 +13,9 @@
     th:src="${cover}"
     th:alt="${post.spec.title}"
     alt=""
+    width="1600"
+    height="900"
+    decoding="async"
     th:attr="loading=${eager ? 'eager' : 'lazy'},fetchpriority=${eager ? 'high' : null}"
   />
   <video
@@ -45,12 +48,12 @@
   >
     <span class="fly-iconify fly-iconify--video-camera" aria-hidden="true"
     ></span>
-    <span class="fly-sr-only">视频文章</span>
+    <span class="fly-sr-only">视频封面</span>
     <span
       class="fly-post-video-tooltip"
       role="tooltip"
       popover="manual"
-      data-fly-post-video-tooltip>视频文章</span
+      data-fly-post-video-tooltip>视频封面</span
     >
   </span>
 </th:block>

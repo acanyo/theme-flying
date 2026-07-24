@@ -23,6 +23,9 @@
     ></th:block>
     <th:block th:replace="~{fragments/post/sidebar :: sidebar(post=${post})}"
     ></th:block>
+    <th:block
+      th:replace="~{fragments/post/comments :: comments(post=${post}, enabled=${commentsEnabled})}"
+    ></th:block>
   </div>
 
   <th:block
@@ -31,7 +34,5 @@
 
   <th:block th:replace="~{fragments/post/newsletter :: newsletter}"></th:block>
 
-  <th:block
-    th:replace="~{fragments/post/comments :: comments(post=${post}, enabled=${commentsEnabled})}"
-  ></th:block>
+  <th:block th:replace="~{fragments/post/lightbox :: lightbox}"></th:block>
 </article>

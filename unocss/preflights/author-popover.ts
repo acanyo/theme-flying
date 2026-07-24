@@ -119,9 +119,7 @@ export const authorPopoverPreflight = {
   content: "";
 }
 
-.fly-author-popover-trigger:hover .fly-author-popover,
-.fly-author-popover-trigger:focus-within .fly-author-popover,
-.fly-author-popover-trigger[data-fly-author-popover-open="true"] .fly-author-popover {
+.fly-author-popover:popover-open {
   visibility: visible;
   opacity: 1;
   pointer-events: auto;
@@ -129,7 +127,7 @@ export const authorPopoverPreflight = {
 }
 
 @starting-style {
-  .fly-author-popover-trigger[data-fly-author-popover-open="true"] .fly-author-popover:popover-open {
+  .fly-author-popover:popover-open {
     opacity: 0;
     transform: translateY(6px);
   }
@@ -181,10 +179,16 @@ export const authorPopoverPreflight = {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 16px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
 }
 
-.fly-author-popover-contacts > :is(a, button) {
+.fly-author-popover-contacts > li {
+  display: flex;
+}
+
+.fly-author-popover-contacts .fly-author-contact-action {
   position: relative;
   display: inline-flex;
   width: 32px;
@@ -202,14 +206,14 @@ export const authorPopoverPreflight = {
     transform 160ms ease;
 }
 
-.fly-author-popover-contacts > :is(a, button):hover,
-.fly-author-popover-contacts > :is(a, button):focus-visible {
+.fly-author-popover-contacts .fly-author-contact-action:hover,
+.fly-author-popover-contacts .fly-author-contact-action:focus-visible {
   background: var(--accent);
   color: var(--page);
   transform: translateY(-2px);
 }
 
-.fly-author-popover-contacts > button::after {
+.fly-author-popover-contacts button.fly-author-contact-action::after {
   position: absolute;
   bottom: calc(100% + 8px);
   left: 50%;
@@ -231,7 +235,8 @@ export const authorPopoverPreflight = {
   white-space: nowrap;
 }
 
-.fly-author-popover-contacts > button[data-fly-contact-copied="true"]::after {
+.fly-author-popover-contacts
+  button.fly-author-contact-action[data-fly-contact-copied="true"]::after {
   visibility: visible;
   opacity: 1;
   transform: translate(-50%, 0);
@@ -243,9 +248,13 @@ export const authorPopoverPreflight = {
   flex-basis: 16px;
 }
 
+.fly-author-popover-contacts .fly-author-contact-label {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .fly-author-popover,
-  .fly-author-popover-contacts > :is(a, button) {
+  .fly-author-popover-contacts .fly-author-contact-action {
     transition-duration: 1ms;
   }
 }

@@ -1,0 +1,3 @@
+<!DOCTYPE html><form th:action="@{/apis/api.flow.post.kunkunyu.com/v1alpha1/follows/-/submit}" th:fragment="form(formClass, label, labelClass, controlClass)" th:class="${formClass}" action="/apis/api.flow.post.kunkunyu.com/v1alpha1/follows/-/submit" method="post" data-fly-newsletter novalidate> <span th:if="${not #strings.isEmpty(label)}" th:class="${labelClass}" th:text="${label}">
+订阅更新
+</span> <div th:class="${controlClass}"> <label> <span class="fly-sr-only">邮箱地址</span> <input type="email" name="email" placeholder="输入邮箱地址..." autocomplete="email"> </label> <button class="fly-button fly-button--primary" type="submit"> 订阅 </button> </div> <p class="fly-newsletter-status" role="status" aria-live="polite" aria-atomic="true"></p> </form>

@@ -1,0 +1,5 @@
+<!DOCTYPE html><nav class="fly-links-filter" th:fragment="filter(simpleGroups, activeGroupName)" th:if="${not #lists.isEmpty(simpleGroups)}" aria-label="友情链接分组" data-fly-reveal> <a href="/links" th:href="@{/links}" th:classappend="${#strings.isEmpty(activeGroupName)} ? ' fly-is-active'" th:attr="aria-current=${#strings.isEmpty(activeGroupName) ? 'page' : null}">
+全部
+</a> <a th:each="groupItem : ${simpleGroups}" th:href="@{/links(group=${groupItem.metadata.name})}" th:text="${groupItem.spec.displayName}" th:classappend="${activeGroupName == groupItem.metadata.name} ? ' fly-is-active'" th:attr="aria-current=${activeGroupName == groupItem.metadata.name ? 'page' : null}">
+链接分组
+</a> </nav>

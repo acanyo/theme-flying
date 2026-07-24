@@ -1,0 +1,27 @@
+---
+
+---
+
+<button
+  class="fly-horizontal-nav-arrow"
+  type="button"
+  th:fragment="arrow(direction, label, railId, controller, modifierClass)"
+  th:classappend="${'fly-horizontal-nav-arrow--' + direction + (modifierClass != null and not #strings.isEmpty(modifierClass) ? ' ' + modifierClass : '')}"
+  th:attr="aria-label=${label},aria-controls=${railId},hidden=${controller == 'category-filter' ? 'hidden' : null},disabled=${controller == 'taxonomy-carousel' and direction == 'prev' ? 'disabled' : null},data-fly-category-filter-prev=${controller == 'category-filter' and direction == 'prev' ? 'true' : null},data-fly-category-filter-next=${controller == 'category-filter' and direction == 'next' ? 'true' : null},data-fly-taxonomy-carousel-prev=${controller == 'taxonomy-carousel' and direction == 'prev' ? 'true' : null},data-fly-taxonomy-carousel-next=${controller == 'taxonomy-carousel' and direction == 'next' ? 'true' : null}"
+>
+  <svg
+    class="fly-horizontal-nav-arrow-icon"
+    viewBox="0 0 20 20"
+    width="18"
+    height="18"
+    fill="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M7.5 5L12.5 10L7.5 15"
+      stroke="currentColor"
+      stroke-width="1.75"
+      stroke-linecap="round"
+      stroke-linejoin="round"></path>
+  </svg>
+</button>

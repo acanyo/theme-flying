@@ -5,6 +5,7 @@ declare namespace astroHTML.JSX {
     "th:attr"?: string;
     "th:class"?: string;
     "th:classappend"?: string;
+    "th:content"?: string;
     "th:datetime"?: string;
     "th:each"?: string;
     "th:fragment"?: string;
@@ -21,5 +22,6 @@ declare namespace astroHTML.JSX {
     "th:style"?: string;
     "th:with"?: string;
     "th:target"?: string;
+    "th:title"?: string;
   }
 }

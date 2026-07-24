@@ -4,7 +4,8 @@
 
 <div
   class="fly-footer-identity"
-  th:fragment="identity(icpBeian, gonganBeian, gonganBeianUrl)"
+  th:fragment="identity(icpBeian, gonganBeian, gonganBeianUrl, copyrightText, showCopyright, showPoweredBy)"
+  th:if="${showCopyright or showPoweredBy or not #strings.isEmpty(icpBeian) or not #strings.isEmpty(gonganBeian)}"
 >
   <div
     class="fly-footer-records"
@@ -24,6 +25,8 @@
         th:src="@{/assets/images/icp-beian.webp}"
         alt=""
         aria-hidden="true"
+        width="17"
+        height="17"
         loading="lazy"
         decoding="async"
       />
@@ -43,6 +46,8 @@
         th:src="@{/assets/images/gongan-beian.png}"
         alt=""
         aria-hidden="true"
+        width="17"
+        height="17"
         loading="lazy"
         decoding="async"
       />
@@ -50,23 +55,32 @@
     </a>
   </div>
 
-  <p class="fly-footer-copyright">
-    <span
-      class="fly-iconify fly-iconify--copyright fly-footer-copyright-icon"
-      aria-hidden="true"></span>
-    <span th:text="|${site.title}版权所有 · 架构于|"
-      >站点标题版权所有 · 架构于</span
-    >
-    <a href="https://halo.run/" target="_blank" rel="noopener noreferrer"
-      ><strong>Halo</strong></a
-    >
-    <span>及为您增强体验的</span>
-    <a
-      href="https://github.com/acanyo/theme-flying"
-      target="_blank"
-      rel="noopener noreferrer">Flying</a
-    >
-    <span>主题</span>
+  <p class="fly-footer-copyright" th:if="${showCopyright or showPoweredBy}">
+    <th:block th:if="${showCopyright}">
+      <span
+        class="fly-iconify fly-iconify--copyright fly-footer-copyright-icon"
+        aria-hidden="true"></span>
+      <span
+        th:text="${#strings.isEmpty(copyrightText) ? site.title + '版权所有' : copyrightText}"
+        >站点标题版权所有</span
+      >
+    </th:block>
+    <th:block th:if="${showPoweredBy}">
+      <span th:if="${showCopyright}">·</span>
+      <span>由</span>
+      <a href="https://halo.run/" target="_blank" rel="noopener noreferrer"
+        ><strong>Halo</strong></a
+      >
+      <span>与</span>
+      <a
+        href="https://github.com/acanyo/theme-flying"
+        th:href="${theme.spec.homepage}"
+        th:text="${theme.spec.displayName}"
+        target="_blank"
+        rel="noopener noreferrer">Flying</a
+      >
+      <span>主题驱动</span>
+    </th:block>
   </p>
 </div>
 

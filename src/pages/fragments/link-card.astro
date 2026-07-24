@@ -1,0 +1,27 @@
+---
+
+---
+
+<article class="fly-friend-card" th:fragment="card(link)">
+  <a
+    th:href="${link.spec.url}"
+    target="_blank"
+    rel="noopener noreferrer"
+    th:attr="aria-label=|访问 ${link.spec.displayName}|"></a>
+  <img
+    th:if="${not #strings.isEmpty(link.spec.logo)}"
+    th:src="${link.spec.logo}"
+    th:alt="${link.spec.displayName}"
+    width="28"
+    height="28"
+    loading="lazy"
+    decoding="async"
+  />
+  <h3 th:text="${link.spec.displayName}">网站名称</h3>
+  <p
+    th:if="${not #strings.isEmpty(link.spec.description)}"
+    th:text="${link.spec.description}"
+  >
+    网站简介
+  </p>
+</article>

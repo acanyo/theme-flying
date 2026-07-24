@@ -1,0 +1,16 @@
+---
+
+---
+
+<html
+  lang="zh-CN"
+  th:replace="~{fragments/layout :: page(pageTitle=|${singlePage.spec.title} - ${site.title}|, pageKind='single-page', pageUrl=${#strings.startsWith(singlePage.status.permalink, 'http') ? singlePage.status.permalink : site.url + singlePage.status.permalink}, bodyClass='fly-page', content=~{::content})}"
+>
+  <th:block th:fragment="content">
+    <th:block
+      th:replace="~{fragments/single-page/shell :: shell(singlePage=${singlePage}, pageLayout='cover')}"
+    ></th:block>
+  </th:block>
+
+
+</html>

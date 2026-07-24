@@ -1,0 +1,248 @@
+---
+
+---
+
+<th:block
+  th:fragment="card(post, variant)"
+  th:with="cardVariant=${variant == 'overlay' ? 'overlay' : (variant == 'standard' or variant == 'carousel' or variant == 'slider' or variant == 'author-preview' ? variant : 'classic')}"
+>
+  <article
+    class="fly-overlay-post-card"
+    th:if="${cardVariant == 'overlay'}"
+    data-fly-post-card
+    th:attr="data-fly-post-name=${post.metadata.name},data-fly-category=${not #lists.isEmpty(post.categories) ? post.categories[0].metadata.name : 'uncategorized'},data-fly-title=${post.spec.title},data-fly-excerpt=${post.status.excerpt ?: ''}"
+  >
+    <a
+      class="fly-overlay-post-hit"
+      href="/"
+      th:href="@{${post.status.permalink}}"
+      th:attr="aria-label=|阅读：${post.spec.title}|"
+    >
+      <th:block
+        th:replace="~{fragments/post-cover-media :: badge(post=${post})}"
+      ></th:block>
+    </a>
+    <th:block
+      th:replace="~{fragments/post-cover-media :: media(post=${post}, mediaClass=${'fly-overlay-post-image'}, eager=${false})}"
+    ></th:block>
+    <div class="fly-overlay-post-shade" aria-hidden="true"></div>
+    <div class="fly-overlay-post-content">
+      <h3>
+        <a
+          href="/"
+          th:href="@{${post.status.permalink}}"
+          th:text="${post.spec.title}">文章标题</a
+        >
+      </h3>
+      <div class="fly-overlay-post-meta">
+        <th:block
+          th:if="${post.owner != null}"
+          th:replace="~{fragments/author-popover :: trigger(author=${post.owner}, fallbackPermalink=${post.status.permalink}, variant=${'name'})}"
+        ></th:block>
+        <span th:unless="${post.owner != null}" th:text="${site.title}"
+          >作者</span
+        >
+        <span aria-hidden="true">·</span>
+        <time
+          th:datetime="${post.spec.publishTime}"
+          th:text="${#dates.format(post.spec.publishTime, 'yyyy年MM月dd日')}"
+          >2024年7月11日</time
+        >
+        <span th:if="${not #lists.isEmpty(post.categories)}" aria-hidden="true"
+          >·</span
+        >
+        <span
+          th:if="${not #lists.isEmpty(post.categories)}"
+          th:text="${post.categories[0].spec.displayName}">分类</span
+        >
+      </div>
+    </div>
+  </article>
+
+  <article
+    class="fly-post-card"
+    th:classappend="${cardVariant == 'carousel' ? 'fly-post-card--carousel' : (cardVariant == 'slider' ? 'fly-post-card--slider' : '')}"
+    th:if="${cardVariant == 'standard' or cardVariant == 'carousel' or cardVariant == 'slider'}"
+    data-fly-post-card
+    th:attr="data-fly-post-name=${post.metadata.name},data-fly-category=${not #lists.isEmpty(post.categories) ? post.categories[0].metadata.name : 'uncategorized'},data-fly-title=${post.spec.title},data-fly-excerpt=${post.status.excerpt ?: ''}"
+  >
+    <div class="fly-post-image-frame">
+      <a
+        class="fly-post-image-link"
+        href="/"
+        th:href="@{${post.status.permalink}}"
+        th:attr="aria-label=|阅读：${post.spec.title}|"
+      >
+        <th:block
+          th:replace="~{fragments/post-cover-media :: media(post=${post}, mediaClass=${'fly-post-cover'}, eager=${false})}"
+        ></th:block>
+        <th:block
+          th:replace="~{fragments/post-cover-media :: badge(post=${post})}"
+        ></th:block>
+      </a>
+      <a
+        class="fly-post-chip fly-post-chip--image"
+        href="/"
+        th:href="@{${not #lists.isEmpty(post.categories) ? post.categories[0].status.permalink : post.status.permalink}}"
+        th:text="${not #lists.isEmpty(post.categories) ? post.categories[0].spec.displayName : '文章'}"
+        >文章</a
+      >
+    </div>
+    <div class="fly-post-body">
+      <h2 class="fly-post-title">
+        <a
+          href="/"
+          th:href="@{${post.status.permalink}}"
+          th:text="${post.spec.title}">文章标题</a
+        >
+      </h2>
+      <p
+        class="fly-post-excerpt"
+        th:if="${not #strings.isEmpty(post.status.excerpt)}"
+        th:text="${post.status.excerpt}"
+      >
+        文章摘要
+      </p>
+
+      <div
+        class="fly-post-tags"
+        th:if="${not #lists.isEmpty(post.tags)}"
+        aria-label="文章标签"
+      >
+        <a
+          href="/"
+          th:each="tag, tagIter : ${post.tags}"
+          th:if="${tagIter.index < 2}"
+          th:href="@{${tag.status.permalink}}"
+          th:text="|#${tag.spec.displayName}|">#标签</a
+        >
+      </div>
+      <footer class="fly-post-meta">
+        <div class="fly-author-pill">
+          <th:block
+            th:if="${post.owner != null}"
+            th:replace="~{fragments/author-popover :: trigger(author=${post.owner}, fallbackPermalink=${post.status.permalink}, variant=${'named'})}"
+          ></th:block>
+          <a
+            class="fly-author-name-link"
+            th:unless="${post.owner != null}"
+            href="/"
+            th:href="@{${post.owner?.permalink ?: post.status.permalink}}"
+          >
+            <span th:text="${post.owner?.displayName ?: site.title}">作者</span>
+          </a>
+        </div>
+        <span class="fly-dot" aria-hidden="true"></span>
+        <time
+          th:datetime="${post.spec.publishTime}"
+          th:text="${#dates.format(post.spec.publishTime, 'yyyy年MM月dd日')}"
+          >2026年07月08日</time
+        >
+      </footer>
+    </div>
+  </article>
+
+  <article
+    class="fly-taxonomy-post-card"
+    th:classappend="${cardVariant == 'author-preview' ? ' fly-taxonomy-post-card--author-preview fly-author-preview-post-card' : ''}"
+    th:if="${cardVariant == 'classic' or cardVariant == 'author-preview'}"
+    data-fly-post-card
+    th:attr="data-fly-post-name=${post.metadata.name},data-fly-category=${not #lists.isEmpty(post.categories) ? post.categories[0].metadata.name : 'uncategorized'},data-fly-title=${post.spec.title},data-fly-excerpt=${post.status.excerpt ?: ''}"
+  >
+    <div class="fly-taxonomy-post-media">
+      <a
+        class="fly-taxonomy-post-media-link"
+        href="/"
+        th:href="@{${post.status.permalink}}"
+        th:attr="aria-label=|阅读：${post.spec.title}|"
+      >
+        <th:block
+          th:replace="~{fragments/post-cover-media :: media(post=${post}, mediaClass=${'fly-taxonomy-post-cover'}, eager=${false})}"
+        ></th:block>
+        <th:block th:if="${cardVariant == 'classic'}">
+          <th:block
+            th:replace="~{fragments/post-cover-media :: badge(post=${post})}"
+          ></th:block>
+        </th:block>
+        <span
+          class="fly-author-preview-badge-group"
+          th:if="${cardVariant == 'author-preview'}"
+        >
+          <span
+            class="fly-author-preview-visit-badge"
+            th:text="|${post.stats.visit} 次阅读|"></span>
+          <th:block
+            th:replace="~{fragments/post-cover-media :: badge(post=${post})}"
+          ></th:block>
+        </span>
+      </a>
+    </div>
+
+    <div class="fly-taxonomy-post-body">
+      <h2 class="fly-taxonomy-post-title">
+        <a
+          href="/"
+          th:href="@{${post.status.permalink}}"
+          th:text="${post.spec.title}">文章标题</a
+        >
+      </h2>
+
+      <th:block th:if="${cardVariant == 'classic' and post.owner != null}">
+        <th:block
+          th:replace="~{fragments/author-popover :: trigger(author=${post.owner}, fallbackPermalink=${post.status.permalink}, variant=${'avatar'})}"
+        ></th:block>
+      </th:block>
+      <a
+        class="fly-taxonomy-post-fallback-avatar"
+        th:if="${cardVariant == 'classic' and post.owner == null}"
+        href="/"
+        th:href="@{${post.status.permalink}}"
+        th:aria-label="|阅读：${post.spec.title}|"
+      >
+        <img
+          src="/assets/images/avatar.svg"
+          th:src="${#theme.assets('/images/avatar.svg')}"
+          th:alt="${site.title}"
+          alt=""
+          width="36"
+          height="36"
+          loading="lazy"
+          decoding="async"
+        />
+      </a>
+
+      <a
+        class="fly-taxonomy-post-author"
+        th:if="${cardVariant == 'classic'}"
+        href="/"
+        th:href="@{${post.owner?.permalink ?: post.status.permalink}}"
+        th:text="${post.owner?.displayName ?: site.title}"
+      >
+        作者
+      </a>
+
+      <div
+        class="fly-taxonomy-post-meta"
+        th:with="cardTerms=${not #lists.isEmpty(post.tags) ? post.tags : post.categories}"
+      >
+        <time
+          th:datetime="${post.spec.publishTime}"
+          th:text="${#dates.format(post.spec.publishTime, 'yyyy年MM月dd日')}"
+        >
+          2026年07月16日
+        </time>
+        <th:block
+          th:each="cardTerm, termStat : ${cardTerms}"
+          th:if="${termStat.index < 3}"
+        >
+          <span aria-hidden="true">•</span>
+          <a
+            href="/"
+            th:href="@{${cardTerm.status.permalink}}"
+            th:text="${cardTerm.spec.displayName}">术语</a
+          >
+        </th:block>
+      </div>
+    </div>
+  </article>
+</th:block>

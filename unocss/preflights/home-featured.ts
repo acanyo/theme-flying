@@ -505,8 +505,8 @@ export const homeFeaturedPreflight = {
   gap: 6px;
   margin-top: 20px;
   border-radius: 20px;
-  background: var(--text);
-  color: var(--page);
+  background: var(--accent);
+  color: var(--accent-contrast);
   padding: 8px 20px;
   font-size: 14px;
   font-weight: 600;
@@ -559,7 +559,7 @@ export const homeFeaturedPreflight = {
 }
 
 .fly-home-carousel .fly-carousel-dot.fly-is-active {
-  background: var(--text);
+  background: var(--accent);
 }
 
 @media (max-width: 991px) {

@@ -1,0 +1,69 @@
+<!DOCTYPE html><script type="application/ld+json" th:fragment="collection(name, description, url)" th:inline="javascript" th:with="resolvedDescription=${#strings.isEmpty(description) ? name : description}">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": /*[[${url + '#collection'}]]*/ "https://example.com/collection#collection",
+    "url": /*[[${url}]]*/ "https://example.com/collection",
+    "name": /*[[${name}]]*/ "内容集合",
+    "description": /*[[${resolvedDescription}]]*/ "内容集合",
+    "inLanguage": "zh-CN",
+    "isPartOf": {
+      "@id": /*[[${site.url + '#website'}]]*/ "https://example.com#website"
+    },
+    "breadcrumb": {
+      "@id": /*[[${url + '#breadcrumb'}]]*/ "https://example.com/collection#breadcrumb"
+    },
+    "mainEntity": {
+      "@type": "ItemList",
+      "name": /*[[${name}]]*/ "内容集合"
+    }
+  }
+</script> <script type="application/ld+json" th:fragment="collectionWithCount(name, description, url, itemCount)" th:inline="javascript" th:with="resolvedDescription=${#strings.isEmpty(description) ? name : description}">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": /*[[${url + '#collection'}]]*/ "https://example.com/collection#collection",
+    "url": /*[[${url}]]*/ "https://example.com/collection",
+    "name": /*[[${name}]]*/ "内容集合",
+    "description": /*[[${resolvedDescription}]]*/ "内容集合",
+    "inLanguage": "zh-CN",
+    "isPartOf": {
+      "@id": /*[[${site.url + '#website'}]]*/ "https://example.com#website"
+    },
+    "breadcrumb": {
+      "@id": /*[[${url + '#breadcrumb'}]]*/ "https://example.com/collection#breadcrumb"
+    },
+    "mainEntity": {
+      "@type": "ItemList",
+      "name": /*[[${name}]]*/ "内容集合",
+      "numberOfItems": /*[[${itemCount}]]*/ 0
+    }
+  }
+</script> <script type="application/ld+json" th:fragment="term(name, description, url, itemCount)" th:inline="javascript" th:with="resolvedDescription=${#strings.isEmpty(description) ? name : description}">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": /*[[${url + '#collection'}]]*/ "https://example.com/collection#collection",
+    "url": /*[[${url}]]*/ "https://example.com/collection",
+    "name": /*[[${name}]]*/ "内容主题",
+    "description": /*[[${resolvedDescription}]]*/ "内容主题",
+    "inLanguage": "zh-CN",
+    "isPartOf": {
+      "@id": /*[[${site.url + '#website'}]]*/ "https://example.com#website"
+    },
+    "breadcrumb": {
+      "@id": /*[[${url + '#breadcrumb'}]]*/ "https://example.com/collection#breadcrumb"
+    },
+    "about": {
+      "@type": "DefinedTerm",
+      "name": /*[[${name}]]*/ "内容主题",
+      "description": /*[[${resolvedDescription}]]*/ "内容主题",
+      "url": /*[[${url}]]*/ "https://example.com/collection"
+    },
+    "mainEntity": {
+      "@type": "ItemList",
+      "name": /*[[${name + '文章'}]]*/ "主题文章",
+      "numberOfItems": /*[[${itemCount}]]*/ 0
+    }
+  }
+</script>

@@ -1,0 +1,19 @@
+---
+
+---
+
+<th:block th:fragment="page(title, description, cover)" th:with="pageSize=${9}">
+  <th:block th:if="${pluginFinder.available('PluginLinks')}">
+    <th:block th:with="feedPage=${linkFeedFinder.list({limit: pageSize})}">
+      <th:block
+        th:replace="~{fragments/friends/shell :: shell(title=${title}, description=${description}, cover=${cover}, feedPage=${feedPage}, pageSize=${pageSize}, pluginAvailable=${true})}"
+      ></th:block>
+    </th:block>
+  </th:block>
+
+  <th:block th:unless="${pluginFinder.available('PluginLinks')}">
+    <th:block
+      th:replace="~{fragments/friends/shell :: shell(title=${title}, description=${description}, cover=${cover}, feedPage=${null}, pageSize=${pageSize}, pluginAvailable=${false})}"
+    ></th:block>
+  </th:block>
+</th:block>

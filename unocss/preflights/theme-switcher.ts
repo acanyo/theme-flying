@@ -1,5 +1,19 @@
 export const themeSwitcherPreflight = {
   getCSS: () => String.raw`
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+}
+
 .fly-navbar-user-nav {
   position: relative;
   display: flex;
@@ -9,6 +23,12 @@ export const themeSwitcherPreflight = {
   align-items: center;
   justify-content: flex-end;
   justify-self: end;
+}
+
+[data-fly-account-authenticated="true"]
+  ~ astro-island[ssr]
+  .fly-navbar-user-nav {
+  visibility: hidden;
 }
 
 .fly-navbar-user-trigger {
@@ -30,7 +50,7 @@ export const themeSwitcherPreflight = {
 }
 
 .fly-navbar-user-trigger:focus-visible {
-  outline: 2px solid var(--text);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -47,7 +67,8 @@ export const themeSwitcherPreflight = {
   z-index: 10000;
   display: flex;
   width: 290px;
-  height: 159px;
+  height: auto;
+  min-height: 159px;
   padding: 6px;
   flex-direction: column;
   gap: 4px;
@@ -92,6 +113,21 @@ export const themeSwitcherPreflight = {
   place-items: center;
   border-radius: 999px;
   background: var(--page-alt);
+  overflow: hidden;
+}
+
+.fly-navbar-user-trigger-avatar,
+.fly-navbar-user-avatar > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+}
+
+.fly-navbar-user-trigger-avatar {
+  width: 28px;
+  height: 28px;
 }
 
 .fly-navbar-user-avatar .fly-iconify {
@@ -163,6 +199,10 @@ export const themeSwitcherPreflight = {
   flex-basis: 20px;
 }
 
+.fly-navbar-user-menu-item--logout > .fly-iconify {
+  transform: scaleX(-1);
+}
+
 .fly-theme-current-icons {
   position: relative;
   display: grid;
@@ -219,6 +259,13 @@ export const themeSwitcherPreflight = {
     top: 64px;
     right: 16px;
     width: min(290px, calc(100vw - 32px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.01ms;
   }
 }
 `,

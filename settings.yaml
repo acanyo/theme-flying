@@ -90,6 +90,19 @@ spec:
           value: ""
           placeholder: 请输入完整查询链接
           help: 留空时跳转公安部互联网安全管理服务平台查询页。
+        - $formkit: text
+          name: footer_copyright
+          label: 页脚版权文字
+          value: ""
+          placeholder: 留空时使用“站点名称版权所有”
+        - $formkit: switch
+          name: show_copyright
+          label: 显示页脚版权
+          value: true
+        - $formkit: switch
+          name: show_powered_by
+          label: 显示 Halo 与主题信息
+          value: true
         - $formkit: select
           name: home_link_group
           label: 首页友情链接分组
@@ -109,7 +122,139 @@ spec:
             labelField: spec.displayName
             valueField: metadata.name
             fieldSelectorKey: metadata.name
+    - group: pages
+      label: 主题页面
+      formSchema:
+        - $formkit: attachment
+          name: auth_cover
+          label: 认证页面背景图
+          value: ""
+          help: 用于登录、注册、找回密码等认证页面左侧的背景视觉图；未选择时使用主题内置默认图片。
+        - $formkit: text
+          name: categories_title
+          label: 分类页标题
+          value: 分类
+        - $formkit: textarea
+          name: categories_description
+          label: 分类页说明
+          value: 按主题浏览内容，发现感兴趣的文章。
+        - $formkit: attachment
+          name: categories_cover
+          label: 分类页封面图
+          value: ""
+          help: 未选择时使用主题内置默认图片。
+        - $formkit: text
+          name: tags_title
+          label: 标签页标题
+          value: 标签
+        - $formkit: textarea
+          name: tags_description
+          label: 标签页说明
+          value: 使用标签轻松探索丰富多样的内容。查找特定主题、追踪内容趋势，并在广泛的主题与文章中发现新的兴趣，让每一次浏览都更快抵达你真正关心的方向。
+        - $formkit: attachment
+          name: tags_cover
+          label: 标签页封面图
+          value: ""
+          help: 未选择时使用主题内置默认图片。
+        - $formkit: text
+          name: archives_title
+          label: 归档页标题
+          value: 文章归档
+        - $formkit: textarea
+          name: archives_description
+          label: 归档页说明
+          value: 汇集站点发布的全部文章，涵盖技术、生活与更多主题，在这里按时间探索感兴趣的内容。
+        - $formkit: attachment
+          name: archives_cover
+          label: 归档页封面图
+          value: ""
+          help: 未选择时使用主题内置默认图片。
+        - $formkit: text
+          name: moments_title
+          label: 瞬间页标题
+          value: 瞬间
+        - $formkit: textarea
+          name: moments_description
+          label: 瞬间页说明
+          value: 记录生活中的片段、灵感与当下，让轻量的表达也能被认真收藏。
+        - $formkit: attachment
+          name: moments_cover
+          label: 瞬间页封面图
+          value: ""
+          help: 未选择时使用主题内置默认图片。
+        - $formkit: text
+          name: photos_title
+          label: 图库页标题
+          value: 图库
+        - $formkit: textarea
+          name: photos_description
+          label: 图库页说明
+          value: 用影像收藏沿途所见，记录值得反复回看的片刻。
+        - $formkit: attachment
+          name: photos_cover
+          label: 图库页封面图
+          value: ""
+          help: 未选择时使用主题内置默认图片。
+        - $formkit: text
+          name: links_title
+          label: 友情链接页标题
+          value: ""
+          placeholder: 留空时使用链接管理插件中的页面标题
+        - $formkit: textarea
+          name: links_description
+          label: 友情链接页说明
+          value: 发现值得持续关注的网站与创作者，在彼此分享的内容和观点之间建立连接。
+        - $formkit: attachment
+          name: links_cover
+          label: 友情链接页封面图
+          value: ""
+          help: 未选择时使用主题内置默认图片。
+        - $formkit: switch
+          name: links_application_enabled
+          label: 开放友情链接申请
+          value: true
+          help: 使用评论组件提交申请，并供链接管理插件在后台解析最新评论。
+        - $formkit: text
+          name: links_application_title
+          label: 申请区标题
+          value: 申请友情链接
+        - $formkit: textarea
+          name: links_application_description
+          label: 申请区说明
+          value: 请先在自己的网站添加本站链接，再复制申请模板、填写完整信息并通过右侧评论组件提交。
+        - $formkit: textarea
+          name: links_application_template
+          label: 友情链接申请模板
+          value: |-
+            站点名称：
+            站点地址：https://
+            站点图标：https://
+            站点简介：
+            本站友链页：https://
+        - $formkit: text
+          name: friends_title
+          label: RSS 朋友圈页标题
+          value: ""
+          placeholder: 留空时使用对应 Halo 单页的标题
+        - $formkit: textarea
+          name: friends_description
+          label: RSS 朋友圈页说明
+          value: ""
+          placeholder: 留空时使用对应 Halo 单页的摘要
+        - $formkit: attachment
+          name: friends_cover
+          label: RSS 朋友圈页封面图
+          value: ""
+          help: 未选择时优先使用对应 Halo 单页封面，其次使用主题内置默认图片。
 
+    - group: newsletter
+      label: 订阅设置
+      formSchema:
+        - $formkit: switch
+          name: enabled
+          label: 启用订阅表单
+          value: true
+          help: 需要安装并启用提供邮件订阅接口的插件。
     - group: navigation
       label: 导航
       formSchema:
@@ -147,13 +292,13 @@ spec:
               value: false
         - $formkit: tagSelect
           name: tags
-          label: 侧栏标签
+          label: 精选标签
           value: []
           multiple: true
           searchable: true
           clearable: true
           placeholder: 请选择标签
-          help: 下拉多选侧栏标签区域展示的标签；不选择则隐藏标签区域。
+          help: 用于侧栏标签区域、标签总览和标签详情页顶部导航；未选择时侧栏隐藏，标签总览仅保留顶部介绍且不显示标签分区，标签详情导航仅保留“全部文章”。
         - $formkit: array
           name: sidebar_links
           label: 侧栏底部链接
@@ -199,9 +344,9 @@ spec:
           help: 用于按钮、链接、选中状态、焦点边框和 Halo 搜索组件。
         - $formkit: color
           name: secondary_color
-          label: 主题辅助色
-          value: "#000000"
-          help: 用于弱强调、装饰元素和辅助交互；默认与主色一致以保持原版黑白风格。
+          label: 主题辅色
+          value: "#ededed"
+          help: 用于导航、标签、输入框等辅助界面的背景色，以及插件的次级配色。
 
     - group: advanced
       label: 高级设置

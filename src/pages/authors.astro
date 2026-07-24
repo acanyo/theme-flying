@@ -1,0 +1,20 @@
+---
+
+---
+
+<!doctype html>
+<html
+  lang="zh-CN"
+  th:replace="~{fragments/layout :: page(pageTitle=|${singlePage.spec.title ?: '所有作者'} - ${site.title}|, pageKind='authors', pageUrl=${site.url + '/authors'}, bodyClass='fly-authors-page', content=~{::content})}"
+>
+  <th:block
+    th:fragment="content"
+    th:with="authorsPostLimit=${96},recentPostsPage=${postFinder.list({ page: 1, size: authorsPostLimit, sort: {'spec.publishTime,desc'} })},recentPosts=${recentPostsPage?.items},authors=${#sets.toSet(recentPosts.?[owner != null].![owner])}"
+  >
+    <th:block
+      th:replace="~{fragments/authors/shell :: shell(singlePage=${singlePage}, recentPosts=${recentPosts}, authors=${authors})}"
+    ></th:block>
+  </th:block>
+
+
+</html>

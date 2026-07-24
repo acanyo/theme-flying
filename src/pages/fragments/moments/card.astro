@@ -1,0 +1,17 @@
+---
+
+---
+
+<article
+  class="fly-moment-card"
+  th:fragment="card(moment)"
+  th:attr="data-fly-moment-name=${moment.metadata.name}"
+  data-fly-reveal
+>
+  <th:block
+    th:replace="~{fragments/moments/author :: author(owner=${moment.owner}, releaseTime=${moment.spec.releaseTime}, momentName=${moment.metadata.name}, linkToMoment=${true})}"
+  ></th:block>
+  <th:block
+    th:replace="~{fragments/moments/body :: body(moment=${moment}, detail=${false})}"
+  ></th:block>
+</article>

@@ -1,0 +1,17 @@
+---
+
+---
+
+<!doctype html>
+<html
+  lang="zh-CN"
+  th:replace="~{fragments/layout :: page(pageTitle=|${moment.owner?.displayName ?: site.title} 的瞬间 - ${site.title}|, pageKind='moment-detail', pageUrl=${site.url + '/moments/' + moment.metadata.name}, bodyClass='fly-moments fly-moment-detail-page', content=~{::content})}"
+>
+  <th:block th:fragment="content">
+    <th:block
+      th:replace="~{fragments/moments/detail :: detail(moment=${moment}, commentsEnabled=${haloCommentEnabled})}"
+    ></th:block>
+  </th:block>
+
+
+</html>

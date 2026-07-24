@@ -3,7 +3,7 @@
 ---
 
 <th:block
-  th:fragment="content(mainMenu, featureMenu, footerLinks, selectedTags, socialLinks, icpBeian, gonganBeian, gonganBeianUrl)"
+  th:fragment="content(mainMenu, featureMenu, footerLinks, selectedTags, socialLinks, icpBeian, gonganBeian, gonganBeianUrl, copyrightText, showCopyright, showPoweredBy)"
 >
   <div class="fly-sidebar-inner">
     <nav
@@ -74,7 +74,7 @@
   <footer
     class="fly-sidebar-socials"
     aria-label="站点链接"
-    th:if="${not #lists.isEmpty(socialLinks) or not #lists.isEmpty(footerLinks) or showCopyright or not #strings.isEmpty(icpBeian) or not #strings.isEmpty(gonganBeian)}"
+    th:if="${not #lists.isEmpty(socialLinks) or not #lists.isEmpty(footerLinks) or showCopyright or showPoweredBy or not #strings.isEmpty(icpBeian) or not #strings.isEmpty(gonganBeian)}"
   >
     <div class="fly-social-icons" th:if="${not #lists.isEmpty(socialLinks)}">
       <a
@@ -104,7 +104,7 @@
       th:replace="~{fragments/footer-content :: navigation(footerLinks=${footerLinks}, placement='sidebar')}"
     ></th:block>
     <th:block
-      th:replace="~{fragments/footer-content :: identity(icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl})}"
+      th:replace="~{fragments/footer-content :: identity(icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl}, copyrightText=${copyrightText}, showCopyright=${showCopyright}, showPoweredBy=${showPoweredBy})}"
     ></th:block>
   </footer>
 </th:block>

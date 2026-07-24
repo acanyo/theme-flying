@@ -1,5 +1,5 @@
-import { setupPostComments } from "./post/comments.js";
 import { setupReadingTime } from "./post/reading-time.js?fly=1.0.117";
+import { setupPostLightbox } from "./post/lightbox.js?fly=1.0.5";
 import { setupPostShare } from "./post/share.js";
 import { setupPostToc } from "./post/toc.js";
 
@@ -16,7 +16,7 @@ export function setupPostPage(root) {
   window.flyPostPageController = controller;
 
   setupReadingTime(page);
+  setupPostLightbox(page, controller.signal);
   setupPostToc(page, controller.signal);
-  setupPostComments(page, controller.signal);
   setupPostShare(page, controller.signal);
 }

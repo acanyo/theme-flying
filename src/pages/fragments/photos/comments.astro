@@ -1,0 +1,22 @@
+---
+
+---
+
+<section
+  id="fly-photo-comments"
+  class="fly-post-comments fly-photo-comments"
+  th:fragment="comments(photo)"
+  th:if="${pluginFinder.available('PluginCommentWidget')}"
+  aria-labelledby="fly-photo-comments-title"
+  tabindex="-1"
+>
+  <div class="fly-post-comments-heading">
+    <h2 id="fly-photo-comments-title">评论</h2>
+  </div>
+  <div class="fly-post-comments-body">
+    <halo:comment
+      group="core.halo.run"
+      kind="Photo"
+      th:attr="name=${photo.metadata.name}"></halo:comment>
+  </div>
+</section>

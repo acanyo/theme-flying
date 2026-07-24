@@ -1,0 +1,62 @@
+---
+
+---
+
+<div
+  class="fly-moment-media"
+  th:fragment="media(content, momentName, detail)"
+  th:if="${not #lists.isEmpty(content.medium)}"
+  th:with="photos=${content.medium.?[type.name == 'PHOTO']}"
+>
+  <div
+    class="fly-moment-photo-grid"
+    th:if="${not #lists.isEmpty(photos)}"
+    th:classappend="${#lists.size(photos) == 1 ? ' fly-moment-photo-grid--single' : (#lists.size(photos) == 2 ? ' fly-moment-photo-grid--pair' : ' fly-moment-photo-grid--gallery')}"
+  >
+    <a
+      class="fly-moment-photo-link"
+      th:if="${not detail}"
+      th:each="photo : ${photos}"
+      th:href="@{/moments/{name}(name=${momentName})}"
+      aria-label="查看瞬间详情"
+    >
+      <img
+        class="fly-moment-photo"
+        th:src="${photo.url}"
+        src="/assets/images/fallback-cover.svg"
+        alt="瞬间图片"
+        loading="lazy"
+      />
+    </a>
+    <img
+      class="fly-moment-photo"
+      th:if="${detail}"
+      th:each="photo : ${photos}"
+      th:src="${photo.url}"
+      src="/assets/images/fallback-cover.svg"
+      alt="瞬间图片"
+      loading="eager"
+    />
+  </div>
+  <th:block th:each="medium : ${content.medium}">
+    <video
+      class="fly-moment-video"
+      th:if="${medium.type.name == 'VIDEO'}"
+      th:src="${medium.url}"
+      controls
+      playsinline
+      preload="metadata"></video>
+    <audio
+      class="fly-moment-audio"
+      th:if="${medium.type.name == 'AUDIO'}"
+      th:src="${medium.url}"
+      controls
+      preload="metadata"></audio>
+    <a
+      class="fly-moment-post-link"
+      th:if="${medium.type.name == 'POST' and not #strings.isEmpty(medium.url)}"
+      th:href="${medium.url}"
+      ><span>查看关联文章</span><span aria-hidden="true">→</span></a
+    >
+  </th:block>
+</div>

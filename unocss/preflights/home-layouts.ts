@@ -58,7 +58,7 @@ export const homeLayoutsPreflight = {
 }
 
 .fly-carousel-arrow:not(:disabled):hover {
-  border-color: var(--text);
+  border-color: var(--accent);
   transform: translateY(-1px);
 }
 

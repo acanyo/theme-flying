@@ -12,6 +12,10 @@ export const homeLoadMorePreflight = {
   pointer-events: none;
 }
 
+.fly-pagination-decoration[hidden] {
+  display: none !important;
+}
+
 .fly-pagination-decoration > span {
   display: block;
   min-width: 0;
@@ -45,8 +49,8 @@ export const homeLoadMorePreflight = {
   gap: 6px;
   border: 0;
   border-radius: 20px;
-  background: transparent;
-  color: var(--text);
+  background: var(--accent);
+  color: var(--accent-contrast);
   padding: 8px 20px;
   font-size: 14px;
   font-weight: 600;
@@ -57,13 +61,13 @@ export const homeLoadMorePreflight = {
 
 .fly-load-more:hover,
 .fly-load-more.fly-button--dark:hover {
-  background: var(--hover-bg-color);
-  color: var(--text);
-  opacity: 1;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  opacity: 0.86;
 }
 
 .fly-load-more:focus-visible {
-  outline: 2px solid var(--text);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 

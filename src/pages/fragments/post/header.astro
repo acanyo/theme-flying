@@ -30,30 +30,17 @@
     <div class="fly-post-page-header-info">
       <ul class="fly-post-page-meta" aria-label="文章信息">
         <li class="fly-post-page-meta-author">
-          <a
-            class="fly-post-page-meta-avatar"
-            href="/"
-            th:href="@{${post.owner?.permalink ?: post.status.permalink}}"
-            th:attr="aria-label=${post.owner?.displayName ?: site.title}"
-          >
-            <img
-              src="/assets/images/avatar.svg"
-              th:src="${post.owner?.avatar ?: #theme.assets('/images/avatar.svg')}"
-              th:alt="${post.owner?.displayName ?: site.title}"
-              alt=""
-              loading="eager"
-            />
-          </a>
+          <span class="fly-post-page-meta-avatar">
+            <th:block
+              th:replace="~{fragments/author-popover :: trigger(author=${post.owner}, fallbackPermalink=${post.status.permalink}, variant=${'avatar'})}"
+            ></th:block>
+          </span>
           <span>作者</span>
-          <a
-            class="fly-post-page-meta-author-name"
-            href="/"
-            th:href="@{${post.owner?.permalink ?: post.status.permalink}}"
-            th:text="${post.owner?.displayName ?: site.title}">作者名称</a
-          >
+          <th:block
+            th:replace="~{fragments/author-popover :: trigger(author=${post.owner}, fallbackPermalink=${post.status.permalink}, variant=${'name'})}"
+          ></th:block>
         </li>
-        <li class="fly-post-page-meta-separator" aria-hidden="true">•</li>
-        <li>
+        <li class="fly-post-page-meta-date">
           <time
             th:datetime="${post.spec.publishTime}"
             th:text="${#dates.format(post.spec.publishTime, 'yyyy年M月d日')}"
@@ -61,39 +48,47 @@
           >
         </li>
         <li class="fly-post-page-meta-separator" aria-hidden="true">•</li>
-        <li><span data-fly-reading-time>1 分钟阅读</span></li>
+        <li class="fly-post-page-meta-reading-time">
+          <span data-fly-reading-time>1 分钟阅读</span>
+        </li>
       </ul>
 
       <div class="fly-post-page-actions">
-        <button
+        <a
           class="fly-post-page-action"
-          type="button"
-          data-fly-comments-open
+          data-fly-motion-button
           th:if="${commentsEnabled}"
+          href="#fly-post-comments"
           aria-controls="fly-post-comments"
-          aria-expanded="false"
         >
           <span class="fly-iconify fly-iconify--comment" aria-hidden="true"
           ></span>
-          <span>评论</span>
+          <span class="fly-motion-label">
+            <span class="fly-motion-label-copy">评论</span>
+            <span class="fly-motion-label-copy" aria-hidden="true">评论</span>
+          </span>
           <span
             class="fly-post-comment-count"
             th:if="${post.status.commentsCount != null and post.status.commentsCount > 0}"
             th:text="${post.status.commentsCount}">0</span
           >
-        </button>
+        </a>
 
         <div class="fly-post-page-share">
           <button
             class="fly-post-page-action"
             type="button"
             data-fly-share-toggle
+            data-fly-motion-button
             aria-haspopup="menu"
             aria-expanded="false"
           >
             <span class="fly-iconify fly-iconify--share" aria-hidden="true"
             ></span>
-            <span>分享</span>
+            <span class="fly-motion-label">
+              <span class="fly-motion-label-copy">分享</span>
+              <span class="fly-motion-label-copy" aria-hidden="true">分享</span>
+            </span>
           </button>
           <div
             class="fly-post-share-menu"

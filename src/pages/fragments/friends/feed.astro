@@ -1,0 +1,94 @@
+---
+
+---
+
+<section
+  class="fly-friends-feed-section"
+  th:fragment="feed(feedPage, pluginAvailable)"
+  aria-labelledby="fly-friends-feed-title"
+>
+  <header class="fly-taxonomy-section-header fly-friends-feed-heading">
+    <div>
+      <h2 id="fly-friends-feed-title">最新动态</h2>
+      <p data-fly-friend-feed-count>
+        <th:block th:if="${feedPage == null}">等待链接管理插件提供动态</th:block
+        >
+        <th:block
+          th:unless="${feedPage == null}"
+          th:text="|已显示 ${#lists.size(feedPage.items)} 条|"
+          >已显示 0 条</th:block
+        >
+      </p>
+    </div>
+  </header>
+
+  <div
+    id="fly-friends-feed-grid"
+    class="fly-article-grid fly-latest-grid fly-article-grid--classic fly-friends-feed-grid"
+    th:if="${feedPage != null and not #lists.isEmpty(feedPage.items)}"
+    data-fly-friend-feed
+    data-fly-reveal-group
+  >
+    <th:block th:each="feedItem : ${feedPage.items}">
+      <th:block
+        th:replace="~{fragments/friends/feed-card :: card(feed=${feedItem})}"
+      ></th:block>
+    </th:block>
+  </div>
+
+  <p
+    class="fly-empty-state fly-empty-state--visible"
+    th:unless="${pluginAvailable}"
+  >
+    请先安装并启用链接管理插件。
+  </p>
+  <p
+    class="fly-empty-state fly-empty-state--visible"
+    th:if="${pluginAvailable and (feedPage == null or #lists.isEmpty(feedPage.items))}"
+  >
+    暂无公开的 RSS 订阅动态。
+  </p>
+
+  <th:block th:if="${feedPage != null and feedPage.hasNext}">
+    <th:block th:replace="~{fragments/home/load-more-preview :: decoration}"
+    ></th:block>
+    <div class="fly-load-more-wrap">
+      <button
+        class="fly-button fly-button--dark fly-load-more"
+        type="button"
+        aria-controls="fly-friends-feed-grid"
+        aria-describedby="fly-friends-feed-status"
+        data-fly-friend-feed-load
+        data-fly-motion-button
+      >
+        <span class="fly-load-more-state">
+          <span
+            class="fly-load-more-label fly-motion-label"
+            data-fly-friend-feed-load-label
+          >
+            <span class="fly-motion-label-copy">加载更多</span>
+            <span class="fly-motion-label-copy" aria-hidden="true"
+              >加载更多</span
+            >
+          </span>
+          <span class="fly-load-more-loader" aria-hidden="true">
+            <span class="fly-iconify fly-iconify--loader"></span>
+          </span>
+          <span
+            class="fly-load-more-complete"
+            data-fly-friend-feed-load-complete>全部动态已显示</span
+          >
+        </span>
+      </button>
+    </div>
+  </th:block>
+
+  <p
+    id="fly-friends-feed-status"
+    class="fly-load-status"
+    role="status"
+    aria-live="polite"
+    data-fly-friend-feed-status
+  >
+  </p>
+</section>

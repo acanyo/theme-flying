@@ -1,0 +1,39 @@
+---
+
+---
+
+<section
+  class="fly-authors-hero"
+  th:fragment="hero(singlePage)"
+  data-fly-reveal
+>
+  <div class="fly-authors-hero-copy">
+    <h1 th:text="${singlePage.spec.title}">所有作者</h1>
+    <p
+      th:if="${not #strings.isEmpty(singlePage.status.excerpt)}"
+      th:text="${singlePage.status.excerpt}"
+    >
+      作者页说明
+    </p>
+    <th:block
+      th:if="${theme.config.newsletter?.enabled == null or theme.config.newsletter.enabled}"
+      th:replace="~{fragments/newsletter-form :: form(formClass=${'fly-authors-newsletter'}, label=${'订阅更新'}, labelClass=${'fly-authors-newsletter-label'}, controlClass=${'fly-authors-newsletter-control'})}"
+    ></th:block>
+  </div>
+  <div class="fly-authors-hero-media">
+    <img
+      class="fly-authors-hero-image"
+      src="/assets/images/authors-hero.webp"
+      th:src="${#strings.isEmpty(singlePage.spec.cover) ? #theme.assets('/images/authors-hero.webp') : singlePage.spec.cover}"
+      th:alt="${singlePage.spec.title}"
+      alt=""
+      width="1600"
+      height="900"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+      width="1600"
+      height="900"
+    />
+  </div>
+</section>

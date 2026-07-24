@@ -4,7 +4,7 @@
 
 <html
   lang="zh-CN"
-  th:replace="~{fragments/layout :: page(pageTitle=|${post.spec.title} - ${site.title}|, bodyClass='fly-post', content=~{::content})}"
+  th:replace="~{fragments/layout :: page(pageTitle=|${post.spec.title} - ${site.title}|, pageKind='post', pageUrl=${#strings.startsWith(post.status.permalink, 'http') ? post.status.permalink : site.url + post.status.permalink}, bodyClass='fly-post', content=~{::content})}"
 >
   <th:block th:fragment="content" th:with="articleLayout=${'split'}">
     <th:block

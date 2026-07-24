@@ -1,0 +1,30 @@
+---
+
+---
+
+<section
+  class="fly-links-hero"
+  th:fragment="hero(title, description, cover)"
+  data-fly-reveal
+>
+  <header class="fly-links-hero-copy">
+    <h1 th:text="${title}">链接</h1>
+    <p th:text="${description}">
+      发现值得持续关注的网站与创作者，在彼此分享的内容和观点之间建立连接。
+    </p>
+  </header>
+
+  <div class="fly-links-hero-media">
+    <img
+      class="fly-links-hero-image"
+      src="/assets/images/archive-hero.webp"
+      th:src="${#strings.isEmpty(cover) ? #theme.assets('/images/archive-hero.webp') : cover}"
+      th:alt="${title}"
+      alt=""
+      width="1600"
+      height="900"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
+</section>

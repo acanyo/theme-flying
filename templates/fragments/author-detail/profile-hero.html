@@ -1,0 +1,5 @@
+<!DOCTYPE html><header class="fly-author-profile-hero" th:fragment="profile(author, posts)"> <div class="fly-author-profile-avatar"> <img src="/assets/images/avatar.svg" th:src="${author.spec.avatar ?: #theme.assets('/images/avatar.svg')}" th:alt="${author.spec.displayName ?: site.title}" alt="" width="210" height="280" loading="eager" decoding="async"> </div> <div class="fly-author-profile-copy"> <p class="fly-author-profile-meta" th:text="|${posts.total} 篇文章|">
+0 篇文章
+</p> <h1 th:text="${author.spec.displayName ?: site.title}">作者</h1> <p class="fly-author-profile-bio" th:if="${not #strings.isEmpty(author.spec.bio)}" th:text="${author.spec.bio}">
+作者简介
+</p> <th:block th:replace="~{fragments/author-contacts :: contacts(author=${author}, authorName=${author.spec.displayName ?: site.title}, email=${author.spec.email ?: ''}, variant=${'profile'})}"></th:block> </div> </header>

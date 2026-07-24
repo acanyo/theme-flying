@@ -3,18 +3,18 @@
 ---
 
 <nav
-  class="fly-category-filter"
+  class="fly-category-filter fly-horizontal-nav"
   aria-label="文章分类筛选"
   data-fly-category-filter
   th:fragment="categoryFilter(categories)"
 >
   <div
     id="fly-category-filter-rail"
-    class="fly-category-filter-rail"
+    class="fly-category-filter-rail fly-horizontal-nav-rail"
     data-fly-category-filter-rail
   >
     <button
-      class="fly-filter-chip fly-is-active"
+      class="fly-filter-chip fly-horizontal-nav-item fly-is-active"
       type="button"
       data-fly-filter="all"
       aria-pressed="true"
@@ -22,7 +22,7 @@
       全部文章
     </button>
     <button
-      class="fly-filter-chip"
+      class="fly-filter-chip fly-horizontal-nav-item"
       type="button"
       data-fly-filter="category"
       aria-pressed="false"
@@ -34,24 +34,10 @@
     </button>
   </div>
 
-  <button
-    class="fly-category-filter-arrow fly-category-filter-arrow--prev"
-    type="button"
-    aria-label="向前浏览文章分类"
-    aria-controls="fly-category-filter-rail"
-    data-fly-category-filter-prev
-    hidden
-  >
-    <span class="fly-iconify fly-iconify--chevron" aria-hidden="true"></span>
-  </button>
-  <button
-    class="fly-category-filter-arrow fly-category-filter-arrow--next"
-    type="button"
-    aria-label="向后浏览文章分类"
-    aria-controls="fly-category-filter-rail"
-    data-fly-category-filter-next
-    hidden
-  >
-    <span class="fly-iconify fly-iconify--chevron" aria-hidden="true"></span>
-  </button>
+  <th:block
+    th:replace="~{fragments/horizontal-nav-arrow :: arrow(direction=${'prev'}, label=${'向前浏览文章分类'}, railId=${'fly-category-filter-rail'}, controller=${'category-filter'}, modifierClass=${'fly-category-filter-arrow fly-category-filter-arrow--prev'})}"
+  ></th:block>
+  <th:block
+    th:replace="~{fragments/horizontal-nav-arrow :: arrow(direction=${'next'}, label=${'向后浏览文章分类'}, railId=${'fly-category-filter-rail'}, controller=${'category-filter'}, modifierClass=${'fly-category-filter-arrow fly-category-filter-arrow--next'})}"
+  ></th:block>
 </nav>

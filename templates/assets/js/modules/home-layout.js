@@ -66,7 +66,9 @@ function applyLayout(layout) {
 }
 
 function itemLeft(rail, item) {
-  return Math.max(0, item.offsetLeft - rail.offsetLeft);
+  const paddingInlineStart =
+    Number.parseFloat(window.getComputedStyle(rail).paddingLeft) || 0;
+  return Math.max(0, item.offsetLeft - rail.offsetLeft - paddingInlineStart);
 }
 
 function nearestItemIndex(rail, items) {
@@ -119,6 +121,7 @@ function createScrollAnimator(rail, { duration, easing, signal }) {
 
     const startedAt = performance.now();
     rail.classList.add("fly-is-animating");
+    void rail.offsetWidth;
 
     function animate(now) {
       const progress = Math.min(1, (now - startedAt) / duration);
@@ -218,7 +221,7 @@ function setupPointerDrag(rail, signal, onDragStart) {
 function findTopicCarouselMedia(carousel) {
   if (!carousel.classList.contains("fly-topic-block")) return null;
   return carousel.querySelector(
-    ".fly-overlay-post-card, .fly-post-image-frame",
+    ".fly-overlay-post-card, .fly-taxonomy-post-media, .fly-post-image-frame",
   );
 }
 
@@ -226,6 +229,30 @@ function syncTopicCarouselControlPosition(carousel, rail, media) {
   if (!media) return;
   const centerY = rail.offsetTop + media.offsetTop + media.offsetHeight / 2;
   carousel.style.setProperty("--fly-topic-control-center-y", `${centerY}px`);
+}
+
+function findAuthorsCarouselLayout(carousel) {
+  if (!carousel.classList.contains("fly-authors-directory-section")) {
+    return null;
+  }
+
+  const container = carousel.querySelector(".fly-authors-post-carousel");
+  const media = container?.querySelector(
+    "[data-fly-carousel-item] .fly-taxonomy-post-media",
+  );
+  return container && media ? { container, media } : null;
+}
+
+function syncAuthorsCarouselControlPosition(layout) {
+  if (!layout) return;
+  const containerBounds = layout.container.getBoundingClientRect();
+  const mediaBounds = layout.media.getBoundingClientRect();
+  const centerY =
+    mediaBounds.top - containerBounds.top + mediaBounds.height / 2;
+  layout.container.style.setProperty(
+    "--fly-authors-control-center-y",
+    `${centerY}px`,
+  );
 }
 
 function setupCarousel(carousel, signal) {
@@ -237,6 +264,7 @@ function setupCarousel(carousel, signal) {
 
   const buttonsOnly = carousel.hasAttribute("data-fly-carousel-buttons-only");
   const topicMedia = findTopicCarouselMedia(carousel);
+  const authorsLayout = findAuthorsCarouselLayout(carousel);
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const isFeaturedCarousel = carousel.classList.contains("fly-home-carousel");
   const scrollAnimator = createScrollAnimator(rail, {
@@ -270,7 +298,9 @@ function setupCarousel(carousel, signal) {
 
   function sync() {
     if (rail.scrollTop !== 0) rail.scrollTop = 0;
-    activeIndex = nearestItemIndex(rail, items);
+    if (!rail.classList.contains("fly-is-animating")) {
+      activeIndex = nearestItemIndex(rail, items);
+    }
     const maxScroll = Math.max(0, rail.scrollWidth - rail.clientWidth - 1);
     prev.disabled = rail.scrollLeft <= 1;
     next.disabled = rail.scrollLeft >= maxScroll;
@@ -328,6 +358,7 @@ function setupCarousel(carousel, signal) {
       frame = window.requestAnimationFrame(() => {
         scrollToIndex(activeIndex, { immediate: true });
         syncTopicCarouselControlPosition(carousel, rail, topicMedia);
+        syncAuthorsCarouselControlPosition(authorsLayout);
         sync();
       });
     });
@@ -336,20 +367,25 @@ function setupCarousel(carousel, signal) {
       observer.observe(carousel);
       observer.observe(topicMedia);
     }
+    if (authorsLayout) {
+      observer.observe(authorsLayout.container);
+      observer.observe(authorsLayout.media);
+    }
     signal.addEventListener("abort", () => observer.disconnect(), {
       once: true,
     });
-  } else {
-    window.addEventListener(
-      "resize",
-      () => {
-        scrollToIndex(activeIndex, { immediate: true });
-        syncTopicCarouselControlPosition(carousel, rail, topicMedia);
-        sync();
-      },
-      { signal },
-    );
   }
+
+  window.addEventListener(
+    "resize",
+    () => {
+      scrollToIndex(activeIndex, { immediate: true });
+      syncTopicCarouselControlPosition(carousel, rail, topicMedia);
+      syncAuthorsCarouselControlPosition(authorsLayout);
+      sync();
+    },
+    { signal },
+  );
 
   signal.addEventListener("abort", () => window.cancelAnimationFrame(frame), {
     once: true,
@@ -357,15 +393,22 @@ function setupCarousel(carousel, signal) {
   rail.scrollLeft = 0;
   rail.scrollTop = 0;
   syncTopicCarouselControlPosition(carousel, rail, topicMedia);
+  syncAuthorsCarouselControlPosition(authorsLayout);
   sync();
 }
 
 export function setupHomeLayout(root) {
-  if (window.flyHomeLayoutController) window.flyHomeLayoutController.abort();
+  if (window.flyHomeLayoutController) {
+    window.flyHomeLayoutController.abort();
+    delete window.flyHomeLayoutController;
+  }
+
+  const home = root.querySelector(".fly-home-shell[data-fly-home-layout]");
+  if (home) applyLayout(readConfiguredLayout(root));
+  else if (document.body) delete document.body.dataset.flyHomeLayout;
 
   const controller = new AbortController();
   window.flyHomeLayoutController = controller;
-  applyLayout(readConfiguredLayout(root));
   all("[data-fly-carousel]", root).forEach((carousel) =>
     setupCarousel(carousel, controller.signal),
   );

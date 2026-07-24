@@ -5,13 +5,13 @@
 <th:block
   th:fragment="authors(posts)"
   th:if="${posts != null and not #lists.isEmpty(posts.items)}"
-  th:with="authors=${#sets.toSet(posts.items.?[owner != null].![owner])}"
+  th:with="authors=${#sets.toSet(posts.items.?[owner != null].![owner])},authorLimit=${8}"
 >
   <section
     class="fly-authors-section"
     aria-labelledby="fly-authors-heading"
     th:if="${not #sets.isEmpty(authors)}"
-    th:attr="data-fly-author-count=${authors.size()}"
+    th:attr="data-fly-author-count=${authors.size() < authorLimit ? authors.size() : authorLimit}"
     data-fly-carousel
   >
     <header class="fly-section-heading fly-authors-heading" data-fly-reveal>
@@ -34,38 +34,51 @@
         <article
           class="fly-author-card"
           th:each="author, authorStat : ${authors}"
-          th:if="${author != null and authorStat.index < 8}"
+          th:if="${author != null and authorStat.index < authorLimit}"
           th:with="authorBackground=${#annotations.getOrDefault(author, 'fly_author_background', '')}"
           data-fly-carousel-item
         >
-          <a
-            class="fly-author-card-link"
-            href="/"
-            th:href="@{${author.permalink ?: '/'}}"
-            th:aria-label="|查看 ${author.displayName ?: site.title} 的作者主页|"
-          >
-            <span class="fly-author-portrait">
-              <img
-                src="/assets/images/avatar.svg"
-                th:src="${#strings.isEmpty(authorBackground) ? (author.avatar ?: #theme.assets('/images/avatar.svg')) : authorBackground}"
-                th:alt="${author.displayName ?: site.title}"
-                alt=""
-                loading="lazy"
-                decoding="async"
-              />
-            </span>
-            <span class="fly-author-copy">
+          <div class="fly-author-card-image">
+            <a
+              class="fly-author-card-link fly-author-card-image-link"
+              href="/"
+              th:href="@{${author.permalink ?: '/'}}"
+              th:aria-label="|查看 ${author.displayName ?: site.title} 的作者主页|"
+            >
+              <span class="fly-author-portrait">
+                <img
+                  src="/assets/images/avatar.svg"
+                  th:src="${#strings.isEmpty(authorBackground) ? (author.avatar ?: #theme.assets('/images/avatar.svg')) : authorBackground}"
+                  th:alt="${author.displayName ?: site.title}"
+                  alt=""
+                  width="600"
+                  height="800"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+            </a>
+            <th:block
+              th:replace="~{fragments/author-contacts :: contacts(author=${author}, authorName=${author.displayName ?: site.title}, email=${''}, variant=${'card'})}"
+            ></th:block>
+          </div>
+          <div class="fly-author-copy">
+            <a
+              class="fly-author-name-link"
+              href="/"
+              th:href="@{${author.permalink ?: '/'}}"
+            >
               <strong
                 class="fly-author-name"
                 th:text="${author.displayName ?: site.title}">作者</strong
               >
-              <span
-                class="fly-author-link-label"
-                th:if="${not #strings.isEmpty(author.bio)}"
-                th:text="${author.bio}">作者简介</span
-              >
-            </span>
-          </a>
+            </a>
+            <span
+              class="fly-author-link-label"
+              th:if="${not #strings.isEmpty(author.bio)}"
+              th:text="${author.bio}">作者简介</span
+            >
+          </div>
         </article>
       </div>
 

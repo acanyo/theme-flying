@@ -1,0 +1,78 @@
+---
+
+---
+
+<section
+  id="fly-links-application"
+  class="fly-links-application"
+  th:fragment="application(pluginName)"
+  th:if="${haloCommentEnabled and (theme.config.pages?.links_application_enabled == null or theme.config.pages.links_application_enabled)}"
+  th:with="applicationTitle=${theme.config.pages?.links_application_title ?: '申请友情链接'}, applicationDescription=${theme.config.pages?.links_application_description ?: '请先在自己的网站添加本站链接，再复制申请模板、填写完整信息并通过右侧评论组件提交。'}, applicationTemplate=${theme.config.pages?.links_application_template ?: '站点名称：\n站点地址：https://\n站点图标：https://\n站点简介：\n本站友链页：https://'}"
+  aria-labelledby="fly-links-application-title"
+  data-fly-link-application
+>
+  <aside class="fly-links-application-guide" data-fly-reveal>
+    <h2 id="fly-links-application-title" th:text="${applicationTitle}">
+      申请友情链接
+    </h2>
+    <p th:text="${applicationDescription}">
+      请先在自己的网站添加本站链接，再复制申请模板、填写完整信息并通过右侧评论组件提交。
+    </p>
+
+    <dl class="fly-links-site-info">
+      <div>
+        <dt>本站名称</dt>
+        <dd th:text="${site.title}">网站名称</dd>
+      </div>
+      <div>
+        <dt>本站地址</dt>
+        <dd>
+          <a
+            th:href="@{${site.url}}"
+            th:text="${site.url}"
+            target="_blank"
+            rel="noopener noreferrer">网站地址</a
+          >
+        </dd>
+      </div>
+    </dl>
+
+    <pre
+      class="fly-links-application-template"
+      data-fly-link-application-template
+      th:text="${applicationTemplate}">站点名称：
+站点地址：https://
+站点图标：https://
+站点简介：
+本站友链页：https://</pre>
+
+    <button
+      class="fly-links-application-copy"
+      type="button"
+      data-fly-link-application-copy
+    >
+      <span data-fly-link-application-label>复制申请模板</span>
+      <span aria-hidden="true">→</span>
+    </button>
+    <p
+      class="fly-links-application-status"
+      data-fly-link-application-status
+      role="status"
+      aria-live="polite"
+    >
+    </p>
+  </aside>
+
+  <div id="fly-links-application-form" class="fly-links-application-form">
+    <header class="fly-links-application-form-heading">
+      <h3>提交申请</h3>
+      <p>填写复制的模板后发布评论，站点管理员会在后台审核并添加。</p>
+    </header>
+    <div class="fly-links-application-comment">
+      <halo:comment
+        group="plugin.halo.run"
+        kind="Plugin"
+        th:attr="name=${pluginName}"></halo:comment>
+    </div>
+  </div>
+</section>

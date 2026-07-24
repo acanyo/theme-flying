@@ -7,11 +7,12 @@
   aria-label="精选分类"
   th:fragment="topics(categories, homeLayout)"
   th:if="${not #lists.isEmpty(categories)}"
+  th:with="topicLimit=${4},topicPostsLimit=${8}"
 >
   <th:block
     th:each="category, catIter : ${categories}"
-    th:if="${catIter.index < 4}"
-    th:with="categoryPosts=${postFinder.list({ page: 1, size: 8, categoryName: category.metadata.name })}"
+    th:if="${catIter.index < topicLimit}"
+    th:with="categoryPosts=${postFinder.list({ page: 1, size: topicPostsLimit, categoryName: category.metadata.name })}"
   >
     <section
       class="fly-topic-block"
@@ -35,27 +36,13 @@
             分类简介
           </p>
         </div>
-        <a
-          class="fly-topic-view-link"
-          href="/"
-          th:href="@{${category.status.permalink}}"
-          data-fly-motion-button
+        <th:block
+          th:with="targetHref=${category.status.permalink}, label=|查看${category.spec.displayName}|"
         >
-          <span class="fly-motion-label">
-            <span
-              class="fly-motion-label-copy"
-              th:text="|查看${category.spec.displayName}|">查看分类</span
-            >
-            <span
-              class="fly-motion-label-copy"
-              aria-hidden="true"
-              th:text="|查看${category.spec.displayName}|">查看分类</span
-            >
-          </span>
-          <span class="fly-topic-arrow fly-motion-icon" aria-hidden="true"
-            >→</span
-          >
-        </a>
+          <th:block
+            th:replace="~{fragments/section-view-link :: link(targetHref=${targetHref}, label=${label})}"
+          ></th:block>
+        </th:block>
       </header>
 
       <div
@@ -66,15 +53,9 @@
       >
         <th:block th:each="post : ${categoryPosts.items}">
           <div class="fly-topic-slide" data-fly-carousel-item>
-            <th:block th:if="${homeLayout == 'grid'}">
-              <th:block
-                th:replace="~{fragments/home/post-card-overlay :: card(${post})}"
-              ></th:block>
-            </th:block>
-            <th:block th:unless="${homeLayout == 'grid'}">
-              <th:block th:replace="~{fragments/post-card :: card(${post})}"
-              ></th:block>
-            </th:block>
+            <th:block
+              th:replace="~{fragments/article-card :: card(post=${post}, variant=${homeLayout == 'grid' ? 'overlay' : (homeLayout == 'carousel' ? 'carousel' : (homeLayout == 'slider' ? 'slider' : 'standard'))})}"
+            ></th:block>
           </div>
         </th:block>
       </div>

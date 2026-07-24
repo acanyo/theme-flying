@@ -1,0 +1,36 @@
+---
+
+---
+
+<section class="fly-archive-posts" th:fragment="feed(archives, feedId)">
+  <h2 class="fly-sr-only">全部文章</h2>
+  <div
+    class="fly-article-grid fly-article-grid--classic fly-archive-grid"
+    data-fly-feed
+    th:id="${feedId}"
+  >
+    <th:block th:if="${archives != null}">
+      <th:block th:each="archiveYear : ${archives.items}">
+        <th:block th:each="archiveMonth : ${archiveYear.months}">
+          <th:block th:each="post : ${archiveMonth.posts}">
+            <th:block
+              th:replace="~{fragments/article-card :: card(post=${post}, variant=${'classic'})}"
+            ></th:block>
+          </th:block>
+        </th:block>
+      </th:block>
+    </th:block>
+  </div>
+
+  <p
+    class="fly-empty-state fly-empty-state--visible"
+    data-fly-feed-empty
+    th:if="${archives == null or #lists.isEmpty(archives.items)}"
+  >
+    暂无文章。
+  </p>
+
+  <th:block
+    th:replace="~{fragments/article-feed-controls :: controls(result=${archives}, feedId=${feedId}, autoLoad=${true})}"
+  ></th:block>
+</section>

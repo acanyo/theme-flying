@@ -248,8 +248,8 @@ export const contentPreflight = {
 }
 
 .fly-pagination a {
-  background: var(--text);
-  color: var(--page);
+  background: var(--accent);
+  color: var(--accent-contrast);
 }
 
 .fly-pagination span {

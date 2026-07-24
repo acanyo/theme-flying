@@ -1,0 +1,26 @@
+<!DOCTYPE html><script type="application/ld+json" th:fragment="site" th:inline="javascript" th:with="siteDescription=${#strings.isEmpty(site.seo.description) ? (#strings.isEmpty(site.subtitle) ? site.title : site.subtitle) : site.seo.description}, siteLogo=${#strings.isEmpty(site.logo) ? null : (#strings.startsWith(site.logo, 'http') ? site.logo : site.url + site.logo)}">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": /*[[${site.url + '#website'}]]*/ "https://example.com#website",
+        "url": /*[[${site.url}]]*/ "https://example.com",
+        "name": /*[[${site.title}]]*/ "站点名称",
+        "description": /*[[${siteDescription}]]*/ "站点说明",
+        "inLanguage": "zh-CN",
+        "publisher": {
+          "@id": /*[[${site.url + '#organization'}]]*/ "https://example.com#organization"
+        }
+      },
+      {
+        "@type": "Organization",
+        "@id": /*[[${site.url + '#organization'}]]*/ "https://example.com#organization",
+        "name": /*[[${site.title}]]*/ "站点名称",
+        "url": /*[[${site.url}]]*/ "https://example.com",
+        "description": /*[[${siteDescription}]]*/ "站点说明",
+        "logo": /*[[${siteLogo}]]*/ "https://example.com/logo.png"
+      }
+    ]
+  }
+</script>

@@ -17,75 +17,7 @@
     <h2 id="fly-latest-heading">最新文章</h2>
   </header>
 
-  <div
-    id="fly-latest-feed"
-    class="fly-article-grid fly-latest-grid"
-    data-fly-feed
-    data-fly-reveal-group
-  >
-    <th:block th:each="post : ${posts.items}">
-      <th:block th:if="${homeLayout == 'grid'}">
-        <th:block
-          th:replace="~{fragments/home/post-card-overlay :: card(${post})}"
-        ></th:block>
-      </th:block>
-      <th:block th:unless="${homeLayout == 'grid'}">
-        <th:block th:replace="~{fragments/post-card :: card(${post})}"
-        ></th:block>
-      </th:block>
-    </th:block>
-  </div>
-
-  <p class="fly-empty-state" data-fly-feed-empty hidden>
-    当前分类暂无文章，试试其他分类。
-  </p>
-
   <th:block
-    th:replace="~{fragments/home/load-more-preview :: decoration}"
-    th:if="${posts.hasNext()}"></th:block>
-
-  <div class="fly-load-more-wrap" th:if="${posts.hasNext()}">
-    <a
-      class="fly-button fly-button--dark fly-load-more"
-      href="/"
-      th:href="${posts.nextUrl}"
-      aria-controls="fly-latest-feed"
-      aria-describedby="fly-load-status"
-      data-fly-end-text="全部文章已显示"
-      data-fly-load-more
-      data-fly-motion-button
-      data-fly-no-swup
-    >
-      <span class="fly-load-more-state">
-        <span class="fly-load-more-label fly-motion-label" data-fly-load-label>
-          <span class="fly-motion-label-copy" data-fly-load-label-copy
-            >加载更多</span
-          >
-          <span
-            class="fly-motion-label-copy"
-            data-fly-load-label-copy
-            aria-hidden="true">加载更多</span
-          >
-        </span>
-        <span
-          class="fly-load-more-loader"
-          data-fly-load-loader
-          aria-hidden="true"
-        >
-          <span class="fly-iconify fly-iconify--loader"></span>
-        </span>
-        <span class="fly-load-more-complete" data-fly-load-complete
-          >全部文章已显示</span
-        >
-      </span>
-    </a>
-  </div>
-  <p
-    id="fly-load-status"
-    class="fly-load-status"
-    role="status"
-    aria-live="polite"
-    data-fly-load-status
-  >
-  </p>
+    th:replace="~{fragments/article-feed :: feed(result=${posts}, cardVariant=${homeLayout == 'grid' ? 'overlay' : 'standard'}, feedId=${'fly-latest-feed'}, emptyText=${'当前分类暂无文章，试试其他分类。'}, emptyHidden=${true})}"
+  ></th:block>
 </section>

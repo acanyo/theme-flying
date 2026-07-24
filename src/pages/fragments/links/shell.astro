@@ -1,0 +1,55 @@
+---
+
+---
+
+<div
+  class="fly-content-shell fly-links-page-shell"
+  th:fragment="shell(links, simpleGroups, groups, activeGroupName, title, description, pluginName, cover)"
+>
+  <article class="fly-links-page-content">
+    <th:block
+      th:replace="~{fragments/links/hero :: hero(title=${title}, description=${description}, cover=${cover})}"
+    ></th:block>
+    <th:block
+      th:replace="~{fragments/links/group-filter :: filter(simpleGroups=${simpleGroups}, activeGroupName=${activeGroupName})}"
+    ></th:block>
+
+    <div
+      class="fly-links-groups"
+      th:if="${#strings.isEmpty(activeGroupName) and not #lists.isEmpty(groups)}"
+    >
+      <th:block th:each="groupItem : ${groups}">
+        <th:block
+          th:replace="~{fragments/links/group-section :: group(title=${groupItem.spec.displayName}, linkItems=${groupItem.links}, groupId=${groupItem.metadata.name})}"
+        ></th:block>
+      </th:block>
+    </div>
+
+    <th:block th:unless="${#strings.isEmpty(activeGroupName)}">
+      <th:block
+        th:with="activeGroups=${groups.?[metadata.name == #vars.activeGroupName]}"
+      >
+        <th:block
+          th:with="activeGroup=${#lists.isEmpty(activeGroups) ? null : activeGroups[0]}"
+        >
+          <div class="fly-links-groups">
+            <th:block
+              th:replace="~{fragments/links/group-section :: group(title=${activeGroup?.spec?.displayName}, linkItems=${links}, groupId=${activeGroupName})}"
+            ></th:block>
+          </div>
+        </th:block>
+      </th:block>
+    </th:block>
+
+    <p
+      class="fly-links-empty"
+      th:if="${#strings.isEmpty(activeGroupName) ? #lists.isEmpty(groups) : #lists.isEmpty(links)}"
+    >
+      暂无友情链接。
+    </p>
+
+    <th:block
+      th:replace="~{fragments/links/application :: application(pluginName=${pluginName})}"
+    ></th:block>
+  </article>
+</div>

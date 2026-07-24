@@ -4,8 +4,8 @@ export const componentShortcuts = {
     "inline-flex min-w-0 items-center text-[var(--text)] font-sans font-500 leading-none",
   "fly-button":
     "inline-flex min-h-10 items-center justify-center rounded-full border-0 px-5.5 text-sm font-800",
-  "fly-button--primary": "bg-[var(--accent)] text-white",
-  "fly-button--dark": "bg-[var(--text)] text-[var(--page)]",
+  "fly-button--primary": "bg-[var(--accent)] text-[var(--accent-contrast)]",
+  "fly-button--dark": "bg-[var(--accent)] text-[var(--accent-contrast)]",
   "fly-icon-button": "h-10 w-10 border-0 bg-transparent text-[var(--text)]",
   "fly-featured-grid": "min-w-0",
   "fly-featured-card":

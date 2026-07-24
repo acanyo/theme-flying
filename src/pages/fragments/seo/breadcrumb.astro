@@ -1,0 +1,63 @@
+---
+
+---
+
+<script
+  is:inline
+  type="application/ld+json"
+  th:fragment="twoLevel(name, url)"
+  th:inline="javascript"
+>
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": /*[[${url + '#breadcrumb'}]]*/ "https://example.com/page#breadcrumb",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": /*[[${site.title}]]*/ "首页",
+        "item": /*[[${site.url}]]*/ "https://example.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": /*[[${name}]]*/ "当前页面",
+        "item": /*[[${url}]]*/ "https://example.com/page"
+      }
+    ]
+  }
+</script>
+
+<script
+  is:inline
+  type="application/ld+json"
+  th:fragment="threeLevel(parentName, parentUrl, name, url)"
+  th:inline="javascript"
+>
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": /*[[${url + '#breadcrumb'}]]*/ "https://example.com/page#breadcrumb",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": /*[[${site.title}]]*/ "首页",
+        "item": /*[[${site.url}]]*/ "https://example.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": /*[[${parentName}]]*/ "上级页面",
+        "item": /*[[${parentUrl}]]*/ "https://example.com/parent"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": /*[[${name}]]*/ "当前页面",
+        "item": /*[[${url}]]*/ "https://example.com/page"
+      }
+    ]
+  }
+</script>

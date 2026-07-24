@@ -21,14 +21,18 @@ export const tokenPreflight = {
   --faint: #757575;
   --mute: #b2b2b2;
   --line: hsla(0, 0%, 50%, 0.2);
-  --hover-bg-color: #ededed;
   --fly-primary-color: #000000;
-  --fly-secondary-color: #000000;
+  --fly-secondary-color: #ededed;
   --fly-primary-color-dark: #ffffff;
   --fly-secondary-color-dark: #ffffff;
   --accent: var(--fly-primary-color);
   --accent-strong: var(--fly-primary-color);
   --accent-secondary: var(--fly-secondary-color);
+  --accent-soft: color-mix(in srgb, var(--accent) 14%, var(--page));
+  --accent-soft-strong: color-mix(in srgb, var(--accent) 22%, var(--page));
+  --accent-secondary-soft: var(--accent-secondary);
+  --accent-contrast: #ffffff;
+  --hover-bg-color: var(--accent-secondary-soft);
   --shadow-soft: 0 18px 38px -16px rgba(0, 0, 0, 0.35);
   --navbar-height: 58px;
   color-scheme: light;
@@ -42,13 +46,17 @@ export const tokenPreflight = {
   --faint: #a2a2a2;
   --mute: #747474;
   --line: #2a3038;
-  --hover-bg-color: #252a31;
   --navigation-overlay: #212121;
   --accent: var(--fly-primary-color-dark);
   --accent-strong: var(--fly-primary-color-dark);
   --accent-secondary: var(--fly-secondary-color-dark);
+  --accent-secondary-soft: color-mix(in srgb, var(--accent-secondary) 10%, var(--page));
   --shadow-soft: 0 18px 48px rgba(0, 0, 0, 0.34);
   color-scheme: dark;
+}
+
+@supports (color: contrast-color(red)) {
+  :root { --accent-contrast: contrast-color(var(--accent)); }
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
