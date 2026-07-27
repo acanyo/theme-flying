@@ -1,5 +1,9 @@
 # build output
 dist/
+
+# local research and design references
+/docs/
+
 # generated types
 .astro/
 
