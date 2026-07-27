@@ -16,7 +16,7 @@
       作者页说明
     </p>
     <th:block
-      th:if="${theme.config.newsletter?.enabled == null or theme.config.newsletter.enabled}"
+      th:if="${newsletterEnabled}"
       th:replace="~{fragments/newsletter-form :: form(formClass=${'fly-authors-newsletter'}, label=${'订阅更新'}, labelClass=${'fly-authors-newsletter-label'}, controlClass=${'fly-authors-newsletter-control'})}"
     ></th:block>
   </div>

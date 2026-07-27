@@ -107,7 +107,10 @@
     />
   </head>
 
-  <body th:class="${bodyClass}">
+  <body
+    th:class="${bodyClass}"
+    th:with="newsletterEnabled=${theme.config.basic?.newsletter_enabled == null ? (theme.config.newsletter?.enabled == null or theme.config.newsletter.enabled) : theme.config.basic.newsletter_enabled}"
+  >
     <th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block>
     <th:block th:replace="~{fragments/mobile-header :: mobileHeader}"
     ></th:block>

@@ -5,7 +5,7 @@ metadata:
 spec:
   forms:
     - group: basic
-      label: 基础设置
+      label: 基础信息
       formSchema:
         - $formkit: toggle
           name: home_layout
@@ -72,6 +72,11 @@ spec:
                   value: topics
                 - label: 友情链接
                   value: friends
+        - $formkit: switch
+          name: newsletter_enabled
+          label: 启用订阅表单
+          value: true
+          help: 需要安装并启用提供邮件订阅接口的插件。
         - $formkit: text
           name: icp_beian
           label: ICP备案号
@@ -122,14 +127,18 @@ spec:
             labelField: spec.displayName
             valueField: metadata.name
             fieldSelectorKey: metadata.name
-    - group: pages
-      label: 主题页面
+    - group: auth
+      label: 认证界面
       formSchema:
         - $formkit: attachment
-          name: auth_cover
+          name: cover
           label: 认证页面背景图
           value: ""
           help: 用于登录、注册、找回密码等认证页面左侧的背景视觉图；未选择时使用主题内置默认图片。
+
+    - group: pages
+      label: 主题页面
+      formSchema:
         - $formkit: text
           name: categories_title
           label: 分类页标题
@@ -246,15 +255,6 @@ spec:
           label: RSS 朋友圈页封面图
           value: ""
           help: 未选择时优先使用对应 Halo 单页封面，其次使用主题内置默认图片。
-
-    - group: newsletter
-      label: 订阅设置
-      formSchema:
-        - $formkit: switch
-          name: enabled
-          label: 启用订阅表单
-          value: true
-          help: 需要安装并启用提供邮件订阅接口的插件。
     - group: navigation
       label: 导航
       formSchema:

@@ -1,3 +1,3 @@
-<!DOCTYPE html><section class="fly-newsletter-panel" th:fragment="newsletter" th:if="${theme.config.newsletter?.enabled == null or theme.config.newsletter.enabled}" data-fly-reveal> <div> <h2 th:text="|订阅 ${site.title}|">订阅站点</h2> <p th:if="${not #strings.isEmpty(site.subtitle)}" th:text="${site.subtitle}">
+<!DOCTYPE html><section class="fly-newsletter-panel" th:fragment="newsletter" th:if="${newsletterEnabled}" data-fly-reveal> <div> <h2 th:text="|订阅 ${site.title}|">订阅站点</h2> <p th:if="${not #strings.isEmpty(site.subtitle)}" th:text="${site.subtitle}">
 站点副标题
 </p> </div> <th:block th:replace="~{fragments/newsletter-form :: form(formClass=${'fly-newsletter-form'}, label=${''}, labelClass=${''}, controlClass=${'fly-newsletter-form-control'})}"></th:block> </section>

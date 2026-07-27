@@ -12,7 +12,7 @@
     <p th:text="${description}">页面简介</p>
 
     <th:block
-      th:if="${theme.config.newsletter?.enabled == null or theme.config.newsletter.enabled}"
+      th:if="${newsletterEnabled}"
       th:replace="~{fragments/newsletter-form :: form(formClass=${'fly-taxonomy-newsletter'}, label=${'订阅更新'}, labelClass=${'fly-taxonomy-newsletter-label'}, controlClass=${'fly-taxonomy-newsletter-control'})}"
     ></th:block>
   </div>

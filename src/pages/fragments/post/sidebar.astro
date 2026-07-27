@@ -12,7 +12,7 @@
 
     <section
       class="fly-post-sidebar-newsletter"
-      th:if="${theme.config.newsletter?.enabled == null or theme.config.newsletter.enabled}"
+      th:if="${newsletterEnabled}"
       aria-label="订阅邮件"
     >
       <h2>订阅邮件</h2>

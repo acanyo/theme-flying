@@ -5,7 +5,7 @@
 <section
   class="fly-post-newsletter-panel"
   th:fragment="newsletter"
-  th:if="${theme.config.newsletter?.enabled == null or theme.config.newsletter.enabled}"
+  th:if="${newsletterEnabled}"
   data-fly-post-newsletter
 >
   <div>
