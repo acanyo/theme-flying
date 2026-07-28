@@ -44,6 +44,10 @@ export const homeFeedPreflight = {
   gap: var(--content-padding-x);
 }
 
+.fly-latest-section .fly-post-excerpt {
+  display: none;
+}
+
 .fly-empty-state {
   margin: 28px 0 0;
   border: 1px dashed var(--line);

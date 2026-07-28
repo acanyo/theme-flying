@@ -1,0 +1,202 @@
+<!doctype html>
+<html
+  lang="zh-CN"
+  class="fly-error-root"
+  data-theme="light"
+  data-color-scheme="light"
+  th:with="primaryColor=${theme.config.style?.primary_color ?: '#000000'},
+           secondaryColor=${theme.config.style?.secondary_color ?: '#ededed'},
+           statusCode=${error.status ?: 500},
+           errorGroup=${statusCode >= 500 ? 'server' : (statusCode >= 400 ? 'client' : 'unknown')},
+           isRetryable=${statusCode >= 500 or statusCode == 408 or statusCode == 429},
+           errorHeading=${statusCode == 400 ? '这个请求无法处理' :
+             (statusCode == 401 ? '登录后才能继续' :
+             (statusCode == 403 ? '这里暂时不对外开放' :
+             (statusCode == 404 ? '这一页找不到了' :
+             (statusCode == 408 ? '页面加载超时' :
+             (statusCode == 429 ? '操作有点频繁' :
+             (statusCode == 500 ? '页面暂时无法加载' :
+             (statusCode == 502 ? '内容服务没有响应' :
+             (statusCode == 503 ? '网站正在短暂维护' :
+             (statusCode == 504 ? '内容加载超时' :
+             (statusCode >= 500 ? '页面暂时无法加载' :
+             (statusCode >= 400 ? '当前页面无法访问' : #strings.defaultString(error.title, '页面没有正常打开'))))))))))))},
+           errorDescription=${statusCode == 400 ? '请检查访问地址或提交的内容，然后再试一次。' :
+             (statusCode == 401 ? '完成登录后，就可以继续访问这个页面。' :
+             (statusCode == 403 ? '当前账号没有访问权限，可以返回首页继续浏览。' :
+             (statusCode == 404 ? '链接可能已经失效，内容被移动，或者地址输入有误。' :
+             (statusCode == 408 ? '网络响应时间过长，请稍后重新尝试。' :
+             (statusCode == 429 ? '请求过于频繁，请稍等片刻再继续。' :
+             (statusCode == 500 ? '服务没有完成这次请求，请稍后重新尝试。' :
+             (statusCode == 502 ? '暂时无法取得所需内容，请稍后重新加载。' :
+             (statusCode == 503 ? '服务暂时不可用，请稍后再回来。' :
+             (statusCode == 504 ? '等待内容服务响应超时，请稍后重新加载。' :
+             (statusCode >= 500 ? '服务遇到了临时问题，请稍后重新尝试。' : '请返回首页，或退回上一页继续浏览。'))))))))))}"
+  th:style="|--fly-primary-color:${primaryColor};--fly-secondary-color:${secondaryColor};--fly-primary-color-dark:${primaryColor == '#000000' ? '#ffffff' : primaryColor};--fly-secondary-color-dark:${secondaryColor == '#000000' ? '#ffffff' : secondaryColor}|"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title th:text="|${statusCode} · ${errorHeading} - ${site.title}|">
+      500 · 页面暂时无法加载
+    </title>
+    <script is:inline>
+      (function applyErrorPageTheme() {
+        var storedTheme = null;
+        try {
+          storedTheme = localStorage.getItem("flying-theme");
+        } catch (error) {
+          storedTheme = null;
+        }
+
+        var preference =
+          storedTheme === "dark" ||
+          storedTheme === "light" ||
+          storedTheme === "system"
+            ? storedTheme
+            : "system";
+        var prefersDark =
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme =
+          preference === "system"
+            ? prefersDark
+              ? "dark"
+              : "light"
+            : preference;
+        document.documentElement.dataset.colorScheme = preference;
+      })();
+    </script>
+    <link
+      rel="stylesheet"
+      href="/assets/css/uno.css?v=1.0.221"
+      th:href="@{/assets/css/uno.css(v=${theme.spec.version},fly='1.0.221')}"
+    />
+  </head>
+  <body
+    class="fly-error-page"
+    th:attr="data-fly-error-status=${statusCode},data-fly-error-group=${errorGroup}"
+  >
+    <div class="fly-error-page-shell">
+      <main class="fly-error-card">
+        <section class="fly-error-copy" aria-labelledby="fly-error-heading">
+          <p class="fly-error-eyebrow">
+            <span>错误代码</span>
+            <strong th:text="${statusCode}">500</strong>
+          </p>
+          <h1 id="fly-error-heading" th:text="${errorHeading}">
+            页面暂时无法加载
+          </h1>
+          <p class="fly-error-description" th:text="${errorDescription}">
+            服务没有完成这次请求，请稍后重新尝试。
+          </p>
+
+          <div class="fly-error-actions">
+            <a
+              class="fly-error-action fly-error-action--primary"
+              href="/"
+              th:href="@{/}"
+            >
+              <span>返回首页</span>
+              <svg
+                aria-hidden="true"
+                width="18"
+                height="18"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <path
+                  d="M4.16675 10H15.8334M15.8334 10L11.0001 5.16667M15.8334 10L11.0001 14.8333"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+              </svg>
+            </a>
+            <button
+              class="fly-error-action fly-error-action--secondary"
+              type="button"
+              data-fly-error-reload
+              th:if="${isRetryable}"
+            >
+              重新加载
+            </button>
+            <button
+              class="fly-error-action fly-error-action--secondary"
+              type="button"
+              data-fly-error-back
+              th:unless="${isRetryable}"
+            >
+              返回上一页
+            </button>
+          </div>
+
+          <p class="fly-error-footnote">你可以返回首页继续浏览其他内容。</p>
+        </section>
+
+        <div class="fly-error-visual" aria-hidden="true">
+          <p class="fly-error-visual-code" th:text="${statusCode}">500</p>
+
+          <div class="fly-error-card-stack">
+            <span class="fly-error-ghost-card fly-error-ghost-card--back"
+            ></span>
+            <article class="fly-error-ghost-card fly-error-ghost-card--front">
+              <div class="fly-error-ghost-cover">
+                <svg viewBox="0 0 48 48" fill="none">
+                  <path
+                    d="M11 34.5 19 26l6 6 5-5 7 7.5"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"></path>
+                  <circle cx="18" cy="18" r="3" fill="currentColor"></circle>
+                  <rect
+                    x="7"
+                    y="9"
+                    width="34"
+                    height="30"
+                    rx="7"
+                    stroke="currentColor"
+                    stroke-width="2"></rect>
+                </svg>
+              </div>
+              <div class="fly-error-ghost-body">
+                <span class="fly-error-ghost-line fly-error-ghost-line--title"
+                ></span>
+                <span class="fly-error-ghost-line"></span>
+                <span class="fly-error-ghost-line fly-error-ghost-line--short"
+                ></span>
+                <span class="fly-error-ghost-meta">
+                  <i></i>
+                  <i></i>
+                </span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script is:inline>
+      (function setupErrorPageActions() {
+        var reloadButton = document.querySelector("[data-fly-error-reload]");
+        if (reloadButton) {
+          reloadButton.addEventListener("click", function () {
+            window.location.reload();
+          });
+        }
+
+        var backButton = document.querySelector("[data-fly-error-back]");
+        if (!backButton) return;
+        if (window.history.length <= 1) {
+          backButton.hidden = true;
+          return;
+        }
+        backButton.addEventListener("click", function () {
+          window.history.back();
+        });
+      })();
+    </script>
+  </body>
+</html>

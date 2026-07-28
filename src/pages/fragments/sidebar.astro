@@ -12,9 +12,6 @@
            icpBeian=${theme.config.basic?.icp_beian ?: ''},
            gonganBeian=${theme.config.basic?.gongan_beian ?: ''},
            gonganBeianUrl=${theme.config.basic?.gongan_beian_url ?: ''},
-           copyrightText=${theme.config.basic?.footer_copyright ?: ''},
-           showCopyright=${theme.config.basic?.show_copyright == null or theme.config.basic.show_copyright},
-           showPoweredBy=${theme.config.basic?.show_powered_by == null or theme.config.basic.show_powered_by},
            mainMenu=${#strings.isEmpty(mainMenuName) ? null : menuFinder.getByName(mainMenuName)},
            featureMenu=${#strings.isEmpty(featureMenuName) ? null : menuFinder.getByName(featureMenuName)},
            selectedTags=${#lists.isEmpty(tagNames) ? null : tagFinder.getByNames(tagNames)}"
@@ -25,7 +22,7 @@
     aria-label="站点导航"
   >
     <th:block
-      th:replace="~{fragments/sidebar-content :: content(mainMenu=${mainMenu}, featureMenu=${featureMenu}, footerLinks=${footerLinks}, selectedTags=${selectedTags}, socialLinks=${socialLinks}, icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl}, copyrightText=${copyrightText}, showCopyright=${showCopyright}, showPoweredBy=${showPoweredBy})}"
+      th:replace="~{fragments/sidebar-content :: content(mainMenu=${mainMenu}, featureMenu=${featureMenu}, footerLinks=${footerLinks}, selectedTags=${selectedTags}, socialLinks=${socialLinks}, icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl})}"
     ></th:block>
   </aside>
 
@@ -64,7 +61,7 @@
       </header>
 
       <th:block
-        th:replace="~{fragments/sidebar-content :: content(mainMenu=${mainMenu}, featureMenu=${featureMenu}, footerLinks=${footerLinks}, selectedTags=${selectedTags}, socialLinks=${socialLinks}, icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl}, copyrightText=${copyrightText}, showCopyright=${showCopyright}, showPoweredBy=${showPoweredBy})}"
+        th:replace="~{fragments/sidebar-content :: content(mainMenu=${mainMenu}, featureMenu=${featureMenu}, footerLinks=${footerLinks}, selectedTags=${selectedTags}, socialLinks=${socialLinks}, icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl})}"
       ></th:block>
     </aside>
   </div>

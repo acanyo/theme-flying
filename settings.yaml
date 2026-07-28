@@ -95,19 +95,6 @@ spec:
           value: ""
           placeholder: 请输入完整查询链接
           help: 留空时跳转公安部互联网安全管理服务平台查询页。
-        - $formkit: text
-          name: footer_copyright
-          label: 页脚版权文字
-          value: ""
-          placeholder: 留空时使用“站点名称版权所有”
-        - $formkit: switch
-          name: show_copyright
-          label: 显示页脚版权
-          value: true
-        - $formkit: switch
-          name: show_powered_by
-          label: 显示 Halo 与主题信息
-          value: true
         - $formkit: select
           name: home_link_group
           label: 首页友情链接分组

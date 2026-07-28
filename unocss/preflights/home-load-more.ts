@@ -5,7 +5,7 @@ export const homeLoadMorePreflight = {
   width: 100%;
   min-width: 0;
   height: 60px;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(16px, 2.1vw, 30px);
   margin: 30px 0 0;
   overflow: hidden;
@@ -17,7 +17,7 @@ export const homeLoadMorePreflight = {
 }
 
 .fly-pagination-decoration > span {
-  display: block;
+  display: none;
   min-width: 0;
   height: 60px;
   border-radius: 14px 14px 0 0;
@@ -26,6 +26,10 @@ export const homeLoadMorePreflight = {
     transparent 0%,
     color-mix(in srgb, var(--page-alt) 92%, var(--text) 4%) 100%
   );
+}
+
+.fly-pagination-decoration > span:first-child {
+  display: block;
 }
 
 .fly-load-more-wrap {
@@ -155,24 +159,49 @@ export const homeLoadMorePreflight = {
   to { transform: rotate(360deg); }
 }
 
-@media (max-width: 1279px) {
+@media (min-width: 540px) {
+  .fly-pagination-decoration {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fly-pagination-decoration > span:nth-child(2) {
+    display: block;
+  }
+}
+
+@media (min-width: 992px) {
   .fly-pagination-decoration {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .fly-pagination-decoration > span:nth-child(n + 4) {
-    display: none;
+  .fly-pagination-decoration > span:nth-child(3) {
+    display: block;
+  }
+}
+
+@media (min-width: 1200px) {
+  .fly-pagination-decoration {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .fly-pagination-decoration > span:nth-child(4) {
+    display: block;
+  }
+}
+
+@media (min-width: 1575px) {
+  .fly-pagination-decoration {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .fly-pagination-decoration > span:nth-child(5) {
+    display: block;
   }
 }
 
 @media (max-width: 639px) {
   .fly-pagination-decoration {
-    grid-template-columns: minmax(0, 1fr);
     margin-top: 24px;
-  }
-
-  .fly-pagination-decoration > span:nth-child(n + 2) {
-    display: none;
   }
 
   .fly-load-more-wrap {

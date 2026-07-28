@@ -27,7 +27,4 @@
 请按照页面提示完成账户验证与安全操作。
 </p> </header> <div class="fly-auth-native"> <th:block th:replace="${body}"></th:block> </div> </div> <footer class="fly-auth-footer" th:with="icpBeian=${theme.config.basic?.icp_beian ?: ''},
                    gonganBeian=${theme.config.basic?.gongan_beian ?: ''},
-                   gonganBeianUrl=${theme.config.basic?.gongan_beian_url ?: ''},
-                   copyrightText=${theme.config.basic?.footer_copyright ?: ''},
-                   showCopyright=${theme.config.basic?.show_copyright == null or theme.config.basic.show_copyright},
-                   showPoweredBy=${theme.config.basic?.show_powered_by == null or theme.config.basic.show_powered_by}"> <th:block th:replace="~{fragments/footer-content :: identity(icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl}, copyrightText=${copyrightText}, showCopyright=${showCopyright}, showPoweredBy=${showPoweredBy})}"></th:block> </footer> </section> </main> <script type="module" src="/assets/js/modules/auth-page.js?v=1.0.8" th:src="@{/assets/js/modules/auth-page.js(v=${theme.spec.version},fly='1.0.8')}"></script> </body> </html>
+                   gonganBeianUrl=${theme.config.basic?.gongan_beian_url ?: ''}"> <th:block th:replace="~{fragments/footer-content :: identity(icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl})}"></th:block> </footer> </section> </main> <script type="module" src="/assets/js/modules/auth-page.js?v=1.0.8" th:src="@{/assets/js/modules/auth-page.js(v=${theme.spec.version},fly='1.0.8')}"></script> </body> </html>

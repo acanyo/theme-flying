@@ -35,7 +35,7 @@ export const searchWidgetPreflight = {
 
 :root[data-color-scheme="dark"] {
   --halo-search-widget-base-bg-color: var(--page-alt);
-  --halo-search-widget-primary-color: var(--accent-strong);
+  --halo-search-widget-primary-color: color-mix(in srgb, var(--accent-strong) 36%, var(--page-alt));
   --halo-search-widget-muted-color: var(--faint);
   --halo-search-widget-content-color: var(--text);
   --halo-search-widget-modal-bg-color: var(--page);

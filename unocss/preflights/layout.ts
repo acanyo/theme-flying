@@ -216,11 +216,25 @@ kbd {
   .fly-navbar-search {
     display: grid;
     width: 36px;
+    height: 36px;
     max-width: none;
     flex: 0 0 36px;
     margin-left: auto;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text);
     padding: 0;
     place-items: center;
+  }
+
+  .fly-navbar-search:hover {
+    background: var(--page-alt);
+  }
+
+  .fly-navbar-search .fly-search-icon {
+    width: 20px;
+    height: 20px;
+    color: currentColor;
   }
 
   .fly-search-placeholder {

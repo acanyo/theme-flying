@@ -275,7 +275,7 @@ export const articleCardPreflight = {
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto minmax(0, 1fr) auto auto;
   column-gap: 8px;
   padding: 12px 8px 16px 56px;
 }
@@ -294,18 +294,19 @@ export const articleCardPreflight = {
 
 .fly-post-card--carousel .fly-post-meta,
 .fly-home-shell[data-fly-home-layout="carousel"] .fly-post-card .fly-post-meta {
-  grid-column: 2;
-  grid-row: 4;
+  grid-column: 1 / -1;
+  grid-row: 5;
   align-self: center;
+  justify-content: flex-start;
   flex-wrap: nowrap;
-  margin-top: 12px;
+  margin-top: 6px;
   padding-top: 0;
 }
 
 .fly-post-card--carousel .fly-post-tags,
 .fly-home-shell[data-fly-home-layout="carousel"] .fly-post-card .fly-post-tags {
   min-width: 0;
-  grid-column: 1;
+  grid-column: 1 / -1;
   grid-row: 4;
   align-self: center;
   flex-wrap: nowrap;
@@ -321,6 +322,13 @@ export const articleCardPreflight = {
 .fly-post-card--carousel .fly-author-pill:has(.fly-author-popover-trigger),
 .fly-home-shell[data-fly-home-layout="carousel"] .fly-post-card .fly-author-pill:has(.fly-author-popover-trigger) {
   display: contents;
+}
+
+.fly-post-card--carousel .fly-author-pill:not(:has(.fly-author-popover-trigger)),
+.fly-home-shell[data-fly-home-layout="carousel"] .fly-post-card .fly-author-pill:not(:has(.fly-author-popover-trigger)),
+.fly-post-card--carousel .fly-post-meta .fly-dot,
+.fly-home-shell[data-fly-home-layout="carousel"] .fly-post-card .fly-post-meta .fly-dot {
+  display: none;
 }
 
 .fly-post-card--carousel .fly-author-popover-trigger,

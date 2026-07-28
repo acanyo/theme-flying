@@ -8,6 +8,7 @@ import { authPagePreflight } from "./auth-page";
 import { cardPreflight } from "./cards";
 import { commentWidgetPreflight } from "./comment-widget";
 import { contentPreflight } from "./content";
+import { errorPagePreflight } from "./error-page";
 import { footerPreflight } from "./footer";
 import { friendsPagePreflight } from "./friends-page";
 import { homeAuthorsPreflight } from "./home-authors";
@@ -43,6 +44,7 @@ export const preflights = [
   basePreflight,
   iconPreflight,
   layoutPreflight,
+  errorPagePreflight,
   linksPagePreflight,
   momentsPagePreflight,
   photosPagePreflight,

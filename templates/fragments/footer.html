@@ -1,7 +1,4 @@
 <!DOCTYPE html><footer class="fly-site-footer" th:fragment="footer" th:with="footerLinks=${theme.config.navigation?.footer_links},
            icpBeian=${theme.config.basic?.icp_beian ?: ''},
            gonganBeian=${theme.config.basic?.gongan_beian ?: ''},
-           gonganBeianUrl=${theme.config.basic?.gongan_beian_url ?: ''},
-           copyrightText=${theme.config.basic?.footer_copyright ?: ''},
-           showCopyright=${theme.config.basic?.show_copyright == null or theme.config.basic.show_copyright},
-           showPoweredBy=${theme.config.basic?.show_powered_by == null or theme.config.basic.show_powered_by}"> <div class="fly-footer-shell"> <th:block th:replace="~{fragments/footer-content :: identity(icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl}, copyrightText=${copyrightText}, showCopyright=${showCopyright}, showPoweredBy=${showPoweredBy})}"></th:block> <th:block th:replace="~{fragments/footer-content :: navigation(footerLinks=${footerLinks}, placement='content')}"></th:block> </div> <halo:footer></halo:footer> </footer>
+           gonganBeianUrl=${theme.config.basic?.gongan_beian_url ?: ''}"> <div class="fly-footer-shell"> <th:block th:replace="~{fragments/footer-content :: identity(icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl})}"></th:block> <th:block th:replace="~{fragments/footer-content :: navigation(footerLinks=${footerLinks}, placement='content')}"></th:block> </div> <halo:footer></halo:footer> </footer>

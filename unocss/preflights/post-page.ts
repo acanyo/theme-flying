@@ -73,9 +73,9 @@ body.fly-post {
 .fly-post-page-tags a:hover,
 .fly-post-page-tags a:focus-visible { background: color-mix(in srgb, var(--hover-bg-color) 92%, var(--text)); }
 
-.fly-post-page-header--split { max-width: 1300px; align-items: stretch; flex-direction: row; gap: 40px; }
+.fly-post-page-header--split { max-width: 1300px; align-items: center; flex-direction: row; gap: 40px; }
 .fly-post-page-header--split > .fly-post-page-media { width: auto; max-width: 50%; flex: 1 1 0%; margin-inline: 0; }
-.fly-post-page-header--split > .fly-post-page-media figure { height: 100%; aspect-ratio: auto; }
+.fly-post-page-header--split > .fly-post-page-media figure { height: auto; aspect-ratio: 16 / 9; }
 .fly-post-page-header--split .fly-post-page-header-copy { max-width: 600px; flex: 1 1 0%; justify-content: center; padding: 30px 0; }
 .fly-post-page-header--split :is(.fly-post-page-title, .fly-post-page-excerpt, .fly-post-page-tags) { width: 100%; }
 .fly-post-page-header--split .fly-post-page-tags { margin-bottom: 4px; }
@@ -218,6 +218,7 @@ body.fly-post {
 .fly-post-page-media { position: relative; width: 100%; max-width: 1300px; margin-inline: auto; }
 .fly-post-page-media figure { position: relative; width: 100%; aspect-ratio: 21 / 9; margin: 0; border-radius: 14px; background: var(--page-alt); overflow: hidden; }
 .fly-post-page-media :is(img, video, .fly-post-cover-media) { width: 100%; height: 100%; object-fit: cover; }
+.fly-post-page-header--split .fly-post-page-cover { object-fit: contain; }
 
 .fly-post-page-grid {
   display: grid;
@@ -388,7 +389,7 @@ body.fly-post {
 @media (max-width: 991px) {
   .fly-post-page-header--split { flex-direction: column; gap: 40px; }
   .fly-post-page-header--split > .fly-post-page-media { width: 100%; max-width: 100%; flex: none; margin-inline: auto; }
-  .fly-post-page-header--split > .fly-post-page-media figure { height: auto; aspect-ratio: 21 / 9; }
+  .fly-post-page-header--split > .fly-post-page-media figure { height: auto; aspect-ratio: 16 / 9; }
   .fly-post-page-header--split .fly-post-page-header-copy { width: 100%; max-width: 100%; flex: none; padding: 0; }
   .fly-post-page-grid { display: flex; max-width: 1100px; flex-direction: column; gap: 0; }
   .fly-post-page-aside { order: 1; width: 100%; max-width: 700px; margin: 0 auto; }

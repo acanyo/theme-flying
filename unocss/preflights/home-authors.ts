@@ -187,12 +187,14 @@ export const homeAuthorsPreflight = {
 
 .fly-author-card-contacts {
   position: absolute;
-  right: 20px;
-  bottom: 20px;
-  left: 20px;
+  right: 12px;
+  bottom: 16px;
+  left: 12px;
   z-index: 3;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
   gap: 8px;
   margin: 0;
   padding: 0;
@@ -201,11 +203,6 @@ export const homeAuthorsPreflight = {
 
 .fly-author-card-contacts > li {
   display: flex;
-  transition: transform 250ms ease;
-}
-
-.fly-author-card-contacts > li:hover {
-  transform: scale(1.1);
 }
 
 .fly-author-card-contacts .fly-author-contact-action {
@@ -223,71 +220,17 @@ export const homeAuthorsPreflight = {
   background: rgba(5, 5, 5, 0.7);
   box-shadow: none;
   color: #ffffff;
-  opacity: 0;
   padding: 6px;
   font-family: inherit;
   font-size: 14px;
   font-weight: 500;
   line-height: 1.3;
-  transform: translateY(6px);
-  transition:
-    opacity 220ms ease,
-    transform 500ms cubic-bezier(0.22, 1.4, 0.36, 1),
-    background-color 160ms ease;
+  transition: background-color 160ms ease;
+  white-space: nowrap;
 }
 
-.fly-author-card:hover .fly-author-card-contacts .fly-author-contact-action,
-.fly-author-card:focus-within
-  .fly-author-card-contacts
-  .fly-author-contact-action {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.fly-author-card:hover
-  .fly-author-card-contacts
-  > li:nth-child(2)
-  .fly-author-contact-action,
-.fly-author-card:focus-within
-  .fly-author-card-contacts
-  > li:nth-child(2)
-  .fly-author-contact-action {
-  transition-delay: 100ms;
-}
-
-.fly-author-card:hover
-  .fly-author-card-contacts
-  > li:nth-child(3)
-  .fly-author-contact-action,
-.fly-author-card:focus-within
-  .fly-author-card-contacts
-  > li:nth-child(3)
-  .fly-author-contact-action {
-  transition-delay: 200ms;
-}
-
-.fly-author-card:hover
-  .fly-author-card-contacts
-  > li:nth-child(4)
-  .fly-author-contact-action,
-.fly-author-card:focus-within
-  .fly-author-card-contacts
-  > li:nth-child(4)
-  .fly-author-contact-action {
-  transition-delay: 300ms;
-}
-
-.fly-author-card:hover
-  .fly-author-card-contacts
-  .fly-author-contact-action:hover,
-.fly-author-card:focus-within
-  .fly-author-card-contacts
-  .fly-author-contact-action:hover,
-.fly-author-card:focus-within
-  .fly-author-card-contacts
-  .fly-author-contact-action:focus-visible {
-  opacity: 1;
-  transform: translateY(0);
+.fly-author-card-contacts .fly-author-contact-action:hover {
+  background: rgba(5, 5, 5, 0.84);
 }
 
 .fly-author-card-contacts .fly-author-contact-action:focus-visible {
@@ -376,35 +319,8 @@ export const homeAuthorsPreflight = {
   }
 
   .fly-author-portrait,
-  .fly-author-portrait img,
-  .fly-author-card-contacts > li,
-  .fly-author-card-contacts .fly-author-contact-action {
+  .fly-author-portrait img {
     transition-duration: 0.01ms;
-  }
-
-  .fly-author-card-contacts .fly-author-contact-action,
-  .fly-author-card:hover
-    .fly-author-card-contacts
-    .fly-author-contact-action,
-  .fly-author-card:focus-within
-    .fly-author-card-contacts
-    .fly-author-contact-action,
-  .fly-author-card:hover
-    .fly-author-card-contacts
-    .fly-author-contact-action:hover,
-  .fly-author-card:focus-within
-    .fly-author-card-contacts
-    .fly-author-contact-action:hover,
-  .fly-author-card:focus-within
-    .fly-author-card-contacts
-    .fly-author-contact-action:focus-visible {
-    transform: none;
-    transition-delay: 0s;
-  }
-
-  .fly-author-card-contacts > li,
-  .fly-author-card-contacts > li:hover {
-    transform: none;
   }
 }
 `,
