@@ -2,6 +2,12 @@
 
 Fly 是一款面向 Halo 2 的中文博客主题，视觉设计受 Aspect 启发。主题以内容阅读为核心，提供响应式侧栏、三种首页布局、深浅色模式，以及文章、作者、分类、标签、归档、瞬间、图库和友情链接等完整页面。
 
+**演示站**：[https://www.xhhao.com/](https://www.xhhao.com/)
+
+**文档**：[https://docs.lik.cc/](https://docs.lik.cc/)
+
+**QQ 交流群**：[![QQ群](https://www.xhhao.com/upload/iShot_2025-03-03_16.03.00.png)](https://www.xhhao.com/upload/iShot_2025-03-03_16.03.00.png)
+
 ## 主题预览
 
 ### 桌面端首页
