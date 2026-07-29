@@ -1,17 +1,16 @@
 ---
-
+import PageLayout from "../components/layout/PageLayout.astro";
 ---
 
-<!doctype html>
-<html
-  lang="zh-CN"
-  th:replace="~{fragments/layout :: page(pageTitle=|${theme.config.pages?.photos_title ?: '图库'} - ${site.title}|, pageKind='photos', pageUrl=${site.url + '/photos'}, bodyClass='fly-photos-page', content=~{::content})}"
+<PageLayout
+  pageTitle="|${theme.config.pages?.photos_title ?: '图库'} - ${site.title}|"
+  pageKind="photos"
+  pageUrl="${site.url + '/photos'}"
+  bodyClass="fly-photos-page"
 >
-  <th:block th:fragment="content">
+  <th:block>
     <th:block
       th:replace="~{fragments/photos/shell :: shell(photos=${photos}, groups=${groups}, photoUrl=${photoUrl}, title=${theme.config.pages?.photos_title ?: '图库'}, description=${theme.config.pages?.photos_description ?: '用影像收藏沿途所见，记录值得反复回看的片刻。'}, cover=${theme.config.pages?.photos_cover})}"
     ></th:block>
   </th:block>
-
-
-</html>
+</PageLayout>

@@ -1,17 +1,19 @@
 ---
+import PageLayout from "../components/layout/PageLayout.astro";
 
 ---
 
-<html
-  lang="zh-CN"
-  th:replace="~{fragments/layout :: page(pageTitle=|${category.spec.displayName} - ${site.title}|, pageKind='category-detail', pageUrl=${#strings.startsWith(category.status.permalink, 'http') ? category.status.permalink : site.url + category.status.permalink}, bodyClass='fly-taxonomy fly-taxonomy--detail', content=~{::content})}"
+<PageLayout
+  pageTitle="|${category.spec.displayName} - ${site.title}|"
+  pageKind="category-detail"
+  pageUrl="${#strings.startsWith(category.status.permalink, 'http') ? category.status.permalink : site.url + category.status.permalink}"
+  bodyClass="fly-taxonomy fly-taxonomy--detail"
 >
   <th:block
-    th:fragment="content"
     th:with="allCategories=${categoryFinder.listAll()}"
   >
     <th:block
       th:replace="~{fragments/taxonomy/archive :: archive(term=${category}, posts=${posts}, terms=${allCategories}, kind='category')}"
     ></th:block>
   </th:block>
-</html>
+</PageLayout>

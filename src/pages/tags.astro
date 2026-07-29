@@ -1,13 +1,15 @@
 ---
+import PageLayout from "../components/layout/PageLayout.astro";
 
 ---
 
-<html
-  lang="zh-CN"
-  th:replace="~{fragments/layout :: page(pageTitle=|${theme.config.pages?.tags_title ?: '标签'} - ${site.title}|, pageKind='tags', pageUrl=${site.url + site.routes.tagsUri}, bodyClass='fly-taxonomy fly-taxonomy--collection', content=~{::content})}"
+<PageLayout
+  pageTitle="|${theme.config.pages?.tags_title ?: '标签'} - ${site.title}|"
+  pageKind="tags"
+  pageUrl="${site.url + site.routes.tagsUri}"
+  bodyClass="fly-taxonomy fly-taxonomy--collection"
 >
   <th:block
-    th:fragment="content"
     th:with="tagNames=${theme.config.navigation?.tags},
              selectedTags=${#lists.isEmpty(tagNames) ? null : tagFinder.getByNames(tagNames)}"
   >
@@ -15,4 +17,4 @@
       th:replace="~{fragments/taxonomy/collection :: collection(title=${theme.config.pages?.tags_title ?: '标签'}, description=${theme.config.pages?.tags_description ?: '使用标签轻松探索丰富多样的内容。查找特定主题、追踪内容趋势，并在广泛的主题与文章中发现新的兴趣，让每一次浏览都更快抵达你真正关心的方向。'}, cover=${theme.config.pages?.tags_cover}, terms=${selectedTags}, kind='tag')}"
     ></th:block>
   </th:block>
-</html>
+</PageLayout>

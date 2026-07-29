@@ -1,12 +1,15 @@
 ---
+import PageLayout from "../components/layout/PageLayout.astro";
 
 ---
 
-<html
-  lang="zh-CN"
-  th:replace="~{fragments/layout :: page(pageTitle=|${theme.config.pages?.archives_title ?: '文章归档'} - ${site.title}|, pageKind='archive', pageUrl=${site.url + site.routes.archivesUri}, bodyClass='fly-archive', content=~{::content})}"
+<PageLayout
+  pageTitle="|${theme.config.pages?.archives_title ?: '文章归档'} - ${site.title}|"
+  pageKind="archive"
+  pageUrl="${site.url + site.routes.archivesUri}"
+  bodyClass="fly-archive"
 >
-  <th:block th:fragment="content">
+  <th:block>
     <div class="fly-content-shell">
       <div
         class="fly-archive-page"
@@ -59,4 +62,4 @@
     </div>
   </th:block>
 
-</html>
+</PageLayout>

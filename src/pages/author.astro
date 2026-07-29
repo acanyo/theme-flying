@@ -1,13 +1,14 @@
 ---
-
+import PageLayout from "../components/layout/PageLayout.astro";
 ---
 
-<!doctype html>
-<html
-  lang="zh-CN"
-  th:replace="~{fragments/layout :: page(pageTitle=|${author.spec.displayName ?: site.title} - ${site.title}|, pageKind='author-detail', pageUrl=${site.url + '/authors/' + author.metadata.name}, bodyClass='fly-author fly-author--detail', content=~{::content})}"
+<PageLayout
+  pageTitle="|${author.spec.displayName ?: site.title} - ${site.title}|"
+  pageKind="author-detail"
+  pageUrl="${site.url + '/authors/' + author.metadata.name}"
+  bodyClass="fly-author fly-author--detail"
 >
-  <th:block th:fragment="content">
+  <th:block>
     <div class="fly-content-shell">
       <div class="fly-author-detail" data-fly-feed-region>
         <th:block
@@ -19,6 +20,4 @@
       </div>
     </div>
   </th:block>
-
-
-</html>
+</PageLayout>

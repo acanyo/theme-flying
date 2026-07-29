@@ -1,1 +1,77 @@
-<!DOCTYPE html><html lang="zh-CN" th:replace="~{fragments/layout :: page(pageTitle=|${singlePage.spec.title} - ${site.title}|, pageKind='single-page', pageUrl=${#strings.startsWith(singlePage.status.permalink, 'http') ? singlePage.status.permalink : site.url + singlePage.status.permalink}, bodyClass='fly-page', content=~{::content})}"> <th:block th:fragment="content"> <th:block th:replace="~{fragments/single-page/shell :: shell(singlePage=${singlePage}, pageLayout='cover')}"></th:block> </th:block> </html>
+<!DOCTYPE html><html lang="zh-CN" data-theme="light" data-color-scheme="light" th:with="primaryColor=${theme.config.style?.primary_color ?: '#000000'}, secondaryColor=${theme.config.style?.secondary_color ?: '#ededed'}" th:style="|--fly-primary-color:${primaryColor};--fly-secondary-color:${secondaryColor};--fly-primary-color-dark:${primaryColor == '#000000' ? '#ffffff' : primaryColor};--fly-secondary-color-dark:${secondaryColor == '#000000' ? '#ffffff' : secondaryColor}|"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><script th:inline="javascript">
+      (function markDocumentEnter() {
+        var motionQuery = window.matchMedia
+          ? window.matchMedia("(prefers-reduced-motion: no-preference)")
+          : null;
+        if (motionQuery && !motionQuery.matches) return;
+
+        var root = document.documentElement;
+        var fallbackTimer = 0;
+        var cleared = false;
+
+        function clearDocumentEnter() {
+          if (cleared) return;
+          cleared = true;
+          window.clearTimeout(fallbackTimer);
+          document.removeEventListener("animationend", onDocumentEnterEnd);
+          root.classList.remove("fly-document-enter");
+        }
+
+        function onDocumentEnterEnd(event) {
+          if (
+            event.target &&
+            event.target.id === "swup" &&
+            event.animationName === "fly-content-fade-in"
+          ) {
+            clearDocumentEnter();
+          }
+        }
+
+        root.classList.add("fly-document-enter");
+        document.addEventListener("animationend", onDocumentEnterEnd);
+        document.addEventListener(
+          "DOMContentLoaded",
+          function () {
+            if (!cleared)
+              fallbackTimer = window.setTimeout(clearDocumentEnter, 500);
+          },
+          { once: true },
+        );
+      })();
+
+      (function () {
+        window.flyThemeConfig = window.flyThemeConfig || {};
+        window.flyThemeConfig.advanced = window.flyThemeConfig.advanced || {};
+        window.flyThemeConfig.advanced.enable_swup = /*[[${theme.config.advanced?.enable_swup == null ? true : theme.config.advanced.enable_swup}]]*/ true;
+        window.flyThemeConfig.advanced.swup_timeout = /*[[${theme.config.advanced?.swup_timeout ?: 5000}]]*/ 5000;
+        var configuredHomeLayout =
+          /*[[${theme.config.basic?.home_layout ?: 'grid'}]]*/ "grid";
+        document.documentElement.dataset.flyHomeLayout =
+          configuredHomeLayout === "slider" ||
+          configuredHomeLayout === "carousel"
+            ? configuredHomeLayout
+            : "grid";
+
+        var stored = null;
+        try {
+          stored = localStorage.getItem("flying-theme");
+        } catch (error) {
+          stored = null;
+        }
+        var prefersDark =
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var themePreference =
+          stored === "dark" || stored === "light" || stored === "system"
+            ? stored
+            : "system";
+        var resolvedTheme =
+          themePreference === "system"
+            ? prefersDark
+              ? "dark"
+              : "light"
+            : themePreference;
+        document.documentElement.dataset.theme = resolvedTheme;
+        document.documentElement.dataset.colorScheme = themePreference;
+      })();
+    </script><title th:text="|${singlePage.spec.title} - ${site.title}|"></title><template th:replace="~{fragments/seo/facade :: head(pageKind=${'single-page'}, pageTitle=|${singlePage.spec.title} - ${site.title}|, pageUrl=${#strings.startsWith(singlePage.status.permalink, 'http') ? singlePage.status.permalink : site.url + singlePage.status.permalink})}"></template><link rel="stylesheet" href="/assets/css/uno.css?v=1.0.205" th:href="@{/assets/css/uno.css(v=${theme.spec.version},fly='1.0.205')}"><link rel="stylesheet" href="/assets/css/style.css?v=1.0.116" th:href="@{/assets/css/style.css(v=${theme.spec.version},fly='1.0.116')}"></head> <body class="fly-page" th:with="newsletterEnabled=${theme.config.basic?.newsletter_enabled == null ? (theme.config.newsletter?.enabled == null or theme.config.newsletter.enabled) : theme.config.basic.newsletter_enabled}"> <th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block> <th:block th:replace="~{fragments/mobile-header :: mobileHeader}"></th:block> <div id="swup" class="fly-site-main"> <template data-fly-route-body-class="fly-page"></template> <th:block th:replace="~{fragments/seo/facade :: body(pageKind=${'single-page'}, pageTitle=|${singlePage.spec.title} - ${site.title}|, pageUrl=${#strings.startsWith(singlePage.status.permalink, 'http') ? singlePage.status.permalink : site.url + singlePage.status.permalink})}"></th:block> <main id="main-content" tabindex="-1">  <th:block> <th:block th:replace="~{fragments/single-page/shell :: shell(singlePage=${singlePage}, pageLayout='cover')}"></th:block> </th:block>  </main> <th:block th:replace="~{fragments/footer :: footer}"></th:block> </div> <th:block th:replace="~{fragments/author-popover :: popover}"></th:block> <script type="module" src="/assets/js/script.js?v=1.0.167" th:src="@{/assets/js/script.js(v=${theme.spec.version},fly='1.0.167')}"></script> </body> </html>

@@ -7,6 +7,7 @@ const requiredFiles = [
   "settings.yaml",
   "uno.config.ts",
   "astro.config.mjs",
+  "src/components/layout/PageLayout.astro",
   "src/components/theme/ThemeSwitcher.vue",
   "src/components/theme/theme-preference.ts",
   "src/pages/archives.astro",
@@ -19,7 +20,6 @@ const requiredFiles = [
   "src/pages/post.astro",
   "src/pages/tag.astro",
   "src/pages/tags.astro",
-  "src/pages/fragments/layout.astro",
   "src/pages/fragments/author-popover.astro",
   "src/pages/fragments/post-cover-media.astro",
   "src/pages/fragments/mobile-header.astro",
@@ -47,7 +47,6 @@ const requiredFiles = [
   "templates/post.html",
   "templates/tag.html",
   "templates/tags.html",
-  "templates/fragments/layout.html",
   "templates/fragments/author-popover.html",
   "templates/fragments/post-cover-media.html",
   "templates/fragments/mobile-header.html",
@@ -163,7 +162,7 @@ for (const file of templateFiles) {
 }
 
 const astroSourceFiles = requiredFiles.filter(
-  (file) => file.startsWith("src/pages/") && file.endsWith(".astro"),
+  (file) => file.startsWith("src/") && file.endsWith(".astro"),
 );
 
 for (const file of astroSourceFiles) {

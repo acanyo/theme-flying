@@ -1,14 +1,17 @@
 ---
+import PageLayout from "../components/layout/PageLayout.astro";
 
 ---
 
-<html
-  lang="zh-CN"
-  th:replace="~{fragments/layout :: page(pageTitle=|${theme.config.pages?.categories_title ?: '分类'} - ${site.title}|, pageKind='categories', pageUrl=${site.url + site.routes.categoriesUri}, bodyClass='fly-taxonomy fly-taxonomy--collection', content=~{::content})}"
+<PageLayout
+  pageTitle="|${theme.config.pages?.categories_title ?: '分类'} - ${site.title}|"
+  pageKind="categories"
+  pageUrl="${site.url + site.routes.categoriesUri}"
+  bodyClass="fly-taxonomy fly-taxonomy--collection"
 >
-  <th:block th:fragment="content">
+  <th:block>
     <th:block
       th:replace="~{fragments/taxonomy/collection :: collection(title=${theme.config.pages?.categories_title ?: '分类'}, description=${theme.config.pages?.categories_description ?: '按主题浏览内容，发现感兴趣的文章。'}, cover=${theme.config.pages?.categories_cover}, terms=${categoryFinder.listAll()}, kind='category')}"
     ></th:block>
   </th:block>
-</html>
+</PageLayout>
