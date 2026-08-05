@@ -350,6 +350,50 @@ export const authPagePreflight = {
   accent-color: var(--accent);
 }
 
+.fly-auth-page
+  .fly-auth-native
+  .form-item-compact:has(> #agreedToTerms) {
+  display: grid;
+  min-height: 0 !important;
+  grid-template-columns: 16px minmax(0, 1fr);
+  align-items: start;
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 8px;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.fly-auth-page .fly-auth-native #agreedToTerms {
+  margin-top: 2px;
+}
+
+.fly-auth-page
+  .fly-auth-native
+  .form-item-compact
+  > label[for="agreedToTerms"] {
+  min-width: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--muted) !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  line-height: 20px !important;
+}
+
+.fly-auth-page
+  .fly-auth-native
+  .form-item-compact
+  > label[for="agreedToTerms"]
+  a {
+  color: var(--text) !important;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--text) 34%, transparent);
+  text-underline-offset: 2px;
+}
+
 .fly-auth-page .fly-auth-native altcha-widget {
   display: block;
   width: 100%;

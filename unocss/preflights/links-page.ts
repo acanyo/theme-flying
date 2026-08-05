@@ -199,7 +199,7 @@ body[data-fly-link-application-open="true"] {
 
 .fly-links-application-dialog {
   width: min(560px, calc(100vw - 48px));
-  height: auto;
+  height: fit-content !important;
   max-width: none;
   max-height: calc(100dvh - 48px);
   margin: auto;
@@ -215,14 +215,13 @@ body[data-fly-link-application-open="true"] {
   transform: translateY(10px);
   transition:
     width 200ms ease,
-    height 200ms ease,
     opacity 160ms ease,
     transform 160ms ease;
 }
 
 .fly-links-application-dialog[data-fly-step="form"] {
   width: min(860px, calc(100vw - 48px));
-  height: min(760px, calc(100dvh - 48px));
+  height: fit-content !important;
 }
 
 .fly-links-application-dialog[open][data-fly-open="true"] {
@@ -236,16 +235,12 @@ body[data-fly-link-application-open="true"] {
 }
 
 .fly-links-application-shell {
-  display: grid;
+  display: flex;
+  height: auto !important;
   max-height: calc(100dvh - 48px);
   min-height: 0;
-  grid-template-rows: auto minmax(0, 1fr);
+  flex-direction: column;
   background: var(--page);
-}
-
-.fly-links-application-dialog[data-fly-step="form"]
-  .fly-links-application-shell {
-  height: 100%;
 }
 
 .fly-links-application-header {
@@ -379,6 +374,7 @@ body[data-fly-link-application-open="true"] {
 }
 
 .fly-links-application-body {
+  flex: 0 1 auto;
   min-width: 0;
   min-height: 0;
   overflow-y: auto;
@@ -1071,7 +1067,6 @@ body[data-fly-link-application-open="true"] {
 
   .fly-links-application-dialog[data-fly-step="form"] {
     width: 100%;
-    height: calc(100dvh - 12px);
   }
 
   .fly-links-application-dialog[open][data-fly-open="true"] {

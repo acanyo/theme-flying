@@ -1,0 +1,59 @@
+name: Bug 反馈
+description: 提交 Fly 主题的 Bug 反馈
+labels: [bug]
+body:
+  - type: markdown
+    id: preface
+    attributes:
+      value: |
+        感谢你花时间填写错误报告！提交前请先确认问题可以稳定复现，并尽量提供完整的环境信息和截图。
+  - type: markdown
+    id: environment
+    attributes:
+      value: "## 环境信息"
+  - type: input
+    id: theme-version
+    validations:
+      required: true
+    attributes:
+      label: "Fly 主题版本"
+      description: "可以在 Halo 管理后台的主题详情中找到。"
+      placeholder: "例如：1.0.0"
+  - type: input
+    id: halo-version
+    validations:
+      required: true
+    attributes:
+      label: "Halo 版本"
+      description: "可以在 Halo 管理后台的关于页面中找到。"
+      placeholder: "例如：2.22.8"
+  - type: input
+    id: site-url
+    attributes:
+      label: "在线站点地址"
+      description: "如果方便，请提供可以复现问题的站点地址，便于定位问题。"
+      placeholder: "例如：https://example.com"
+    validations:
+      required: false
+  - type: markdown
+    id: details
+    attributes:
+      value: "## 详细信息"
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: "发生了什么？"
+      description: "请描述复现步骤、实际结果和预期结果。"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: "相关日志"
+      description: "请粘贴相关日志，并注意移除密码、令牌等敏感信息。"
+      render: shell
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: "补充信息"
+      description: "可以在这里提供截图、录屏或其他有助于定位问题的信息。"

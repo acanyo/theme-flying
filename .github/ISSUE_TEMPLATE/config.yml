@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Fly 主题文档
+    url: https://docs.lik.cc/
+    about: 使用和配置问题请先查阅主题文档。
+  - name: Fly 主题演示站
+    url: https://www.xhhao.com/
+    about: 查看主题的实际展示效果。

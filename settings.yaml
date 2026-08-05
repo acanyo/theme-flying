@@ -218,40 +218,45 @@ spec:
           name: links_application_form_description
           label: 申请区说明
           value: 请先在自己的网站添加本站链接，再填写站点资料提交申请。
-        - $formkit: text
-          name: links_application_site_title
-          label: 本站友链名称
-          value: ""
-          placeholder: 留空时使用系统站点名称
-          help: 对方添加友情链接时使用的站点名称。
-        - $formkit: url
-          name: links_application_site_url
-          label: 本站友链地址
-          value: ""
-          placeholder: 留空时使用系统站点地址
-          help: 建议填写对外可访问的正式地址，避免开发环境显示 localhost。
-        - $formkit: textarea
-          name: links_application_site_description
-          label: 本站友链简介
-          value: ""
-          placeholder: 留空时使用系统 SEO 描述或站点副标题
-          help: 建议填写一至两句话，便于对方直接添加本站友链。
-        - $formkit: attachment
-          name: links_application_site_logo
-          label: 本站友链 Logo
-          value: ""
-          help: 留空时使用系统站点 Logo，建议使用清晰的正方形图片。
-        - $formkit: url
-          name: links_application_site_rss
-          label: 本站 RSS 地址
-          value: ""
-          placeholder: 留空时使用 本站友链地址/rss.xml
-        - $formkit: email
-          name: links_application_site_email
-          label: 友链联系邮箱
-          value: ""
-          placeholder: name@example.com
-          help: 可选，留空时不在申请须知中显示邮箱。
+        - $formkit: group
+          name: links_application_site
+          label: 本站友链资料
+          help: 集中维护供其他站长复制使用的本站信息；留空字段会自动读取系统站点资料。
+          children:
+            - $formkit: text
+              name: title
+              label: 本站友链名称
+              value: ""
+              placeholder: 留空时使用系统站点名称
+              help: 对方添加友情链接时使用的站点名称。
+            - $formkit: url
+              name: url
+              label: 本站友链地址
+              value: ""
+              placeholder: 留空时使用系统站点地址
+              help: 建议填写对外可访问的正式地址，避免开发环境显示 localhost。
+            - $formkit: textarea
+              name: description
+              label: 本站友链简介
+              value: ""
+              placeholder: 留空时使用系统 SEO 描述或站点副标题
+              help: 建议填写一至两句话，便于对方直接添加本站友链。
+            - $formkit: attachment
+              name: logo
+              label: 本站友链 Logo
+              value: ""
+              help: 留空时使用系统站点 Logo，建议使用清晰的正方形图片。
+            - $formkit: url
+              name: rss
+              label: 本站 RSS 地址
+              value: ""
+              placeholder: 留空时使用 本站友链地址/rss.xml
+            - $formkit: email
+              name: email
+              label: 友链联系邮箱
+              value: ""
+              placeholder: name@example.com
+              help: 可选，留空时不在申请须知中显示邮箱。
         - $formkit: text
           name: friends_title
           label: RSS 朋友圈页标题
