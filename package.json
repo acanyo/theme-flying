@@ -7,7 +7,9 @@
     "dev": "nodemon --config nodemon.json --exec \"node scripts/build-theme.mjs\"",
     "lint": "prettier --check \"src/**/*.{astro,vue,ts}\" \"public/assets/js/**/*.js\" \"public/assets/css/style.css\" \"unocss/**/*.ts\" \"scripts/**/*.mjs\" astro.config.mjs uno.config.ts package.json theme.yaml settings.yaml annotation-setting.yaml",
     "typecheck": "astro check",
-    "build": "node scripts/build-theme.mjs",
+    "build": "node scripts/build-release.mjs",
+    "build:templates": "node scripts/build-theme.mjs",
+    "package": "node scripts/package-theme.mjs",
     "astro": "astro",
     "format": "prettier --write ."
   },
@@ -26,8 +28,9 @@
     ]
   },
   "devDependencies": {
-    "@astrojs/vue": "^6.0.1",
     "@astrojs/check": "^0.9.6",
+    "@astrojs/vue": "^6.0.1",
+    "@halo-dev/theme-package-cli": "1.1.1",
     "@iconify-json/mingcute": "^1.2.7",
     "@iconify-json/ph": "^1.2.2",
     "@unocss/cli": "^66.7.4",
