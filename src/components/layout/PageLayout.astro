@@ -103,8 +103,8 @@ const seoBodyFragment = `~{fragments/seo/facade :: body(pageKind=\${'${pageKind}
     <template th:replace={seoHeadFragment}></template>
     <link
       rel="stylesheet"
-      href="/assets/css/uno.css?v=1.0.205"
-      th:href="@{/assets/css/uno.css(v=${theme.spec.version},fly='1.0.205')}"
+      href="/assets/css/uno.css?v=1.0.206"
+      th:href="@{/assets/css/uno.css(v=${theme.spec.version},fly='1.0.206')}"
     />
     <link
       rel="stylesheet"
@@ -130,12 +130,13 @@ const seoBodyFragment = `~{fragments/seo/facade :: body(pageKind=\${'${pageKind}
       <th:block th:replace="~{fragments/footer :: footer}"></th:block>
     </div>
     <th:block th:replace="~{fragments/author-popover :: popover}"></th:block>
+    <th:block th:replace="~{fragments/back-to-top :: backToTop}"></th:block>
 
     <script
       is:inline
       type="module"
-      src="/assets/js/script.js?v=1.0.167"
-      th:src="@{/assets/js/script.js(v=${theme.spec.version},fly='1.0.167')}"
+      src="/assets/js/script.js?v=1.0.168"
+      th:src="@{/assets/js/script.js(v=${theme.spec.version},fly='1.0.168')}"
     ></script>
   </body>
 </html>

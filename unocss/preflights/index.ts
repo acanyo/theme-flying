@@ -1,4 +1,5 @@
 import { basePreflight } from "./base";
+import { backToTopPreflight } from "./back-to-top";
 import { articleCardPreflight } from "./article-card";
 import { archivePreflight } from "./archive";
 import { authorPagePreflight } from "./author-page";
@@ -42,6 +43,7 @@ import { transitionPreflight } from "./transitions";
 export const preflights = [
   tokenPreflight,
   basePreflight,
+  backToTopPreflight,
   iconPreflight,
   layoutPreflight,
   errorPagePreflight,

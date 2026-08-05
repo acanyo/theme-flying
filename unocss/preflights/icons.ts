@@ -46,6 +46,10 @@ export const iconPreflight = {
   --fly-icon-url: url("../icons/iconify/copyright.svg?fly=1.0.116");
 }
 
+.fly-iconify--copy {
+  --fly-icon-url: url("../icons/iconify/copy.svg?fly=1.0.118");
+}
+
 .fly-iconify--facebook {
   --fly-icon-url: url("../icons/iconify/facebook.svg?fly=1.0.116");
 }

@@ -550,10 +550,11 @@ body[data-fly-menu-open="true"] .fly-navigation-panel {
 
   .fly-site-sidebar--static .fly-sidebar-socials {
     display: flex;
+    flex: 0 0 auto;
     flex-direction: column;
     gap: 16px;
     margin: auto var(--fly-responsive-gutter) 0 12px;
-    padding: 16px 16px 0;
+    padding: 16px 16px max(24px, env(safe-area-inset-bottom));
   }
 
   body[data-fly-sidebar-collapsed="true"] .fly-site-sidebar--static {

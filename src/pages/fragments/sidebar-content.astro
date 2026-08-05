@@ -3,7 +3,7 @@
 ---
 
 <th:block
-  th:fragment="content(mainMenu, featureMenu, footerLinks, selectedTags, socialLinks, icpBeian, gonganBeian, gonganBeianUrl)"
+  th:fragment="content(mainMenu, featureMenu, footerLinks, selectedTags, socialLinks)"
 >
   <div class="fly-sidebar-inner">
     <nav
@@ -98,9 +98,6 @@
     </div>
     <th:block
       th:replace="~{fragments/footer-content :: navigation(footerLinks=${footerLinks}, placement='sidebar')}"
-    ></th:block>
-    <th:block
-      th:replace="~{fragments/footer-content :: identity(icpBeian=${icpBeian}, gonganBeian=${gonganBeian}, gonganBeianUrl=${gonganBeianUrl})}"
     ></th:block>
   </footer>
 </th:block>

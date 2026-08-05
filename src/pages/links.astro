@@ -10,7 +10,7 @@ import PageLayout from "../components/layout/PageLayout.astro";
 >
   <th:block>
     <th:block
-      th:replace="~{fragments/links/shell :: shell(links=${links}, simpleGroups=${simpleGroups}, groups=${groups}, activeGroupName=${group}, title=${theme.config.pages?.links_title ?: linksTitle}, description=${theme.config.pages?.links_description ?: '发现值得持续关注的网站与创作者，在彼此分享的内容和观点之间建立连接。'}, pluginName=${pluginName}, cover=${theme.config.pages?.links_cover})}"
+      th:replace="~{fragments/links/shell :: shell(links=${links}, simpleGroups=${simpleGroups}, groups=${groups}, activeGroupName=${group}, title=${theme.config.pages?.links_title ?: linksTitle}, description=${theme.config.pages?.links_description ?: '发现值得持续关注的网站与创作者，在彼此分享的内容和观点之间建立连接。'}, cover=${theme.config.pages?.links_cover})}"
     ></th:block>
   </th:block>
 </PageLayout>

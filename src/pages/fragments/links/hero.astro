@@ -4,11 +4,25 @@
 
 <section
   class="fly-links-hero"
-  th:fragment="hero(title, description, cover)"
+  th:fragment="hero(title, description, cover, simpleGroups, activeGroupName)"
   data-fly-reveal
 >
   <header class="fly-links-hero-copy">
-    <h1 th:text="${title}">链接</h1>
+    <div class="fly-links-hero-heading">
+      <h1 th:text="${title}">链接</h1>
+      <button
+        class="fly-links-application-trigger"
+        type="button"
+        th:if="${linkApplicationEnabled and (theme.config.pages?.links_application_enabled == null or theme.config.pages.links_application_enabled)}"
+        aria-haspopup="dialog"
+        aria-controls="fly-links-application-dialog"
+        data-fly-link-application-open
+      >
+        <span>申请友链</span>
+        <span class="fly-iconify fly-iconify--arrow-forward" aria-hidden="true"
+        ></span>
+      </button>
+    </div>
     <p th:text="${description}">
       发现值得持续关注的网站与创作者，在彼此分享的内容和观点之间建立连接。
     </p>
@@ -27,4 +41,8 @@
       fetchpriority="high"
     />
   </div>
+
+  <th:block
+    th:replace="~{fragments/links/group-filter :: filter(simpleGroups=${simpleGroups}, activeGroupName=${activeGroupName})}"
+  ></th:block>
 </section>

@@ -7,11 +7,11 @@ spec:
   author:
     name: Handsome
     website: https://github.com/acanyo
-  description: 一个受 Aspect 启发的 Halo 中文博客主题。
+  description: 一款面向 Halo 2 的内容型博客主题，提供三种首页布局、响应式侧栏、深浅色切换与沉浸式文章阅读体验。
   settingName: "theme-flying-setting"
   configMapName: "theme-flying-configMap"
   logo: /themes/theme-flying/assets/images/theme-flying-icon.png
-  homepage: https://github.com/acanyo/theme-flying
+  homepage: https://www.xhhao.com/
   issues: https://github.com/acanyo/theme-flying/issues
   customTemplates:
     page:

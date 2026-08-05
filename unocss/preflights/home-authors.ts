@@ -192,7 +192,7 @@ export const homeAuthorsPreflight = {
   left: 12px;
   z-index: 3;
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 8px;

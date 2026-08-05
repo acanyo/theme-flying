@@ -1,10 +1,12 @@
 # Fly
 
-Fly 是一款面向 Halo 2 的中文博客主题，视觉设计受 Aspect 启发。主题以内容阅读为核心，提供响应式侧栏、三种首页布局、深浅色模式，以及文章、作者、分类、标签、归档、瞬间、图库和友情链接等完整页面。
+Fly 是一款面向 Halo 2 的内容型中文博客主题，围绕内容呈现与沉浸式阅读设计，提供三种首页布局、响应式侧栏、深浅色切换，以及文章、作者、分类、标签、归档、瞬间、图库和友情链接等完整页面。
 
-**演示站**：[https://www.xhhao.com/](https://www.xhhao.com/)
+**官网**：[https://www.xhhao.com/](https://www.xhhao.com/)
 
 **文档**：[https://docs.lik.cc/](https://docs.lik.cc/)
+
+**问题反馈**：[https://github.com/acanyo/theme-flying/issues](https://github.com/acanyo/theme-flying/issues)
 
 **QQ 交流群**：[![QQ群](https://www.xhhao.com/upload/iShot_2025-03-03_16.03.00.png)](https://www.xhhao.com/upload/iShot_2025-03-03_16.03.00.png)
 
@@ -61,8 +63,8 @@ Fly 本身可以显示基础文章和页面；以下功能需要对应 Halo 插�
 | 功能     | 插件 / 扩展点            | 说明                                                                     |
 | -------- | ------------------------ | ------------------------------------------------------------------------ |
 | 搜索     | `PluginSearchWidget`     | 提供桌面端与移动端搜索入口                                               |
-| 评论     | `PluginCommentWidget`    | 用于文章、单页、瞬间、图库和友链申请评论                                 |
-| 友情链接 | `PluginLinks`            | 提供友情链接、首页友链分组和 RSS 朋友圈数据                              |
+| 评论     | `PluginCommentWidget`    | 用于文章、单页、瞬间和图库评论                                           |
+| 友情链接 | `PluginLinks`            | 提供友情链接、访客申请、首页友链分组和 RSS 朋友圈数据                    |
 | 瞬间     | 瞬间插件                 | 提供瞬间列表、标签筛选与详情页数据                                       |
 | 图库     | 图库插件                 | 提供图片分组、列表、详情和评论数据                                       |
 | 邮件订阅 | Flow Post / 文章订阅插件 | 需提供 `/apis/api.flow.post.kunkunyu.com/v1alpha1/follows/-/submit` 接口 |

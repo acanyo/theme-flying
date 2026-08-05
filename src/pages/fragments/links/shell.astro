@@ -4,14 +4,11 @@
 
 <div
   class="fly-content-shell fly-links-page-shell"
-  th:fragment="shell(links, simpleGroups, groups, activeGroupName, title, description, pluginName, cover)"
+  th:fragment="shell(links, simpleGroups, groups, activeGroupName, title, description, cover)"
 >
   <article class="fly-links-page-content">
     <th:block
-      th:replace="~{fragments/links/hero :: hero(title=${title}, description=${description}, cover=${cover})}"
-    ></th:block>
-    <th:block
-      th:replace="~{fragments/links/group-filter :: filter(simpleGroups=${simpleGroups}, activeGroupName=${activeGroupName})}"
+      th:replace="~{fragments/links/hero :: hero(title=${title}, description=${description}, cover=${cover}, simpleGroups=${simpleGroups}, activeGroupName=${activeGroupName})}"
     ></th:block>
 
     <div
@@ -48,8 +45,7 @@
       暂无友情链接。
     </p>
 
-    <th:block
-      th:replace="~{fragments/links/application :: application(pluginName=${pluginName})}"
+    <th:block th:replace="~{fragments/links/application :: application}"
     ></th:block>
   </article>
 </div>

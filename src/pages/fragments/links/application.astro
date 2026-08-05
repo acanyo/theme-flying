@@ -2,77 +2,452 @@
 
 ---
 
-<section
-  id="fly-links-application"
-  class="fly-links-application"
-  th:fragment="application(pluginName)"
-  th:if="${haloCommentEnabled and (theme.config.pages?.links_application_enabled == null or theme.config.pages.links_application_enabled)}"
-  th:with="applicationTitle=${theme.config.pages?.links_application_title ?: '申请友情链接'}, applicationDescription=${theme.config.pages?.links_application_description ?: '请先在自己的网站添加本站链接，再复制申请模板、填写完整信息并通过右侧评论组件提交。'}, applicationTemplate=${theme.config.pages?.links_application_template ?: '站点名称：\n站点地址：https://\n站点图标：https://\n站点简介：\n本站友链页：https://'}"
+<dialog
+  id="fly-links-application-dialog"
+  class="fly-links-application-dialog"
+  th:fragment="application"
+  th:if="${linkApplicationEnabled and (theme.config.pages?.links_application_enabled == null or theme.config.pages.links_application_enabled)}"
+  th:with="applicationTitle=${theme.config.pages?.links_application_title ?: '申请友情链接'}, applicationDescription=${theme.config.pages?.links_application_form_description ?: '请先在自己的网站添加本站链接，再填写表单提交申请。'}, exchangeTitle=${theme.config.pages?.links_application_site_title ?: site.title}, exchangeUrlRaw=${theme.config.pages?.links_application_site_url ?: site.url}, exchangeUrl=${#strings.endsWith(exchangeUrlRaw, '/') ? #strings.substring(exchangeUrlRaw, 0, #strings.length(exchangeUrlRaw) - 1) : exchangeUrlRaw}, exchangeDescription=${theme.config.pages?.links_application_site_description ?: (#strings.isEmpty(site.seo?.description) ? site.subtitle : site.seo.description)}, exchangeLogoRaw=${theme.config.pages?.links_application_site_logo ?: site.logo}, exchangeLogo=${#strings.isEmpty(exchangeLogoRaw) ? '' : (#strings.startsWith(exchangeLogoRaw, 'http') ? exchangeLogoRaw : exchangeUrl + (#strings.startsWith(exchangeLogoRaw, '/') ? exchangeLogoRaw : '/' + exchangeLogoRaw))}, exchangeRss=${theme.config.pages?.links_application_site_rss ?: exchangeUrl + '/rss.xml'}, exchangeEmail=${theme.config.pages?.links_application_site_email ?: ''}"
   aria-labelledby="fly-links-application-title"
-  data-fly-link-application
+  aria-describedby="fly-links-application-description"
+  data-fly-link-application-dialog
+  data-fly-step="guide"
 >
-  <aside class="fly-links-application-guide" data-fly-reveal>
-    <h2 id="fly-links-application-title" th:text="${applicationTitle}">
-      申请友情链接
-    </h2>
-    <p th:text="${applicationDescription}">
-      请先在自己的网站添加本站链接，再复制申请模板、填写完整信息并通过右侧评论组件提交。
-    </p>
+  <div class="fly-links-application-shell">
+    <header class="fly-links-application-header">
+      <div class="fly-links-application-heading">
+        <h2 id="fly-links-application-title" th:text="${applicationTitle}">
+          申请友情链接
+        </h2>
+        <p
+          id="fly-links-application-description"
+          th:text="${applicationDescription}"
+        >
+          请先在自己的网站添加本站链接，再填写表单提交申请。
+        </p>
 
-    <dl class="fly-links-site-info">
-      <div>
-        <dt>本站名称</dt>
-        <dd th:text="${site.title}">网站名称</dd>
+        <ol class="fly-links-application-progress" aria-label="友链申请进度">
+          <li aria-current="step" data-fly-link-application-progress="guide">
+            <span aria-hidden="true">1</span>
+            <strong>申请须知</strong>
+          </li>
+          <li aria-hidden="true"></li>
+          <li data-fly-link-application-progress="form">
+            <span aria-hidden="true">2</span>
+            <strong>填写资料</strong>
+          </li>
+        </ol>
       </div>
-      <div>
-        <dt>本站地址</dt>
-        <dd>
-          <a
-            th:href="@{${site.url}}"
-            th:text="${site.url}"
-            target="_blank"
-            rel="noopener noreferrer">网站地址</a
-          >
-        </dd>
-      </div>
-    </dl>
 
-    <pre
-      class="fly-links-application-template"
-      data-fly-link-application-template
-      th:text="${applicationTemplate}">站点名称：
-站点地址：https://
-站点图标：https://
-站点简介：
-本站友链页：https://</pre>
-
-    <button
-      class="fly-links-application-copy"
-      type="button"
-      data-fly-link-application-copy
-    >
-      <span data-fly-link-application-label>复制申请模板</span>
-      <span aria-hidden="true">→</span>
-    </button>
-    <p
-      class="fly-links-application-status"
-      data-fly-link-application-status
-      role="status"
-      aria-live="polite"
-    >
-    </p>
-  </aside>
-
-  <div id="fly-links-application-form" class="fly-links-application-form">
-    <header class="fly-links-application-form-heading">
-      <h3>提交申请</h3>
-      <p>填写复制的模板后发布评论，站点管理员会在后台审核并添加。</p>
+      <button
+        class="fly-links-application-close"
+        type="button"
+        aria-label="关闭友链申请"
+        data-fly-link-application-close
+      >
+        <span class="fly-iconify fly-iconify--close" aria-hidden="true"></span>
+      </button>
     </header>
-    <div class="fly-links-application-comment">
-      <halo:comment
-        group="plugin.halo.run"
-        kind="Plugin"
-        th:attr="name=${pluginName}"></halo:comment>
+
+    <div class="fly-links-application-body">
+      <section
+        class="fly-links-application-panel fly-links-application-panel--guide"
+        aria-labelledby="fly-links-application-guide-title"
+        data-fly-link-application-panel="guide"
+      >
+        <header class="fly-links-application-guide-heading">
+          <span>交换链接</span>
+          <h3 id="fly-links-application-guide-title" tabindex="-1">
+            先把本站添加到你的友链页
+          </h3>
+          <p>友情链接是一份双向约定，提交前请确认以下信息。</p>
+        </header>
+
+        <div class="fly-links-site-card" data-fly-link-site-card>
+          <div class="fly-links-site-copybar">
+            <div>
+              <strong>本站友链资料</strong>
+              <span>复制后即可添加</span>
+            </div>
+            <button
+              class="fly-links-site-copy fly-links-site-copy--all"
+              type="button"
+              aria-label="复制全部本站友链资料"
+              data-fly-link-copy-all
+            >
+              <span class="fly-iconify fly-iconify--copy" aria-hidden="true"
+              ></span>
+              <span data-fly-link-copy-button-label>复制全部</span>
+            </button>
+          </div>
+
+          <div class="fly-links-site-identity">
+            <div
+              class="fly-links-site-logo"
+              th:if="${not #strings.isEmpty(exchangeLogo)}"
+            >
+              <img
+                th:src="@{${exchangeLogo}}"
+                th:alt="|${exchangeTitle} Logo|"
+                width="56"
+                height="56"
+              />
+            </div>
+            <div class="fly-links-site-identity-copy">
+              <h4
+                th:text="${exchangeTitle}"
+                th:attr="data-fly-link-copy-value=${exchangeTitle}"
+                data-fly-link-copy-entry
+                data-fly-link-copy-label="网站名称"
+              >
+                网站名称
+              </h4>
+              <p
+                th:if="${not #strings.isEmpty(exchangeDescription)}"
+                th:text="${exchangeDescription}"
+                th:attr="data-fly-link-copy-value=${exchangeDescription}"
+                data-fly-link-copy-entry
+                data-fly-link-copy-label="网站简介"
+              >
+                网站简介
+              </p>
+            </div>
+          </div>
+
+          <dl class="fly-links-site-info">
+            <div
+              th:attr="data-fly-link-copy-value=${exchangeUrl}"
+              data-fly-link-copy-entry
+              data-fly-link-copy-label="网站地址"
+            >
+              <dt>
+                <span>网站地址</span>
+                <button
+                  class="fly-links-site-copy"
+                  type="button"
+                  th:attr="aria-label=|复制网站地址：${exchangeUrl}|"
+                  data-fly-link-copy
+                >
+                  <span class="fly-iconify fly-iconify--copy" aria-hidden="true"
+                  ></span>
+                  <span data-fly-link-copy-button-label>复制</span>
+                </button>
+              </dt>
+              <dd>
+                <a
+                  th:href="@{${exchangeUrl}}"
+                  th:text="${exchangeUrl}"
+                  target="_blank"
+                  rel="noopener noreferrer">网站地址</a
+                >
+              </dd>
+            </div>
+            <div
+              th:if="${not #strings.isEmpty(exchangeLogo)}"
+              th:attr="data-fly-link-copy-value=${exchangeLogo}"
+              data-fly-link-copy-entry
+              data-fly-link-copy-label="Logo 地址"
+            >
+              <dt>
+                <span>Logo 地址</span>
+                <button
+                  class="fly-links-site-copy"
+                  type="button"
+                  th:attr="aria-label=|复制 Logo 地址：${exchangeLogo}|"
+                  data-fly-link-copy
+                >
+                  <span class="fly-iconify fly-iconify--copy" aria-hidden="true"
+                  ></span>
+                  <span data-fly-link-copy-button-label>复制</span>
+                </button>
+              </dt>
+              <dd>
+                <a
+                  th:href="@{${exchangeLogo}}"
+                  th:text="${exchangeLogo}"
+                  target="_blank"
+                  rel="noopener noreferrer">Logo 地址</a
+                >
+              </dd>
+            </div>
+            <div
+              th:attr="data-fly-link-copy-value=${exchangeRss}"
+              data-fly-link-copy-entry
+              data-fly-link-copy-label="RSS 地址"
+            >
+              <dt>
+                <span>RSS 订阅</span>
+                <button
+                  class="fly-links-site-copy"
+                  type="button"
+                  th:attr="aria-label=|复制 RSS 地址：${exchangeRss}|"
+                  data-fly-link-copy
+                >
+                  <span class="fly-iconify fly-iconify--copy" aria-hidden="true"
+                  ></span>
+                  <span data-fly-link-copy-button-label>复制</span>
+                </button>
+              </dt>
+              <dd>
+                <a
+                  th:href="@{${exchangeRss}}"
+                  th:text="${exchangeRss}"
+                  target="_blank"
+                  rel="noopener noreferrer">RSS 地址</a
+                >
+              </dd>
+            </div>
+            <div
+              th:if="${not #strings.isEmpty(exchangeEmail)}"
+              th:attr="data-fly-link-copy-value=${exchangeEmail}"
+              data-fly-link-copy-entry
+              data-fly-link-copy-label="联系邮箱"
+            >
+              <dt>
+                <span>联系邮箱</span>
+                <button
+                  class="fly-links-site-copy"
+                  type="button"
+                  th:attr="aria-label=|复制联系邮箱：${exchangeEmail}|"
+                  data-fly-link-copy
+                >
+                  <span class="fly-iconify fly-iconify--copy" aria-hidden="true"
+                  ></span>
+                  <span data-fly-link-copy-button-label>复制</span>
+                </button>
+              </dt>
+              <dd>
+                <a
+                  th:href="|mailto:${exchangeEmail}|"
+                  th:text="${exchangeEmail}">联系邮箱</a
+                >
+              </dd>
+            </div>
+          </dl>
+        </div>
+
+        <ul class="fly-links-application-rules">
+          <li>
+            <span aria-hidden="true"></span>
+            <div>
+              <strong>已经添加本站链接</strong>
+              <p>如填写反链页面，我们会进一步确认链接是否存在。</p>
+            </div>
+          </li>
+          <li>
+            <span aria-hidden="true"></span>
+            <div>
+              <strong>网站可以正常访问</strong>
+              <p>内容应当原创、稳定，并具有持续更新的计划。</p>
+            </div>
+          </li>
+        </ul>
+
+        <p class="fly-links-application-note">
+          申请提交后将进入待审核列表，审核通过后才会公开展示。
+        </p>
+
+        <footer class="fly-links-application-actions">
+          <button
+            class="fly-links-application-button fly-links-application-button--quiet"
+            type="button"
+            data-fly-link-application-close
+          >
+            暂不申请
+          </button>
+          <button
+            class="fly-links-application-button fly-links-application-button--primary"
+            type="button"
+            aria-controls="fly-links-application-form-panel"
+            data-fly-link-application-next
+          >
+            <span>我已添加，继续</span>
+            <span
+              class="fly-iconify fly-iconify--arrow-forward"
+              aria-hidden="true"></span>
+          </button>
+        </footer>
+      </section>
+
+      <section
+        id="fly-links-application-form-panel"
+        class="fly-links-application-panel fly-links-application-panel--form"
+        aria-labelledby="fly-links-application-form-title"
+        data-fly-link-application-panel="form"
+        hidden
+      >
+        <header class="fly-links-application-form-heading">
+          <h3 id="fly-links-application-form-title" tabindex="-1">
+            填写你的站点资料
+          </h3>
+          <p>带 * 的项目为必填项，其余内容可以稍后补充。</p>
+        </header>
+
+        <form
+          class="fly-links-application-fields"
+          action="/apis/api.link.halo.run/v1alpha1/link-applications"
+          method="post"
+          data-fly-link-application-form
+          data-fly-link-application-endpoint="/apis/api.link.halo.run/v1alpha1/link-applications"
+          data-fly-link-captcha-endpoint="/apis/api.link.halo.run/v1alpha1/link-applications/captcha"
+        >
+          <div class="fly-links-application-grid">
+            <label class="fly-links-application-field">
+              <span>网站名称 <em aria-hidden="true">*</em></span>
+              <input
+                name="displayName"
+                type="text"
+                required
+                autocomplete="organization"
+                placeholder="例如：林间拾语"
+              />
+            </label>
+
+            <label class="fly-links-application-field">
+              <span>网站地址 <em aria-hidden="true">*</em></span>
+              <input
+                name="url"
+                type="url"
+                required
+                inputmode="url"
+                autocomplete="url"
+                placeholder="https://example.com/"
+              />
+            </label>
+
+            <label
+              class="fly-links-application-field fly-links-application-field--full"
+            >
+              <span>网站简介</span>
+              <textarea
+                name="description"
+                rows="3"
+                placeholder="用一两句话介绍你的网站"></textarea>
+            </label>
+          </div>
+
+          <details class="fly-links-application-optional">
+            <summary>
+              <span>
+                <strong>补充信息</strong>
+                <small>Logo、邮箱、反链与订阅地址（可选）</small>
+              </span>
+              <span class="fly-iconify fly-iconify--chevron" aria-hidden="true"
+              ></span>
+            </summary>
+            <div class="fly-links-application-grid">
+              <label
+                class="fly-links-application-field fly-links-application-field--full"
+              >
+                <span>Logo 地址</span>
+                <input
+                  name="logo"
+                  type="url"
+                  inputmode="url"
+                  placeholder="https://example.com/logo.png"
+                />
+              </label>
+
+              <label class="fly-links-application-field">
+                <span>联系邮箱</span>
+                <input
+                  name="email"
+                  type="email"
+                  inputmode="email"
+                  autocomplete="email"
+                  placeholder="hello@example.com"
+                />
+              </label>
+
+              <label class="fly-links-application-field">
+                <span>反链页面</span>
+                <input
+                  name="backlink"
+                  type="url"
+                  inputmode="url"
+                  placeholder="https://example.com/links"
+                />
+              </label>
+
+              <label
+                class="fly-links-application-field fly-links-application-field--full"
+              >
+                <span>RSS / Atom 地址</span>
+                <textarea
+                  name="feedUrls"
+                  rows="2"
+                  placeholder="每行填写一个订阅地址"></textarea>
+              </label>
+            </div>
+          </details>
+
+          <div class="fly-links-application-captcha">
+            <div class="fly-links-application-captcha-heading">
+              <label for="fly-links-application-captcha-code"
+                >验证码 <em aria-hidden="true">*</em></label
+              >
+              <span>五位字符，不区分大小写</span>
+            </div>
+            <div class="fly-links-application-captcha-row">
+              <input
+                id="fly-links-application-captcha-code"
+                name="captchaCode"
+                type="text"
+                required
+                minlength="5"
+                maxlength="5"
+                autocomplete="off"
+                spellcheck="false"
+                aria-describedby="fly-links-application-result"
+                placeholder="请输入图片中的字符"
+                data-fly-link-captcha-code
+              />
+              <div class="fly-links-application-captcha-media">
+                <img
+                  alt="友链申请验证码"
+                  width="150"
+                  height="46"
+                  data-fly-link-captcha-image
+                />
+                <button type="button" data-fly-link-captcha-refresh>
+                  换一张
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="fly-links-application-actions">
+            <button
+              class="fly-links-application-button fly-links-application-button--quiet"
+              type="button"
+              data-fly-link-application-back
+            >
+              <span
+                class="fly-iconify fly-iconify--arrow-forward fly-links-application-back-icon"
+                aria-hidden="true"></span>
+              <span>上一步</span>
+            </button>
+            <div class="fly-links-application-submit-group">
+              <p
+                id="fly-links-application-result"
+                class="fly-links-application-status"
+                role="status"
+                aria-live="polite"
+                data-fly-link-application-status
+              >
+              </p>
+              <button
+                class="fly-links-application-button fly-links-application-button--primary"
+                type="submit"
+                disabled
+                data-fly-link-application-submit
+              >
+                <span data-fly-link-application-submit-label>提交申请</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </section>
     </div>
   </div>
-</section>
+</dialog>
