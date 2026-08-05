@@ -4,6 +4,7 @@ on:
   release:
     types:
       - published
+      - edited
 
 jobs:
   cd:
@@ -15,4 +16,4 @@ jobs:
       contents: write
     with:
       app-id: app-tfinvzfw
-      pnpm-version: ""
+      pnpm-version: "10"
