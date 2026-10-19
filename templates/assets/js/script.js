@@ -27,6 +27,7 @@ import { setupNewsletter } from "./modules/newsletter.js?fly=1.0.118";
 import { setupKeyboardShortcuts } from "./modules/keyboard.js?fly=1.0.60";
 import { setupTransitions } from "./modules/transitions.js?fly=1.0.60";
 import { setupSidebarTip } from "./modules/sidebar-tip.js?fly=1.0.116";
+import { refreshOfficialComments } from "./modules/comment-widget.js?fly=1.0.2";
 
 function boot() {
   syncPageBodyClass(document);
@@ -60,6 +61,7 @@ function boot() {
   });
   setupTransitions(document, {
     refresh: () => {
+      refreshOfficialComments(document);
       syncPageBodyClass(document);
       normalizeSinglePageContent(document);
       menu.refresh();

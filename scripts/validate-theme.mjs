@@ -98,6 +98,7 @@ const requiredFiles = [
   "templates/assets/js/utils/dom.js",
   "templates/assets/js/modules/menu.js",
   "templates/assets/js/modules/home-layout.js",
+  "templates/assets/js/modules/comment-widget.js",
   "templates/assets/js/modules/category-filter.js",
   "templates/assets/js/modules/contact-copy.js",
   "templates/assets/js/modules/author-popover.js",

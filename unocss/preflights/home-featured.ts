@@ -227,6 +227,11 @@ export const homeFeaturedPreflight = {
   gap: 0;
 }
 
+.fly-home-slider-rail {
+  /* Keep adjacent images outside the viewport when scroll snapping rounds fractional widths. */
+  gap: 1px;
+}
+
 .fly-home-slide {
   position: relative;
   display: flex;
